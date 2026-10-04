@@ -1,38 +1,49 @@
 ---
 // Corkboard with pinned notes (experience). Coordinates follow the room stage.
+// Each note is grouped with its pin so the room island can swing it there.
 ---
 
 <svg class="art" viewBox="90 150 290 230" aria-hidden="true" focusable="false">
   <g filter="url(#wobble)">
     <rect class="l f-paper" x="90" y="150" width="290" height="230" rx="4" />
-    <g transform="rotate(-5 149 204)">
-      <rect class="l f-yellow" x="114" y="174" width="70" height="60" rx="2" />
-      <line class="l" x1="126" y1="196" x2="170" y2="196" />
-      <line class="l" x1="126" y1="212" x2="160" y2="212" />
+    <g class="note" data-pin="149 176">
+      <g transform="rotate(-5 149 204)">
+        <rect class="l f-yellow" x="114" y="174" width="70" height="60" rx="2" />
+        <line class="l" x1="126" y1="196" x2="170" y2="196" />
+        <line class="l" x1="126" y1="212" x2="160" y2="212" />
+      </g>
+      <circle class="l f-sand" cx="149" cy="176" r="5" />
     </g>
-    <g transform="rotate(4 238 202)">
-      <rect class="l f-sand" x="202" y="170" width="72" height="64" rx="2" />
-      <line class="l" x1="214" y1="194" x2="262" y2="194" />
-      <line class="l" x1="214" y1="210" x2="248" y2="210" />
+    <g class="note" data-pin="238 172">
+      <g transform="rotate(4 238 202)">
+        <rect class="l f-sand" x="202" y="170" width="72" height="64" rx="2" />
+        <line class="l" x1="214" y1="194" x2="262" y2="194" />
+        <line class="l" x1="214" y1="210" x2="248" y2="210" />
+      </g>
+      <circle class="l f-yellow" cx="238" cy="172" r="5" />
     </g>
-    <g transform="rotate(-3 326 205)">
-      <rect class="l f-stone" x="294" y="178" width="64" height="56" rx="2" />
-      <path class="l" d="M308,206 l8,8 l18,-20" />
+    <g class="note" data-pin="326 180">
+      <g transform="rotate(-3 326 205)">
+        <rect class="l f-stone" x="294" y="178" width="64" height="56" rx="2" />
+        <path class="l" d="M308,206 l8,8 l18,-20" />
+      </g>
+      <circle class="l f-accent" cx="326" cy="180" r="5" />
     </g>
-    <g transform="rotate(3 164 306)">
-      <rect class="l f-accent" x="122" y="270" width="84" height="70" rx="2" />
-      <line class="l" x1="134" y1="294" x2="192" y2="294" />
-      <line class="l" x1="134" y1="312" x2="178" y2="312" />
+    <g class="note" data-pin="164 272">
+      <g transform="rotate(3 164 306)">
+        <rect class="l f-accent" x="122" y="270" width="84" height="70" rx="2" />
+        <line class="l" x1="134" y1="294" x2="192" y2="294" />
+        <line class="l" x1="134" y1="312" x2="178" y2="312" />
+      </g>
+      <circle class="l f-stone" cx="164" cy="272" r="5" />
     </g>
-    <g transform="rotate(-2 290 306)">
-      <rect class="l f-sky" x="232" y="266" width="116" height="80" rx="2" />
-      <polyline class="l" points="244,332 272,300 294,320 316,288 338,332" />
+    <g class="note" data-pin="290 268">
+      <g transform="rotate(-2 290 306)">
+        <rect class="l f-sky" x="232" y="266" width="116" height="80" rx="2" />
+        <polyline class="l" points="244,332 272,300 294,320 316,288 338,332" />
+      </g>
+      <circle class="l f-sand" cx="290" cy="268" r="5" />
     </g>
-    <circle class="l f-sand" cx="149" cy="176" r="5" />
-    <circle class="l f-yellow" cx="238" cy="172" r="5" />
-    <circle class="l f-accent" cx="326" cy="180" r="5" />
-    <circle class="l f-stone" cx="164" cy="272" r="5" />
-    <circle class="l f-sand" cx="290" cy="268" r="5" />
   </g>
   <rect class="ring" x="81" y="141" width="308" height="248" rx="10" />
 </svg>

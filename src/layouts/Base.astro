@@ -35,7 +35,9 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="twitter:card" content="summary" />
     <!-- og:image and twitter:image arrive with the share image in Phase 5 -->
 
-    <!-- Before first paint: pick the sky from local time and show the room.
+    <!-- Before first paint: pick the sky from local time, show the room (or
+         the list, if that is what this visitor chose last time), and hold the
+         drawings up for the drop-in entrance once per visit.
          Without JS none of this runs and the page is the plain list view. -->
     <script is:inline>
       (function () {
@@ -47,7 +49,15 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
         else if (window.matchMedia('(prefers-color-scheme: dark)').matches) sky = 'night';
         d.dataset.sky = sky;
         d.dataset.theme = sky === 'night' ? 'night' : 'light';
-        d.dataset.view = location.hash.length > 1 ? 'list' : 'room';
+        var view = 'room';
+        var entered = false;
+        try {
+          if (localStorage.getItem('view') === 'list') view = 'list';
+          entered = sessionStorage.getItem('entered') === '1';
+        } catch (e) {}
+        d.dataset.view = view;
+        var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (view === 'room' && !entered && !still && location.hash.length < 2) d.dataset.enter = '';
       })();
     </script>
   </head>

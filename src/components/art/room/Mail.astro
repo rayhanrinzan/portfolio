@@ -1,15 +1,22 @@
 ---
-// Envelope and phone (contact and résumé).
+// Envelope and phone (contact and résumé). The letter hides behind the
+// envelope until the room island lifts it out.
 ---
 
 <svg class="art" viewBox="1105 675 295 120" aria-hidden="true" focusable="false">
   <g filter="url(#wobble)">
-    <g transform="rotate(-7 1185 732)">
-      <rect class="l f-sand" x="1120" y="690" width="130" height="84" rx="4" />
-      <polyline class="l" points="1120,693 1185,740 1250,693" />
+    <g class="env">
+      <g transform="rotate(-7 1185 732)">
+        <rect class="l f-paper letter" x="1134" y="698" width="102" height="60" rx="2" />
+        <rect class="l f-sand" x="1120" y="690" width="130" height="84" rx="4" />
+        <polyline class="l flap" points="1120,693 1185,740 1250,693" />
+      </g>
     </g>
-    <polygon class="l f-accent" points="1296,716 1372,716 1394,768 1306,768" />
-    <line class="l" x1="1334" y1="758" x2="1362" y2="758" />
+    <g class="phone">
+      <polygon class="l f-accent" points="1296,716 1372,716 1394,768 1306,768" />
+      <line class="l" x1="1334" y1="758" x2="1362" y2="758" />
+      <circle class="ping" cx="1362" cy="728" r="5" />
+    </g>
   </g>
   <rect class="ring" x="1104" y="674" width="300" height="118" rx="12" />
 </svg>

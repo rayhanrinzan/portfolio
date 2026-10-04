@@ -1,10 +1,16 @@
 ---
 // Shared hand-drawn wobble. Reference it with filter="url(#wobble)".
+// #boil is the same filter with a seed that the room island steps at about
+// 8fps; room.css swaps it in on the hovered or active object only.
 ---
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <filter id="wobble">
     <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="4"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="3.2" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+  <filter id="boil">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="4" data-boil></feTurbulence>
     <feDisplacementMap in="SourceGraphic" scale="3.2" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
   </filter>
 </svg>

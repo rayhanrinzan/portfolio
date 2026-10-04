@@ -1,0 +1,100 @@
+---
+// Where room content opens. Two surfaces, both empty until the room island
+// moves a list-view section into them (so the content exists once):
+// a notebook page that slides over the room, and the laptop screen that the
+// camera zooms into for projects.
+---
+
+<aside class="page" data-page tabindex="-1" hidden>
+  <div class="page-grab" data-page-grab aria-hidden="true">
+    <svg viewBox="0 0 56 12" focusable="false"><path class="l" d="M3,7 q8,-5 16,0 t16,0 t16,0" /></svg>
+  </div>
+  <svg class="page-holes" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="page-hole" width="28" height="44" patternUnits="userSpaceOnUse">
+        <circle class="hole" cx="14" cy="22" r="6" />
+      </pattern>
+    </defs>
+    <rect width="28" height="100%" fill="url(#page-hole)" />
+  </svg>
+  <button type="button" class="close" data-close aria-label="Close (back to the room)">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3,3 q5,4 10,10 M13,3 q-6,5 -10,10" /></svg>
+    <span>close</span>
+  </button>
+  <div class="page-doodles" aria-hidden="true">
+    <svg viewBox="0 0 72 72" data-doodle="experience" focusable="false">
+      <path class="l" d="M14,18 q22,-4 44,0 q3,22 -1,42 q-20,4 -42,-1 q-3,-20 -1,-41 z" />
+      <path class="l" d="M24,34 h24 M24,44 h17" />
+      <path class="l" d="M36,10 a5,5 0 1 1 0.1,0 M36,20 v6" />
+    </svg>
+    <svg viewBox="0 0 72 72" data-doodle="education" focusable="false">
+      <path class="l" d="M12,58 q24,-3 48,0" />
+      <path class="l" d="M18,56 v-36 q5,-2 10,0 v36" />
+      <path class="l" d="M30,56 v-44 q6,-2 12,0 v44" />
+      <path class="l" d="M45,56 l8,-38 l10,3 l-7,36" />
+    </svg>
+    <svg viewBox="0 0 72 72" data-doodle="about" focusable="false">
+      <path class="l" d="M16,30 q16,-3 32,0 q2,18 -3,30 q-13,3 -26,0 q-5,-14 -3,-30 z" />
+      <path class="l" d="M48,36 q13,0 12,10 q-1,9 -13,8" />
+      <path class="l" d="M26,22 q-5,-7 0,-14 M38,22 q-5,-7 0,-14" />
+    </svg>
+    <svg viewBox="0 0 72 72" data-doodle="contact" focusable="false">
+      <path class="l" d="M10,22 q26,-3 52,0 q2,18 0,34 q-26,3 -52,0 q-2,-17 0,-34 z" />
+      <path class="l" d="M11,23 q13,14 25,19 q13,-6 25,-19" />
+    </svg>
+  </div>
+  <div class="page-body" data-page-body></div>
+</aside>
+
+<div class="screen" data-screen role="region" aria-labelledby="projects-h" tabindex="-1" hidden>
+  <div class="screen-bar">
+    <button type="button" class="close" data-close aria-label="Close (back to the room)">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3,3 q5,4 10,10 M13,3 q-6,5 -10,10" /></svg>
+      <span>close</span>
+    </button>
+  </div>
+  <div class="screen-in">
+    <div class="screen-col">
+      <div data-screen-body></div>
+
+      <section class="run" aria-labelledby="run-h">
+        <h3 id="run-h">What the laptop is doing</h3>
+        <p class="soft">
+          The curve on the laptop is real. A small neural net (two inputs, four hidden units, one output) is
+          learning XOR in your browser, and that line is its loss.
+        </p>
+        <div class="run-grid">
+          <button type="button" class="run-chart" data-restart aria-label="Restart the training run">
+            <svg viewBox="0 0 320 150" aria-hidden="true" focusable="false">
+              <g filter="url(#wobble)">
+                <rect class="l f-sky" x="3" y="3" width="314" height="144" rx="5" />
+                <polyline class="l" points="16,12 16,134 308,134" />
+              </g>
+              <polyline class="curve" data-curve points="24,22 60,76 110,108 170,122 240,128 300,130" />
+            </svg>
+            <span class="run-loss" data-loss>loss 0.02</span>
+            <span class="run-hint">click to restart</span>
+          </button>
+          <div class="run-side">
+            <label class="run-lr">
+              <span>learning rate <output data-lr-out>0.50</output></span>
+              <input type="range" min="-1.7" max="1.5" step="0.05" value="-0.3" data-lr />
+            </label>
+            <p class="soft run-note" data-lr-note>Turn it up and watch the loss bounce.</p>
+            <ul class="preds" role="list" aria-label="What the net answers right now">
+              {
+                ['0 xor 0', '0 xor 1', '1 xor 0', '1 xor 1'].map((q, i) => (
+                  <li>
+                    <span>{q}</span>
+                    <span class="pred-bar"><span data-pred-bar={i} /></span>
+                    <span class="pred-n" data-pred={i}>{i === 1 || i === 2 ? '0.98' : '0.02'}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

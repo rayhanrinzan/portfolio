@@ -1,12 +1,17 @@
 ---
-// Potted plant. Decoration only.
+// Potted plant. Decoration only. Pot and leaves are separate drawings so the
+// leaves can sway without redrawing the pot.
 ---
 
-<svg class="art" viewBox="190 530 115 225" aria-hidden="true" focusable="false">
+<svg class="art top leaves" viewBox="190 530 115 225" aria-hidden="true" focusable="false">
   <g filter="url(#wobble)">
     <ellipse class="l f-sage" cx="222" cy="606" rx="15" ry="42" transform="rotate(-28 222 606)" />
     <ellipse class="l f-sage" cx="270" cy="598" rx="15" ry="44" transform="rotate(22 270 598)" />
     <ellipse class="l f-sage" cx="246" cy="580" rx="14" ry="42" />
+  </g>
+</svg>
+<svg class="art top" viewBox="190 530 115 225" aria-hidden="true" focusable="false">
+  <g filter="url(#wobble)">
     <polygon class="l f-sand" points="200,660 292,660 280,750 212,750" />
   </g>
 </svg>

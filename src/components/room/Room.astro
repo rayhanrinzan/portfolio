@@ -1,9 +1,10 @@
 ---
 // The room: sketch C, the kitchen-table view. A fixed stage grid scaled by one
 // CSS unit (--u); every drawing is its own positioned element so room.css can
-// re-compose the room for portrait screens and Phase 4 can move each one.
+// re-compose the room for portrait screens and room.ts can move each one.
 import './room.css';
 import RoomObject from './RoomObject.astro';
+import Page from './Page.astro';
 import Corkboard from '../art/room/Corkboard.astro';
 import Window from '../art/room/Window.astro';
 import Shelves from '../art/room/Shelves.astro';
@@ -21,12 +22,12 @@ const { name, education } = profile;
 ---
 
 <div class="room" data-room>
-  <header class="room-head">
+  <header class="room-head" data-head>
     <h1>{name}</h1>
     <p>{education.degree} at {education.school}</p>
   </header>
 
-  <div class="stage">
+  <div class="stage" data-stage>
     <svg class="floor" viewBox="0 0 4000 12" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <path class="l" d="M0,6 q250,-3 500,0 t500,0 t500,0 t500,0 t500,0 t500,0 t500,0 t500,0" />
     </svg>
@@ -61,6 +62,8 @@ const { name, education } = profile;
     <div class="obj deco obj-plant" data-layer="objects" data-drop="5" aria-hidden="true"><Plant /></div>
     <div class="obj deco obj-chair" data-layer="foreground" data-drop="9" aria-hidden="true"><Chair /></div>
   </div>
+
+  <Page />
 </div>
 
 <script>
