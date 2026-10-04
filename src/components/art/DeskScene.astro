@@ -1,82 +1,53 @@
 ---
-// Small table scene for the list view header. Static apart from a CSS-only
-// curve draw-in and mug steam, both off under prefers-reduced-motion.
+// The room in miniature for the list view header: the same drawings and the
+// same landscape positions as the room view, with nothing to click. Static
+// apart from CSS-only mug steam, which is off under prefers-reduced-motion.
+import '../room/room.css';
+import Corkboard from './room/Corkboard.astro';
+import Window from './room/Window.astro';
+import Shelves from './room/Shelves.astro';
+import Lamp from './room/Lamp.astro';
+import Glow from './room/Glow.astro';
+import Table from './room/Table.astro';
+import Plant from './room/Plant.astro';
+import Laptop from './room/Laptop.astro';
+import Mug from './room/Mug.astro';
+import Mail from './room/Mail.astro';
 ---
 
-<svg
+<div
   class="scene"
-  viewBox="0 0 600 370"
   role="img"
-  aria-label="A table with a laptop showing a falling loss curve, a steaming mug, a plant and a sticky note, in front of a window"
+  aria-label="A room with a wide table holding a laptop that shows a falling loss curve, a steaming mug, a plant, an envelope and a phone; a corkboard, a window, a pendant lamp and two bookshelves on the wall behind"
 >
-  <g filter="url(#wobble)">
-    <!-- wall: window + shelf -->
-    <rect class="l f-window" x="390" y="28" width="150" height="118" rx="3"></rect>
-    <line class="l" x1="465" y1="28" x2="465" y2="146"></line>
-    <line class="l" x1="390" y1="87" x2="540" y2="87"></line>
-    <line class="l" x1="380" y1="152" x2="550" y2="152"></line>
-    <line class="l" x1="50" y1="110" x2="230" y2="110"></line>
-    <rect class="l f-accent" x="70" y="78" width="16" height="32" rx="2"></rect>
-    <rect class="l f-paper" x="88" y="72" width="14" height="38" rx="2"></rect>
-    <rect class="l f-yellow" x="104" y="84" width="14" height="26" rx="2" transform="rotate(8 111 97)"></rect>
-    <rect class="l f-stone" x="124" y="80" width="15" height="30" rx="2"></rect>
-
-    <!-- table -->
-    <polygon class="l f-paper" points="70,232 530,232 580,300 20,300"></polygon>
-    <polygon class="l f-paper" points="20,300 580,300 580,313 20,313"></polygon>
-    <line class="l" x1="42" y1="313" x2="42" y2="370"></line>
-    <line class="l" x1="558" y1="313" x2="558" y2="370"></line>
-
-    <!-- plant -->
-    <ellipse class="l f-sage" cx="120" cy="178" rx="9" ry="22" transform="rotate(-28 120 178)"></ellipse>
-    <ellipse class="l f-sage" cx="142" cy="172" rx="9" ry="24" transform="rotate(22 142 172)"></ellipse>
-    <ellipse class="l f-sage" cx="131" cy="164" rx="8" ry="22"></ellipse>
-    <polygon class="l f-sand" points="110,198 152,198 146,242 116,242"></polygon>
-
-    <!-- laptop -->
-    <rect class="l f-sky" x="232" y="138" width="140" height="88" rx="5"></rect>
-    <polyline class="l" points="246,152 246,214 360,214"></polyline>
-    <polygon class="l f-stone" points="216,229 388,229 404,250 200,250"></polygon>
-    <line class="l" x1="282" y1="240" x2="322" y2="240"></line>
-
-    <!-- pencil -->
-    <polygon class="l f-yellow" points="168,272 226,262 228,270 170,280"></polygon>
-    <polygon class="l f-sand" points="226,262 236,264 237,268 228,270"></polygon>
-
-    <!-- mug -->
-    <path class="l" d="M462,212 q15,0 15,11 q0,11 -15,11"></path>
-    <rect class="l f-yellow" x="426" y="202" width="36" height="40" rx="5"></rect>
-
-    <!-- sticky note -->
-    <g transform="rotate(-9 502 272)">
-      <rect class="l f-stone" x="482" y="255" width="42" height="34" rx="2"></rect>
-      <path class="l" d="M492,272 l6,6 l13,-14"></path>
-    </g>
-  </g>
-
-  <!-- animated marks sit outside the filter so it is never re-rendered -->
-  <path class="l steam" d="M436,192 q-6,-9 0,-18 q6,-9 0,-18"></path>
-  <path class="l steam steam-2" d="M451,192 q-6,-9 0,-18 q6,-9 0,-18"></path>
-  <polyline class="curve" points="250,160 266,184 284,197 304,204 326,208 356,210"></polyline>
-</svg>
+  <div class="scene-stage">
+    <div class="obj deco obj-corkboard" data-layer="wall"><Corkboard /></div>
+    <div class="obj deco obj-window" data-layer="wall"><Window clipId="scene-pane" /></div>
+    <div class="obj deco obj-shelves" data-layer="wall"><Shelves /></div>
+    <div class="obj deco obj-lamp" data-layer="wall"><Lamp /></div>
+    <div class="obj deco obj-table-land" data-layer="furniture"><Table variant="land" /></div>
+    <div class="obj deco obj-glow obj-glow-land" data-layer="glow"><Glow variant="land" /></div>
+    <div class="obj deco obj-plant" data-layer="objects"><Plant /></div>
+    <div class="obj deco obj-laptop" data-layer="objects"><Laptop /></div>
+    <div class="obj deco obj-mug" data-layer="objects"><Mug /></div>
+    <div class="obj deco obj-mail" data-layer="objects"><Mail /></div>
+  </div>
+</div>
 
 <style>
-  .scene { display: block; width: 100%; height: auto; }
-  .curve {
-    fill: none;
-    stroke: var(--link);
-    stroke-width: 2.6;
-    vector-effect: non-scaling-stroke;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 160;
-    stroke-dashoffset: 160;
-    animation: draw 1.8s ease-out 0.3s forwards;
+  .scene { container-type: inline-size; }
+  .scene-stage {
+    --u: calc(100cqw / 1600);
+    position: relative;
+    height: calc(900 * var(--u));
+    overflow: hidden;
   }
-  .steam { animation: steam 3.2s ease-in-out infinite backwards; }
-  .steam-2 { animation-delay: 1.4s; }
+  /* lighter line at this size so the small drawings stay open */
+  .scene :global(.l) { stroke-width: 1.6; }
+  .scene :global(.curve) { stroke-width: 2; }
+  .scene :global(.steam) { animation: steam 3.2s ease-in-out infinite backwards; }
+  .scene :global(.steam + .steam) { animation-delay: 1.4s; }
 
-  @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes steam {
     0% { opacity: 0; transform: translateY(6px); }
     40% { opacity: 1; }
@@ -84,7 +55,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .curve { animation: none; stroke-dashoffset: 0; }
-    .steam { animation: none; opacity: 0.8; }
+    .scene :global(.steam) { animation: none; opacity: 0.8; }
   }
 </style>

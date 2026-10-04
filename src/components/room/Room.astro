@@ -1,0 +1,68 @@
+---
+// The room: sketch C, the kitchen-table view. A fixed stage grid scaled by one
+// CSS unit (--u); every drawing is its own positioned element so room.css can
+// re-compose the room for portrait screens and Phase 4 can move each one.
+import './room.css';
+import RoomObject from './RoomObject.astro';
+import Corkboard from '../art/room/Corkboard.astro';
+import Window from '../art/room/Window.astro';
+import Shelves from '../art/room/Shelves.astro';
+import Lamp from '../art/room/Lamp.astro';
+import Glow from '../art/room/Glow.astro';
+import Table from '../art/room/Table.astro';
+import Plant from '../art/room/Plant.astro';
+import Laptop from '../art/room/Laptop.astro';
+import Mug from '../art/room/Mug.astro';
+import Mail from '../art/room/Mail.astro';
+import Chair from '../art/room/Chair.astro';
+import { profile } from '../../content/profile';
+
+const { name, education } = profile;
+---
+
+<div class="room" data-room>
+  <header class="room-head">
+    <h1>{name}</h1>
+    <p>{education.degree} at {education.school}</p>
+  </header>
+
+  <div class="stage">
+    <svg class="floor" viewBox="0 0 4000 12" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path class="l" d="M0,6 q250,-3 500,0 t500,0 t500,0 t500,0 t500,0 t500,0 t500,0 t500,0" />
+    </svg>
+
+    <RoomObject id="corkboard" name="Open experience (corkboard)" label="experience" target="experience" layer="wall" drop={1}>
+      <Corkboard />
+    </RoomObject>
+    <RoomObject id="laptop" name="Open projects (laptop)" label="projects" target="projects" layer="objects" drop={6}>
+      <Laptop />
+    </RoomObject>
+    <RoomObject id="shelves" name="Open education (bookshelf)" label="education" target="education" layer="wall" drop={3}>
+      <Shelves />
+    </RoomObject>
+    <RoomObject id="mug" name="Open about me (mug)" label="about" target="about" layer="objects" drop={7}>
+      <Mug />
+    </RoomObject>
+    <RoomObject id="mail" name="Open contact and résumé (envelope and phone)" label="contact" target="contact" layer="objects" drop={8}>
+      <Mail />
+    </RoomObject>
+    <RoomObject id="window" name="Look at the sky (window)" label="sky" layer="wall" drop={2}>
+      <Window />
+    </RoomObject>
+    <RoomObject id="lamp" name="Switch to night (lamp)" label="night" layer="wall" drop={4}>
+      <Lamp />
+    </RoomObject>
+
+    <div class="obj deco obj-table-land" data-layer="furniture" aria-hidden="true"><Table variant="land" /></div>
+    <div class="obj deco obj-table-port" data-layer="furniture" aria-hidden="true"><Table variant="port" /></div>
+    <div class="obj deco obj-glow obj-glow-land" data-layer="glow" aria-hidden="true"><Glow variant="land" /></div>
+    <div class="obj deco obj-glow obj-glow-port" data-layer="backglow" aria-hidden="true"><Glow variant="port-wall" /></div>
+    <div class="obj deco obj-glow obj-glow-port" data-layer="glow" aria-hidden="true"><Glow variant="port-table" /></div>
+    <div class="obj deco obj-plant" data-layer="objects" data-drop="5" aria-hidden="true"><Plant /></div>
+    <div class="obj deco obj-chair" data-layer="foreground" data-drop="9" aria-hidden="true"><Chair /></div>
+  </div>
+</div>
+
+<script>
+  import './room.ts';
+</script>

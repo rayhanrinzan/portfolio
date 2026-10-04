@@ -1,0 +1,30 @@
+---
+// One clickable thing in the room: a real button wrapped around its drawing.
+interface Props {
+  id: string;
+  /** Accessible name, e.g. "Open projects (laptop)". */
+  name: string;
+  /** Handwritten label; names only the destination. */
+  label?: string;
+  /** List-view section this opens until the notebook panels exist (Phase 4). */
+  target?: string;
+  layer: 'wall' | 'objects';
+  /** Order in the Phase 4 drop-in entrance. */
+  drop: number;
+}
+
+const { id, name, label, target, layer, drop } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={['obj', `obj-${id}`]}
+  data-obj={id}
+  data-layer={layer}
+  data-drop={drop}
+  data-target={target}
+  aria-label={name}
+>
+  <slot />
+  {label && <span class="lab" aria-hidden="true">{label}</span>}
+</button>

@@ -1,0 +1,26 @@
+---
+// Lamp light at night: a flat pale-yellow cone, never a blur. Landscape is
+// one shape. Portrait is two (the wall part sits behind the shelves, the
+// table part on top of the table) so the light never tints the wall objects.
+interface Props {
+  variant: 'land' | 'port-wall' | 'port-table';
+}
+
+const { variant } = Astro.props;
+---
+
+{
+  variant === 'land' ? (
+    <svg class="art" viewBox="690 380 640 440" aria-hidden="true" focusable="false">
+      <polygon class="glow" points="950,380 1050,380 1330,820 690,820" />
+    </svg>
+  ) : (
+    <svg class="art" viewBox="0 438 800 997" aria-hidden="true" focusable="false">
+      {variant === 'port-wall' ? (
+        <polygon class="glow" points="602,438 722,438 760,1135 420,1135" />
+      ) : (
+        <polygon class="glow" points="420,1135 760,1135 800,1435 340,1435" />
+      )}
+    </svg>
+  )
+}
