@@ -24,10 +24,19 @@ html:not([data-view='room']) .room { display: none; }
   z-index: 20;
   top: 14px;
   left: 20px;
-  right: 150px;
+  /* only as wide as its text, so it never covers the objects beside it */
+  width: fit-content;
+  max-width: calc(100% - 170px);
 }
-.room-head h1 { font-size: 1.5rem; margin: 0; }
-.room-head p { font-size: 0.9375rem; line-height: 1.4; color: var(--ink-soft); }
+.room-head h1 { font-size: clamp(1.5rem, 2.2vw, 2.4rem); margin: 0; }
+.room-head p { font-size: clamp(0.9375rem, 1.05vw, 1.125rem); line-height: 1.4; color: var(--ink-soft); }
+/* email and LinkedIn, for the visitor who will not click an object. Only
+   where the wall has room above the drawing: landscape, and not too short */
+.room-head .links { display: none; font-size: 0.9375rem; gap: 0 22px; }
+.room-head .links a { padding-block: 5px; }
+@media (min-aspect-ratio: 1/1) and (min-height: 501px) {
+  .room-head .links { display: flex; }
+}
 
 .stage {
   position: absolute;
@@ -127,8 +136,12 @@ button.obj:focus-visible .ring { stroke: var(--link); }
   transition: opacity 120ms ease-out;
   /* the room shrinks beside an open page (--shrink); the label does not */
   scale: calc(1 / var(--shrink, 1));
+  /* ...not fully, or beside an open page a label is wider than its object */
+  scale: calc(1 / sqrt(var(--shrink, 1)));
   transform-origin: 50% 0;
 }
+button.obj:hover .lab,
+button.obj:focus-visible .lab { color: var(--link); border-color: var(--link); }
 button.obj:hover .lab,
 button.obj:focus-visible .lab,
 /* the five that open something are named at rest, so nobody has to probe
@@ -137,6 +150,13 @@ button.obj[data-target] .lab { opacity: 1; }
 /* no hover on touch screens: labels stay up so the room explains itself */
 @media (hover: none) {
   .lab { opacity: 1; }
+  /* the three that open nothing are written on the wall, not pinned up */
+  button.obj:not([data-target]) .lab {
+    border-color: transparent;
+    background: none;
+    color: var(--ink-soft);
+    font-size: clamp(0.875rem, calc(19 * var(--u)), 1.125rem);
+  }
 }
 
 .curve {
@@ -343,7 +363,7 @@ html[data-hint] .hint { opacity: 1; }
 
 /* day / night cross-fade */
 ::view-transition-old(root),
-::view-transition-new(root) { animation-duration: 450ms; }
+::view-transition-new(root) { animation-duration: 260ms; }
 
 /* ---- notebook page ---- */
 .close {
@@ -429,6 +449,11 @@ html[data-hint] .hint { opacity: 1; }
   .page-grab svg { display: block; width: 56px; height: 12px; margin: 6px auto 0; overflow: visible; }
   .page-body { padding-right: 20px; }
 }
+@media (max-width: 600px) {
+  .page-holes { display: none; }
+  .page-doodles { margin-left: 22px; }
+  .page-body { margin-left: 0; padding-left: 22px; border-left: 0; }
+}
 @media (max-aspect-ratio: 1/1) and (min-width: 700px) {
   .page { top: 44%; }
 }
@@ -446,12 +471,16 @@ html[data-hint] .hint { opacity: 1; }
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: 1100px;
   margin: 0 auto;
   padding: 0 10px 10px;
   border: 2px solid var(--line);
   border-radius: 16px 20px 14px 18px;
   background: var(--paper);
+}
+/* the lid is capped only once the view is wide enough for the view toggle to
+   sit clear of its corner; until then the toggle lands in the bar */
+@media (min-width: 1440px) {
+  .lid { max-width: 1100px; }
 }
 /* close sits here, above the scrolling screen; on narrower screens the view
    toggle lands in the right end of the bar */
@@ -526,8 +555,8 @@ html[data-hint] .hint { opacity: 1; }
 }
 .run-lr input:focus { outline: none; }
 .run-lr input:focus-visible { outline: 2px dashed var(--link); outline-offset: 2px; border-radius: 6px; }
-.run-lr input::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: var(--line); }
-.run-lr input::-moz-range-track { height: 3px; border-radius: 2px; background: var(--line); }
+.run-lr input::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: var(--ink-soft); }
+.run-lr input::-moz-range-track { height: 3px; border-radius: 2px; background: var(--ink-soft); }
 .run-lr input::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 22px;
@@ -547,16 +576,17 @@ html[data-hint] .hint { opacity: 1; }
 .run-note { font-size: 0.9375rem; min-height: 3.4em; }
 .preds { margin-top: 10px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
 .preds li { display: grid; grid-template-columns: 4.6em 1fr 2.6em; gap: 10px; align-items: center; }
+/* each answer is a bar standing on a drawn axis, with its number beside it */
 .pred-bar {
-  height: 12px;
-  border: 1.5px solid var(--line);
-  border-radius: 6px 7px 5px 8px;
-  background: var(--paper);
-  overflow: hidden;
+  height: 11px;
+  border-left: 1.5px solid var(--ink-soft);
+  border-bottom: 1.5px solid var(--ink-soft);
+  border-radius: 0 0 2px 3px;
 }
 .pred-bar span {
   display: block;
-  height: 100%;
+  height: calc(100% - 2px);
+  border-radius: 0 3px 2px 0;
   background: var(--yellow);
   transform-origin: left;
   transform: scaleX(var(--p, 0.5));

@@ -37,6 +37,10 @@ The laptop is the exception: clicking it zooms the camera into the screen,
 and the screen becomes the projects page. Closing it zooms back out to the
 room.
 
+The room's header, top left, carries the name and degree line and, in the
+landscape room, email and LinkedIn links, so the fastest facts never need a
+click.
+
 Sky and lamp. Daytime is always the blue afternoon sky, with the sun in the
 top left of the window; night has stars and the lamp on. `?sky=afternoon`
 or `?sky=night` forces one. The sky does not follow the clock while the
@@ -60,9 +64,9 @@ the portrait room); it pops in when the lamp is switched to day, pops out at
 night, and is never there at load. Hovering the plant dims the room around
 the plant and the can with the hint "Try watering the plant" (until it has
 been watered once). Dragging the can to the plant, or clicking it, pours
-water: the sun moves to the middle of the window, lights up behind a flat
-corona and sends shafts of light to the plant, which grows. It is full grown
-after three waterings.
+water: the sun moves to the middle of the window, in front of the clouds,
+lights up behind a flat corona and sends shafts of light to the plant, which
+grows. It is full grown after three waterings.
 
 Laptop screen shows a tiny live "training run": a loss curve that redraws,
 with a loss number ticking down. It is real: a small neural net learning XOR

@@ -134,7 +134,7 @@ export function swingLamp(degrees: number): void {
 }
 
 /** The lamp can be pulled aside and let go; a plain click calls onToggle. */
-export function initLamp(onToggle: () => void): void {
+export function initLamp(onToggle: () => Promise<void>): void {
   if (!lamp) return;
   let startX = 0;
   let down = false;
@@ -165,8 +165,8 @@ export function initLamp(onToggle: () => void): void {
       lampDragged = false;
       return;
     }
-    onToggle();
-    swingLamp(2.2);
+    // the swing waits for the cross-fade: a lamp moving under it shows twice
+    void onToggle().then(() => swingLamp(2.2));
   });
 }
 

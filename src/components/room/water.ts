@@ -289,10 +289,10 @@ function grow(): void {
   }
   const size = { k: before };
   gsap
-    .timeline({ defaults: { transformOrigin: '49% 58%' } })
+    .timeline()
     // drinks: a little squash, then up
-    .to(leaves, { scaleY: 0.92, scaleX: 1.06, duration: 0.14, ease: 'power1.out' })
-    .to(leaves, { scaleX: 1, scaleY: 1, duration: 0.5, ease: 'back.out(3)' })
+    .to(leaves, { scaleY: 0.92, scaleX: 1.06, transformOrigin: '49% 58%', duration: 0.14, ease: 'power1.out' })
+    .to(leaves, { scaleX: 1, scaleY: 1, transformOrigin: '49% 58%', duration: 0.5, ease: 'back.out(3)' })
     .to(size, { k: after, duration: 1.1, ease: 'elastic.out(1.1, 0.4)', onUpdate: () => growth?.style.setProperty('--grow', size.k.toFixed(3)) }, 0.14);
 }
 

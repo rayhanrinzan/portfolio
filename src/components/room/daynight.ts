@@ -38,8 +38,9 @@ function arrive(sky: string): void {
   }
 }
 
-/** The lamp: night if it is day, day if it is night. */
-export function toggleSky(): void {
+/** The lamp: night if it is day, day if it is night. Resolves once the new
+    sky is fully showing, so anything that moves can wait for the cross-fade. */
+export async function toggleSky(): Promise<void> {
   const next = root.dataset.sky === 'night' ? DAY : 'night';
   if (!motionOK()) return setSky(next);
   const change = (): void => {
@@ -48,6 +49,10 @@ export function toggleSky(): void {
     // for anything that lives by daylight (the watering can)
     document.dispatchEvent(new CustomEvent('room:sky', { detail: next }));
   };
-  if ('startViewTransition' in document) document.startViewTransition(change);
-  else change();
+  if (!('startViewTransition' in document)) return change();
+  try {
+    await document.startViewTransition(change).finished;
+  } catch {
+    // a skipped transition has still changed the sky
+  }
 }

@@ -19,13 +19,17 @@ import Chair from '../art/room/Chair.astro';
 import WateringCan from '../art/room/WateringCan.astro';
 import { profile } from '../../content/profile';
 
-const { name, education } = profile;
+const { name, education, contact } = profile;
 ---
 
-<div class="room" data-room>
+<main class="room" data-room>
   <header class="room-head" data-head>
     <h1>{name}</h1>
     <p>{education.degree} at {education.school}</p>
+    <ul class="links" role="list">
+      <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+      <li><a href={contact.linkedin}>LinkedIn</a></li>
+    </ul>
   </header>
 
   <div class="stage" data-stage>
@@ -72,7 +76,7 @@ const { name, education } = profile;
   </div>
 
   <Page />
-</div>
+</main>
 
 <script>
   import './room.ts';

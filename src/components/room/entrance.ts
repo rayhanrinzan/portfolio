@@ -62,17 +62,22 @@ function play(): void {
     .call(puffSteam, [], landing + FALL)
     .call(() => leanPlant(1), [], landing + FALL);
 
+  // when the lamp is about to bring the night, its swing waits for that: a
+  // lamp moving under the cross-fade would show twice
+  const dusk = 'dusk' in root.dataset;
   if (lamp) {
     // hangs from its cord: no squash, it swings instead
-    tl.fromTo(lamp, { y: -height }, { y: 0, duration: FALL, ease: 'power2.in' }, landing).call(() => swingLamp(3), [], landing + FALL);
+    tl.fromTo(lamp, { y: -height }, { y: 0, duration: FALL, ease: 'power2.in' }, landing);
+    if (!dusk) tl.call(() => swingLamp(3), [], landing + FALL);
   }
 
   // daylight until everything has landed; then the lamp comes on
   tl.call(
     () => {
-      if (!('dusk' in root.dataset)) return;
+      if (!dusk) return;
       delete root.dataset.dusk;
-      if (root.dataset.sky !== 'night') toggleSky();
+      if (root.dataset.sky !== 'night') void toggleSky().then(() => swingLamp(3));
+      else swingLamp(3);
     },
     [],
     landing + FALL + 0.45,
