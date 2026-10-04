@@ -185,6 +185,8 @@ button.obj[data-target] .lab { opacity: 1; }
 .obj-mug { --x: 895; --y: 570; --w: 110; --h: 175; }
 .obj-mail { --x: 1105; --y: 675; --w: 295; --h: 120; }
 .obj-chair { --x: 640; --y: 896; --w: 320; --h: 104; }
+.obj-can { --x: 1300; --y: 560; --w: 160; --h: 140; }
+.obj-can .lab { top: auto; bottom: calc(100% + 4px); }
 .obj-window .lab { top: auto; bottom: calc(100% + 6px); }
 
 /* portrait re-composition: window and lamp on top, corkboard and shelves
@@ -205,6 +207,9 @@ button.obj[data-target] .lab { opacity: 1; }
   .room .obj-mug { --x: 60; --y: 1180; --s: 1.2; }
   .room .obj-mail { --x: 440; --y: 1253; --s: 1.1; }
   .room .obj-chair { --x: 240; --y: 1520; }
+  .room .obj-can { --x: 258; --y: 1262; --s: 1.1; }
+  .room .obj-can .lab { top: calc(100% + 4px); bottom: auto; }
+  .room .hint { transform: translateX(-82%) rotate(-2deg); }
 }
 
 /* short landscape screens (phones on their side): keep the header and the
@@ -264,7 +269,63 @@ html[data-motion] .room .obj[data-layer='foreground'] { translate: calc(var(--px
 html[data-enter] .room :is(.obj[data-layer='objects'], .obj-lamp) { transform: translateY(calc(-110 * var(--u))); }
 html[data-enter] .room .obj[data-layer='objects'] { opacity: 0; }
 html[data-enter=''] .room :is(.obj[data-layer='objects'], .obj-lamp) { animation: enter-fallback 300ms 2s ease-in forwards; }
-/* pop lines around a drawing as it appears (entrance.ts) */
+/* ---- watering the plant (water.ts) ---- */
+/* the can is only in the room by day, and never at load */
+.sprout { display: none; }
+.obj-plant { pointer-events: none; }
+.obj-can { touch-action: none; }
+button.obj-can { cursor: grab; }
+button.obj-can:active { cursor: grabbing; }
+html:not([data-can]) .obj-can { visibility: hidden; }
+html[data-can] .room .obj-plant { pointer-events: auto; }
+/* hovering the plant: the room goes dark around the plant and the can.
+   A flat scrim, the one place the room is ever dimmed. */
+.dim {
+  position: absolute;
+  inset: -100vmax;
+  z-index: 21;
+  background: #1C2733;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease-out;
+}
+html[data-hint] .dim { opacity: 0.55; }
+html[data-hint] .room :is(.obj-plant, .obj-can) { z-index: 22; }
+html[data-hint] .obj-can .lab { opacity: 1; }
+/* while it pours the can is tilted, sometimes mirrored: no label then */
+html[data-watering] .room .obj-can .lab { opacity: 0; }
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) rotate(-2deg);
+  padding: 2px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 4px 6px 3px 5px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: clamp(1rem, calc(24 * var(--u)), 1.375rem);
+  line-height: 1.6;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+  scale: calc(1 / var(--shrink, 1));
+  transform-origin: 50% 100%;
+}
+html[data-hint] .hint { opacity: 1; }
+/* drawn over the stage while watering: sunbeam behind the things on the
+   table, water in front of them */
+.fx { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.fx-beam { z-index: 3; }
+.fx-water { z-index: 7; }
+.fx-beam polygon { fill: var(--yellow); fill-opacity: 0.3; }
+.fx-beam path { fill: none; stroke: var(--yellow); stroke-width: 2.6; stroke-linecap: round; }
+.fx-water path { fill: none; stroke: var(--accent-sky); stroke-width: 3; stroke-linecap: round; }
+
+/* pop lines around a drawing as it appears (pop.ts) */
 .pop { position: absolute; z-index: 7; overflow: visible; pointer-events: none; }
 .pop path { fill: none; stroke: var(--line); stroke-width: 2.6; stroke-linecap: round; }
 @keyframes enter-fallback {

@@ -1,10 +1,13 @@
 ---
-// Potted plant. Decoration only. Pot and leaves are separate drawings so the
-// leaves can sway without redrawing the pot.
+// Potted plant. Pot and leaves are separate drawings so the leaves can sway
+// (and grow, when watered) without redrawing the pot.
 ---
 
 <svg class="art top leaves" viewBox="190 530 115 225" aria-hidden="true" focusable="false">
   <g filter="url(#wobble)">
+    <!-- new leaves, hidden until the plant has been watered (water.ts) -->
+    <g class="sprout"><ellipse class="l f-sage" cx="225" cy="638" rx="10" ry="27" transform="rotate(-50 225 638)" /></g>
+    <g class="sprout"><ellipse class="l f-sage" cx="266" cy="637" rx="10" ry="27" transform="rotate(48 266 637)" /></g>
     <ellipse class="l f-sage" cx="222" cy="606" rx="15" ry="42" transform="rotate(-28 222 606)" />
     <ellipse class="l f-sage" cx="270" cy="598" rx="15" ry="44" transform="rotate(22 270 598)" />
     <ellipse class="l f-sage" cx="246" cy="580" rx="14" ry="42" />

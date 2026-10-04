@@ -150,6 +150,14 @@ Wanted:
   be pulled and swings like a pendulum; clouds can be pushed around the
   window, and at night a drag throws a shooting star. When nobody touches
   the room for a while it fidgets a little.
+- Watering the plant: by day a watering can stands on the table. It pops in
+  when the lamp is switched off and out again at night, and is never there at
+  load. Hovering the plant dims the room (a flat scrim, the only one on the
+  site) around the plant and the can, with the hint "Try watering the plant";
+  the hint stops once the plant has been watered. Drag the can to the plant,
+  or click / tap / press Enter on it, and it pours: water falls, a flat
+  sunbeam with three drawn rays comes through the window, and the plant grows
+  (two new leaves, then a little taller, up to three waterings).
 - Room and list: the room folds down into the miniature drawing that heads
   the list view, and grows back out of it.
 - Every drawing sits on its own compositor layer and anything that moves

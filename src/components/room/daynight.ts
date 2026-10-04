@@ -49,6 +49,8 @@ export function toggleSky(): void {
   const change = (): void => {
     setSky(next);
     arrive(next);
+    // for anything that lives by daylight (the watering can)
+    document.dispatchEvent(new CustomEvent('room:sky', { detail: next }));
   };
   if ('startViewTransition' in document) document.startViewTransition(change);
   else change();

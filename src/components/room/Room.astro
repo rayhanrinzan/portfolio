@@ -16,6 +16,7 @@ import Laptop from '../art/room/Laptop.astro';
 import Mug from '../art/room/Mug.astro';
 import Mail from '../art/room/Mail.astro';
 import Chair from '../art/room/Chair.astro';
+import WateringCan from '../art/room/WateringCan.astro';
 import { profile } from '../../content/profile';
 
 const { name, education } = profile;
@@ -47,6 +48,9 @@ const { name, education } = profile;
     <RoomObject id="mail" name="Open contact and résumé (envelope and phone)" label="contact" target="contact" layer="objects" drop={8}>
       <Mail />
     </RoomObject>
+    <RoomObject id="can" name="Water the plant (watering can)" label="water the plant" layer="objects" drop={10}>
+      <WateringCan />
+    </RoomObject>
     <RoomObject id="window" name="Look at the sky (window)" label="sky" layer="wall" drop={2}>
       <Window />
     </RoomObject>
@@ -59,7 +63,11 @@ const { name, education } = profile;
     <div class="obj deco obj-glow obj-glow-land" data-layer="glow" aria-hidden="true"><Glow variant="land" /></div>
     <div class="obj deco obj-glow obj-glow-port" data-layer="backglow" aria-hidden="true"><Glow variant="port-wall" /></div>
     <div class="obj deco obj-glow obj-glow-port" data-layer="glow" aria-hidden="true"><Glow variant="port-table" /></div>
-    <div class="obj deco obj-plant" data-layer="objects" data-drop="5" aria-hidden="true"><Plant /></div>
+    <div class="obj obj-plant" data-layer="objects" data-drop="5" aria-hidden="true">
+      <Plant />
+      <span class="hint">Try watering the plant</span>
+    </div>
+    <div class="dim" aria-hidden="true"></div>
     <div class="obj deco obj-chair" data-layer="foreground" data-drop="9" aria-hidden="true"><Chair /></div>
   </div>
 

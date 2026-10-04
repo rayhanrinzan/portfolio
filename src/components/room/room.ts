@@ -10,6 +10,7 @@ import { initBoil } from './boil';
 import { initEntrance } from './entrance';
 import { initParallax } from './parallax';
 import { initTraining } from './training';
+import { initWater } from './water';
 
 const head = room.querySelector<HTMLElement>('[data-head]');
 const toggle = document.querySelector<HTMLButtonElement>('[data-view-toggle]');
@@ -93,6 +94,7 @@ toggle?.addEventListener('click', () => {
 initLamp(toggleSky);
 initPanels();
 initToys();
+initWater();
 initTraining();
 initAmbient();
 initBoil();
