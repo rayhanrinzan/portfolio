@@ -155,9 +155,12 @@ Wanted:
   load. Hovering the plant dims the room (a flat scrim, the only one on the
   site) around the plant and the can, with the hint "Try watering the plant";
   the hint stops once the plant has been watered. Drag the can to the plant,
-  or click / tap / press Enter on it, and it pours: water falls, a flat
-  sunbeam with three drawn rays comes through the window, and the plant grows
-  (two new leaves, then a little taller, up to three waterings).
+  or click / tap / press Enter on it, and it pours: water falls, the sun
+  slides to the middle of the window and lights up behind a flat corona
+  (discs and drawn strokes, no blur), three flat shafts of light shoot to the
+  plant with pulses running down them and glints where they land, and the
+  plant grows (two new leaves, then a little taller, up to three waterings).
+  In the portrait room the can stands left of the laptop.
 - Room and list: the room folds down into the miniature drawing that heads
   the list view, and grows back out of it.
 - Every drawing sits on its own compositor layer and anything that moves

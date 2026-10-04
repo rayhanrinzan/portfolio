@@ -2,7 +2,8 @@
 // when the lamp is switched off, and out again at night; it is never there
 // at load). Hover the plant and the room dims around the two of them with a
 // hint; drag the can over the plant, or just click it, and it pours: the sun
-// sends a beam through the window and the plant grows a little.
+// moves to the middle of the window, lights up and sends shafts of light to
+// the plant, which grows a little.
 import { gsap, motionOK, root, stage } from './motion';
 import { burst } from './pop';
 
@@ -44,7 +45,7 @@ function overlay(name: string): SVGSVGElement {
   return svg;
 }
 
-function add(svg: SVGSVGElement, tag: 'path' | 'polygon', attrs: Record<string, string>): SVGElement {
+function add(svg: SVGSVGElement, tag: 'path' | 'polygon' | 'ellipse', attrs: Record<string, string>): SVGElement {
   const el = document.createElementNS(SVG, tag);
   for (const [name, value] of Object.entries(attrs)) el.setAttribute(name, value);
   svg.append(el);
@@ -79,6 +80,7 @@ function hideCan(): void {
   if (!can || !('can' in root.dataset)) return;
   run?.kill();
   clearFx();
+  restSun();
   busy = false;
   delete root.dataset.watering;
   gsap.killTweensOf(can);
@@ -96,33 +98,148 @@ function hideCan(): void {
 
 /* ---- the pieces of the watering ---- */
 
-/** Sunlight from the window to the plant: one flat beam and three drawn rays. */
-function sunbeam(p: Box): void {
-  if (!pane) return;
+/** Scale (and turn) an SVG element about a point given in its own units. The
+    transform is written out by hand: it has to be exact for shapes that were
+    created a moment ago. */
+function about(el: Element, cx: number, cy: number, k: number, turn = 0): void {
+  el.setAttribute('transform', `translate(${cx} ${cy}) rotate(${turn.toFixed(2)}) scale(${k.toFixed(4)}) translate(${-cx} ${-cy})`);
+}
+
+/** A tween of that scale and turn, for dropping into a timeline. */
+function tweenAbout(el: Element, cx: number, cy: number, state: { k: number; turn: number }, to: gsap.TweenVars): gsap.core.Tween {
+  about(el, cx, cy, state.k, state.turn);
+  return gsap.to(state, { ...to, onUpdate: () => about(el, cx, cy, state.k, state.turn) });
+}
+
+/** The visible sun in the room's window, and the corona drawn behind it. */
+const sunNow = (): Element | undefined =>
+  Array.from(stage.querySelectorAll('.obj-window .sun')).find((el) => el.getBoundingClientRect().width > 0);
+const halo = stage.querySelector('.obj-window .halo');
+/** The middle of the pane, in the window drawing's own units. */
+const NOON = { x: 675, y: 265 };
+
+function restSun(): void {
+  const suns = stage.querySelectorAll('.obj-window .sun');
+  gsap.killTweensOf([suns, halo]);
+  gsap.set(suns, { clearProps: 'transform' });
+  if (halo) {
+    gsap.set(halo, { clearProps: 'all' });
+    halo.querySelectorAll('.halo-disc, .halo-rays').forEach((el) => el.removeAttribute('transform'));
+  }
+}
+
+/** The sun's part: it slides to the middle of the window, lights up behind a
+    corona, pours light onto the plant, and goes back. Starts as the can sets
+    off, so the light arrives with the water. */
+function sunlight(p: Box): void {
+  const sun = sunNow();
+  if (!pane || !sun) return;
   const w = box(pane);
-  const from = { x: w.x + w.w * 0.5, y: w.y + w.h * 0.55 };
-  const to = { x: p.x + p.w / 2, y: p.y + p.h * 0.32 };
+  // the pane's centre is the drawing's (675,265) in a 498 x 366 box from (426,90)
+  const from = { x: w.x + w.w * 0.5, y: w.y + w.h * 0.478 };
+  const to = { x: p.x + p.w / 2, y: p.y + p.h * 0.45 };
   const length = Math.hypot(to.x - from.x, to.y - from.y) || 1;
-  // unit vector across the beam
   const nx = -(to.y - from.y) / length;
   const ny = (to.x - from.x) / length;
-  const wide = w.w * 0.15;
-  const narrow = p.w * 0.85;
-  const at = (o: { x: number; y: number }, k: number): string => `${(o.x + nx * k).toFixed(1)},${(o.y + ny * k).toFixed(1)}`;
+  const pt = (o: { x: number; y: number }, k: number): string => `${(o.x + nx * k).toFixed(1)},${(o.y + ny * k).toFixed(1)}`;
 
   const svg = overlay('beam');
-  const beam = add(svg, 'polygon', { points: `${at(from, wide)} ${at(from, -wide)} ${at(to, -narrow)} ${at(to, narrow)}` });
-  const rays = [-0.6, 0, 0.6].map((k) => add(svg, 'path', { d: `M${at(from, wide * k)} L${at(to, narrow * k)}` }));
-  gsap
-    .timeline({ onComplete: () => svg.remove() })
-    .fromTo(beam, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power1.out' }, 0)
-    .fromTo(rays, { drawSVG: '0% 0%' }, { drawSVG: '0% 100%', duration: 0.5, ease: 'power2.out', stagger: 0.08 }, 0.05)
-    .to(rays, { drawSVG: '100% 100%', duration: 0.5, ease: 'power2.in', stagger: 0.08 }, 1.3)
-    .to(beam, { opacity: 0, duration: 0.6, ease: 'power1.in' }, 1.5);
+  // light pooling on the table under the pot
+  const pool = add(svg, 'ellipse', {
+    cx: (p.x + p.w / 2).toFixed(1),
+    cy: (p.y + p.h * 0.97).toFixed(1),
+    rx: (p.w * 0.95).toFixed(1),
+    ry: (p.w * 0.2).toFixed(1),
+    'fill-opacity': '0.3',
+  });
+  // three shafts fanning out from the sun; where they overlap the light is stronger
+  const start = w.w * 0.035;
+  const shafts = [
+    { off: -0.55, wide: 0.3, alpha: 0.16 },
+    { off: 0.5, wide: 0.26, alpha: 0.16 },
+    { off: 0, wide: 0.42, alpha: 0.22 },
+  ].map(({ off, wide, alpha }) =>
+    add(svg, 'polygon', {
+      points: `${pt(from, start)} ${pt(from, -start)} ${pt(to, (off - wide) * p.w)} ${pt(to, (off + wide) * p.w)}`,
+      'fill-opacity': String(alpha),
+    }),
+  );
+  // pulses of light running down the shafts
+  const pulses = [-0.7, -0.35, 0, 0.35, 0.7].map((k) => add(svg, 'path', { d: `M${pt(from, start * k)} L${pt(to, p.w * 0.6 * k)}` }));
 
-  // the sun itself swells while it shines
-  const sun = Array.from(stage.querySelectorAll('.obj-window .sun')).find((el) => el.getBoundingClientRect().width > 0);
-  if (sun) gsap.fromTo(sun, { scale: 1 }, { scale: 1.2, transformOrigin: '50% 50%', duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 3 });
+  // four-point glints where the light lands, in front of the leaves
+  const glints = overlay('spark');
+  const stars = Array.from({ length: 7 }, () => {
+    const x = p.x + p.w * gsap.utils.random(-0.15, 1.15);
+    const y = p.y + p.h * gsap.utils.random(-0.08, 0.5);
+    const r = p.w * gsap.utils.random(0.08, 0.15);
+    const q = r * 0.2;
+    return add(glints, 'path', {
+      d: `M${x},${y - r} Q${x + q},${y - q} ${x + r},${y} Q${x + q},${y + q} ${x},${y + r} Q${x - q},${y + q} ${x - r},${y} Q${x - q},${y - q} ${x},${y - r} z`,
+    });
+  });
+
+  const dx = NOON.x - Number(sun.getAttribute('cx'));
+  const dy = NOON.y - Number(sun.getAttribute('cy'));
+  const discs = Array.from(halo?.querySelectorAll('.halo-disc') ?? []);
+  const corona = halo?.querySelector('.halo-rays') ?? null;
+  const LIT = 0.75; // when the light leaves the sun
+  const DONE = 2.7; // when it lets go
+
+  gsap.set([shafts, pool], { opacity: 0 });
+  const tl = gsap
+    .timeline({
+      onComplete() {
+        svg.remove();
+        glints.remove();
+        restSun();
+      },
+    })
+    // the sun climbs to the middle of the window and lights up
+    .to(sun, { x: dx, y: dy, duration: 0.65, ease: 'power2.inOut' }, 0)
+    .to(sun, { scale: 1.25, transformOrigin: '50% 50%', duration: 0.3, ease: 'back.out(3)' }, 0.55)
+    .to(halo, { opacity: 1, duration: 0.3, ease: 'power1.out' }, 0.5);
+  discs.forEach((disc, i) => {
+    const state = { k: 0.3, turn: 0 };
+    tl.add(tweenAbout(disc, NOON.x, NOON.y, state, { k: 1, duration: 0.5, ease: 'back.out(2)' }), 0.5 + i * 0.08);
+    // breathing
+    tl.add(tweenAbout(disc, NOON.x, NOON.y, state, { k: 1.08, duration: 0.45, ease: 'sine.inOut', yoyo: true, repeat: 3 }), 1.1 + i * 0.12);
+  });
+  if (corona) {
+    tl.add(tweenAbout(corona, NOON.x, NOON.y, { k: 0.6, turn: -20 }, { k: 1, turn: 55, duration: DONE - 0.5, ease: 'power1.out' }), 0.5);
+  }
+  // the light shoots out to the plant
+  tl.set(shafts, { opacity: 1 }, LIT);
+  shafts.forEach((shaft, i) => {
+    tl.add(tweenAbout(shaft, from.x, from.y, { k: 0, turn: 0 }, { k: 1, duration: 0.45, ease: 'power3.out' }), LIT + i * 0.07);
+  });
+  tl
+    .to(pool, { opacity: 1, duration: 0.35 }, LIT + 0.3)
+    .to(shafts, { opacity: 0.6, duration: 0.3, ease: 'sine.inOut', yoyo: true, repeat: 3, stagger: 0.11 }, LIT + 0.55)
+    .fromTo(
+      pulses,
+      { drawSVG: '0% 0%' },
+      {
+        keyframes: [
+          { drawSVG: '0% 16%', duration: 0.12, ease: 'none' },
+          { drawSVG: '84% 100%', duration: 0.34, ease: 'none' },
+          { drawSVG: '100% 100%', duration: 0.08, ease: 'none' },
+        ],
+        repeat: 2,
+        stagger: { each: 0.09, from: 'center' },
+      },
+      LIT + 0.1,
+    )
+    .fromTo(
+      stars,
+      { scale: 0, rotation: -40, transformOrigin: '50% 50%' },
+      { scale: 1, rotation: 20, duration: 0.28, ease: 'back.out(3)', yoyo: true, repeat: 1, stagger: { each: 0.16, from: 'random' } },
+      LIT + 0.4,
+    )
+    // and lets go: light fades, the sun goes back to where it was
+    .to([shafts, pool], { opacity: 0, duration: 0.45, ease: 'power1.in' }, DONE)
+    .to(halo, { opacity: 0, duration: 0.4 }, DONE)
+    .to(sun, { x: 0, y: 0, scale: 1, duration: 0.7, ease: 'power2.inOut' }, DONE + 0.1);
 }
 
 /** Water from the rose down onto the leaves: short dashes running along arcs. */
@@ -202,16 +319,18 @@ function water(): void {
         gsap.set(can, { clearProps: 'transform' });
       },
     })
+    .call(() => sunlight(p), [], 0)
     .to(can, { x: centre.x - (c.x + c.w / 2), y: centre.y - (c.y + c.h / 2), scaleX: side, duration: 0.5, ease: 'power2.inOut' })
     .to(can, { rotation: -TILT * side, duration: 0.25, ease: 'back.out(2)' })
     .call(() => shower(rose, p))
-    .call(() => sunbeam(p), [], '+=0.25')
-    .call(grow, [], '+=0.6')
+    .call(grow, [], '+=0.85')
     // a small shake of the can while it pours
     .to(can, { rotation: (-TILT - 5) * side, duration: 0.16, ease: 'sine.inOut', yoyo: true, repeat: 3 }, '<-0.7')
     .to(can, { rotation: 0, duration: 0.25, ease: 'power2.out' }, '+=0.75')
     .to(can, { x: 0, y: 0, duration: 0.55, ease: 'power2.inOut' })
-    .set(can, { scaleX: 1 });
+    .set(can, { scaleX: 1 })
+    // stay busy until the sun is back in its place
+    .to({}, { duration: 0.5 });
 }
 
 /* ---- wiring ---- */
