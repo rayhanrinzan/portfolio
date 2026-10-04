@@ -260,10 +260,8 @@ html[data-motion] .room .obj[data-layer='foreground'] { translate: calc(var(--px
 
 /* drop-in entrance: held just above its resting place until room.ts lets go.
    If the island never starts, the fallback lets go on its own. */
-html[data-enter] .room [data-drop] {
-  transform: translateY(calc(-70 * var(--u)));
-  animation: enter-fallback 300ms 2s ease-in forwards;
-}
+html[data-enter] .room [data-drop] { transform: translateY(calc(-110 * var(--u))); }
+html[data-enter=''] .room [data-drop] { animation: enter-fallback 300ms 2s ease-in forwards; }
 @keyframes enter-fallback {
   to { transform: none; }
 }
