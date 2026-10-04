@@ -11,6 +11,10 @@ hand-drawn line style with flat pastel fills. Content opens as paper notebook
 pages that slide over the room; never modals with dark overlays. The room
 stays visible and alive behind them.
 
+The laptop is the exception: clicking it zooms the camera into the screen,
+which becomes the projects page. The lamp is a clickable object that toggles
+day / night, overriding the local-time sky.
+
 Room composition: sketch C, the kitchen-table view
 (`sketches/c-kitchen-table.html`), chosen by Rayhan in Phase 1. A wide table
 runs across the foreground with the laptop, mug, envelope and phone spread

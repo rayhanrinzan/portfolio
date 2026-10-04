@@ -18,19 +18,27 @@ by clicking objects:
 
 | object                  | opens                    |
 |-------------------------|--------------------------|
-| laptop                  | projects                 |
+| laptop                  | projects (camera zooms into the screen) |
 | corkboard / sticky notes| experience               |
 | bookshelf               | education + coursework   |
 | mug                     | about me                 |
 | phone / envelope        | contact + résumé         |
 | window                  | just the sky (easter egg: clouds you can push around) |
+| lamp                    | nothing; toggles day / night |
 
 Panels open as paper notebook pages that slide over the room, never as modals
 with dark overlays. The room stays visible and alive behind them.
 
+The laptop is the exception: clicking it zooms the camera into the screen,
+and the screen becomes the projects page. Closing it zooms back out to the
+room.
+
 The sky in the window follows the visitor's local time: morning, afternoon,
 golden hour, night (stars, the room lamp turns on). Default to afternoon if
 time is unknown.
+
+The lamp is clickable and toggles day / night by hand, overriding the
+local-time sky.
 
 Laptop screen shows a tiny live "training run": a loss curve that redraws,
 with a loss number ticking down. Clicking it while on the projects page
@@ -103,8 +111,11 @@ Type: Klee One 600 for headings and handwritten labels; Zen Maru Gothic
 
 Allowed, and wanted:
 - Hover/focus: object boils, lifts 2–4px, label appears.
-- Click: a short GSAP timeline (≤600ms) where the object reacts (laptop lid
-  opens, mug steams harder, sticky note peels) and the notebook page slides in.
+- Click: a short GSAP timeline (≤600ms) where the object reacts (mug steams
+  harder, sticky note peels) and the notebook page slides in.
+- Laptop click: the camera zooms into the laptop screen, which becomes the
+  projects page.
+- Lamp click: toggles day / night.
 - Ambient life, all subtle: cloud drift, mug steam, plant sway, occasional
   blink of the laptop cursor. Pause everything when the tab is hidden.
 - Pointer parallax on desktop: layers shift at most 6–12px.
@@ -118,7 +129,8 @@ Banned:
 - Anything that drops below 60fps on a mid-range phone.
 
 `prefers-reduced-motion`: no parallax, no boiling, no ambient loops; panels
-cross-fade instantly. Room still clickable.
+cross-fade instantly, and the laptop zoom becomes a cross-fade too. Room still
+clickable.
 
 ## Anti-slop rules (hard requirements)
 
