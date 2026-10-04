@@ -156,9 +156,7 @@ button.obj[data-target] .lab { opacity: 1; }
 /* sky states */
 .sky-g,
 .obj-glow { display: none; }
-:root[data-sky='morning'] .sky-morning,
 :root[data-sky='afternoon'] .sky-afternoon,
-:root[data-sky='golden'] .sky-golden,
 :root[data-sky='night'] .sky-night { display: inline; }
 :root[data-sky='night'] .obj-glow-land { display: block; }
 /* no JS: the list-view drawing still gets a sky */

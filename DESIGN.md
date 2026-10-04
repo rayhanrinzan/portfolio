@@ -57,8 +57,6 @@ sage #93A88C. The lamp glow is a flat pale-yellow shape, not a blur.
 `src/styles/tokens.css` also defines `--window` (#C1E1F6 light, #141C25 night),
 the sky seen through the window: accent-sky at 40% over `--sky` in daylight, a
 darker flat fill at night. Added in Phase 2; not yet in the `CLAUDE.md` table.
-Phase 3 added two more values for it: #CEE8F8 in the morning (accent-sky at
-25% over `--sky`) and #EBE6BA at golden hour (yellow at 45% over `--sky`).
 
 Check WCAG AA for any new color. Fill colors never carry text.
 
@@ -88,11 +86,11 @@ Check WCAG AA for any new color. Fill colors never carry text.
 
 ## Sky states
 
-Morning (5 to 11), afternoon (11 to 17), golden hour (17 to 20), night (stars;
-the room lamp turns on). Follows the visitor's local time; afternoon if
-unknown. A dark colour scheme shows the night room whatever the time. The
-state lives on `html[data-sky]`; `?sky=morning` etc. forces one for
-screenshots. The lamp shade is sand by day and yellow when lit.
+Two: the blue afternoon sky by day, and night (stars; the room lamp turns on).
+A load without the entrance opens at night from 20 to 5 local time or in a
+dark colour scheme, otherwise in daylight; the lamp toggles between them. The
+state lives on `html[data-sky]`; `?sky=afternoon` or `?sky=night` forces one
+for screenshots. The morning and golden-hour drawings were removed in Phase 5. The lamp shade is sand by day and yellow when lit.
 
 ## Room build (Phase 3)
 
@@ -161,7 +159,7 @@ Wanted:
   plant with pulses running down them and glints where they land, and the
   plant grows. It starts as a sprout and is full grown after three waterings,
   with a new leaf on each of the last two. Daytime is always the blue
-  afternoon sky (morning and golden hour remain only behind `?sky=`).
+  afternoon sky.
   In the portrait room the can stands left of the laptop.
 - Room and list: the room folds down into the miniature drawing that heads
   the list view, and grows back out of it.

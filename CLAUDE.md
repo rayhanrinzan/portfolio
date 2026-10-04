@@ -38,11 +38,11 @@ and the screen becomes the projects page. Closing it zooms back out to the
 room.
 
 Sky and lamp. Daytime is always the blue afternoon sky, with the sun in the
-top left of the window; night has stars and the lamp on. The morning and
-golden-hour drawings still exist but are only reachable with `?sky=`. The
-sky does not follow the clock while the entrance plays (see below); a load
-without the entrance (reduced motion, a deep link) opens at night during
-night hours or in dark mode, otherwise in daylight.
+top left of the window; night has stars and the lamp on. `?sky=afternoon`
+or `?sky=night` forces one. The sky does not follow the clock while the
+entrance plays (see below); a load without the entrance (reduced motion, a
+deep link) opens at night during night hours or in dark mode, otherwise in
+daylight.
 
 The lamp is clickable and toggles day / night.
 
