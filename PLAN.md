@@ -62,7 +62,7 @@ End each UI phase with `/critique` and show me screenshots.
 ## Phase 5: Polish
 
 1. `/impeccable polish`, then `/critique`.
-2. Easter egg: pushable clouds in the window.
+2. ~~Easter egg: pushable clouds in the window.~~ Done in Phase 4.
 3. Open Graph image with `canvas-design` in the room style.
 4. Remove one thing that isn't earning its place.
 
