@@ -50,4 +50,15 @@ export function svgPoint(svg: SVGSVGElement, e: { clientX: number; clientY: numb
   return matrix ? new DOMPoint(e.clientX, e.clientY).matrixTransform(matrix.inverse()) : null;
 }
 
+/** Open a scrolling surface at its top. A #hash deep link makes the browser
+    scroll the matching heading to the top edge, now and again once the page
+    has loaded, so the reset is repeated then. */
+export function toTop(el: HTMLElement | null): void {
+  if (!el) return;
+  const top = (): void => void (el.scrollTop = 0);
+  top();
+  requestAnimationFrame(top);
+  if (document.readyState !== 'complete') window.addEventListener('load', top, { once: true });
+}
+
 export const rand = gsap.utils.random;
