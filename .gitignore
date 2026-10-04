@@ -1,0 +1,24 @@
+# dependencies and build output
+node_modules/
+dist/
+.astro/
+
+# deploy
+.vercel/
+
+# secrets
+.env*
+!.env.example
+
+# OS
+.DS_Store
+
+# local-only tool config
+.claude/settings.local.json
+.impeccable/config.local.json
+
+# original starter kit archive (already unpacked into this folder)
+portfolio-kit.zip
+
+# third-party skills (reinstall with `bash setup.sh`; versions in skills-lock.json)
+.claude/skills/
