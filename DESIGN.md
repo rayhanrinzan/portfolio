@@ -57,6 +57,8 @@ sage #93A88C. The lamp glow is a flat pale-yellow shape, not a blur.
 `src/styles/tokens.css` also defines `--window` (#C1E1F6 light, #141C25 night),
 the sky seen through the window: accent-sky at 40% over `--sky` in daylight, a
 darker flat fill at night. Added in Phase 2; not yet in the `CLAUDE.md` table.
+Phase 3 added two more values for it: #CEE8F8 in the morning (accent-sky at
+25% over `--sky`) and #EBE6BA at golden hour (yellow at 45% over `--sky`).
 
 Check WCAG AA for any new color. Fill colors never carry text.
 
@@ -86,8 +88,25 @@ Check WCAG AA for any new color. Fill colors never carry text.
 
 ## Sky states
 
-Morning, afternoon, golden hour, night (stars; the room lamp turns on).
-Follows the visitor's local time; afternoon if unknown.
+Morning (5 to 11), afternoon (11 to 17), golden hour (17 to 20), night (stars;
+the room lamp turns on). Follows the visitor's local time; afternoon if
+unknown. A dark colour scheme shows the night room whatever the time. The
+state lives on `html[data-sky]`; `?sky=morning` etc. forces one for
+screenshots. The lamp shade is sand by day and yellow when lit.
+
+## Room build (Phase 3)
+
+- One page, two views: `html[data-view]` is `room` or `list`. Without JS the
+  attribute is never set and the page is the list view.
+- The room is a fixed stage grid scaled by one CSS unit `--u`. Landscape is
+  sketch C at 1600 x 1000; portrait (viewport taller than wide) is an
+  800 x 1600 re-composition of the same drawings, positioned in `room.css`.
+- Every drawing is its own positioned element with `data-layer` (wall,
+  furniture, glow, objects, foreground) and `data-drop` (entrance order).
+  Interactive ones are HTML `<button>`s wrapped around an inline SVG.
+- Labels show on hover/focus; on touch screens (no hover) they stay visible.
+- Until the notebook panels exist, clicking an object opens its section in
+  the list view; the back button returns to the room and to that object.
 
 ## Motion
 

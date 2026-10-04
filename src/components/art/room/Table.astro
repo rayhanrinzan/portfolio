@@ -1,0 +1,31 @@
+---
+// The table. Two drawings: the wide landscape one from sketch C and a deeper
+// one for the portrait re-composition. Legs run down out of the stage.
+interface Props {
+  variant: 'land' | 'port';
+}
+
+const { variant } = Astro.props;
+---
+
+{
+  variant === 'land' ? (
+    <svg class="art" viewBox="0 640 1600 360" aria-hidden="true" focusable="false">
+      <path class="l" d="M70,854 q4,70 -1,150 t2,1400" />
+      <path class="l" d="M1530,854 q-4,80 1,150 t-2,1400" />
+      <g filter="url(#wobble)">
+        <polygon class="l f-paper" points="140,640 1460,640 1600,820 0,820" />
+        <polygon class="l f-paper" points="0,820 1600,820 1600,854 0,854" />
+      </g>
+    </svg>
+  ) : (
+    <svg class="art" viewBox="0 0 800 440" aria-hidden="true" focusable="false">
+      <path class="l" d="M-60,334 q4,70 -1,150 t2,1400" />
+      <path class="l" d="M860,334 q-4,80 1,150 t-2,1400" />
+      <g filter="url(#wobble)">
+        <polygon class="l f-paper" points="40,0 760,0 900,300 -100,300" />
+        <polygon class="l f-paper" points="-100,300 900,300 900,334 -100,334" />
+      </g>
+    </svg>
+  )
+}

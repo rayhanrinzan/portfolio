@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Wobble from '../components/art/Wobble.astro';
+import Room from '../components/room/Room.astro';
+import ViewToggle from '../components/room/ViewToggle.astro';
 import Hero from '../components/list/Hero.astro';
 import Squiggle from '../components/list/Squiggle.astro';
 import Experience from '../components/list/Experience.astro';
@@ -16,6 +18,8 @@ const { name, education } = profile;
 
 <Base title={name} description={`Portfolio of ${name}, computer science student at ${education.school}.`}>
   <Wobble />
+  <ViewToggle />
+  <Room />
   <div class="wrap">
     <Hero />
     <Squiggle />
@@ -33,4 +37,9 @@ const { name, education } = profile;
 <style>
   .wrap { max-width: 640px; margin: 0 auto; padding: 0 24px 64px; }
   main :global(section) { margin-top: 56px; }
+  main :global(section:focus) { outline: none; }
+  /* room for the view toggle above the drawing on narrow screens */
+  @media (max-width: 860px) {
+    :global(html[data-view='list']) .wrap { padding-top: 48px; }
+  }
 </style>

@@ -34,6 +34,22 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" />
     <!-- og:image and twitter:image arrive with the share image in Phase 5 -->
+
+    <!-- Before first paint: pick the sky from local time and show the room.
+         Without JS none of this runs and the page is the plain list view. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        var h = new Date().getHours();
+        var sky = h < 5 || h >= 20 ? 'night' : h < 11 ? 'morning' : h < 17 ? 'afternoon' : 'golden';
+        var asked = new URLSearchParams(location.search).get('sky');
+        if (['morning', 'afternoon', 'golden', 'night'].indexOf(asked) > -1) sky = asked;
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) sky = 'night';
+        d.dataset.sky = sky;
+        d.dataset.theme = sky === 'night' ? 'night' : 'light';
+        d.dataset.view = location.hash.length > 1 ? 'list' : 'room';
+      })();
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

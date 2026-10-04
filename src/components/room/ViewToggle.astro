@@ -1,0 +1,53 @@
+---
+// Switches between the room and the list view. Hidden until the head script
+// has set html[data-view], so without JS the page is simply the list view.
+---
+
+<button type="button" class="view-toggle" data-view-toggle>
+  <svg viewBox="0 0 20 16" aria-hidden="true" focusable="false">
+    <path class="to-list" d="M2,3 h16 M2,8 h13 M2,13 h15" />
+    <path class="to-room" d="M2,14 v-8 l8,-4 l8,4 v8 z M8,14 v-5 h4 v5" />
+  </svg>
+  <span class="to-list">list view</span>
+  <span class="to-room">room view</span>
+</button>
+
+<style>
+  .view-toggle {
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: 16px;
+    z-index: 30;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 4px 16px;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 22px 20px 24px 19px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-hand);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    cursor: pointer;
+  }
+  :global(html[data-view]) .view-toggle { display: inline-flex; }
+  /* wide screens: stays put while the list scrolls beside the column */
+  @media (min-width: 900px) {
+    .view-toggle { position: fixed; }
+  }
+  .view-toggle:hover { color: var(--link); border-color: var(--link); }
+  .view-toggle:focus-visible { outline: 2px dashed var(--link); outline-offset: 4px; }
+  svg { width: 20px; height: 16px; }
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .to-room,
+  :global(html[data-view='list']) .to-list { display: none; }
+  :global(html[data-view='list']) .to-room { display: inline; }
+</style>

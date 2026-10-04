@@ -1,0 +1,206 @@
+/* The room. Global on purpose: the art components and room.ts share these
+   class names. Positions are in stage units; --u converts a unit to pixels. */
+
+html[data-view='room'] .wrap,
+html[data-view='room'] .skip,
+html:not([data-view='room']) .room { display: none; }
+
+.room {
+  /* landscape stage: sketch C, 1600 x 1000 */
+  --sw: 1600;
+  --sh: 1000;
+  --u: min(calc(100vw / var(--sw)), calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / var(--sh)));
+  position: relative;
+  height: 100vh;
+  height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.room-head {
+  position: absolute;
+  z-index: 20;
+  top: 14px;
+  left: 20px;
+  right: 150px;
+}
+.room-head h1 { font-size: 1.5rem; margin: 0; }
+.room-head p { font-size: 0.9375rem; line-height: 1.4; color: var(--ink-soft); }
+
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--sw) * var(--u));
+  height: calc(var(--sh) * var(--u));
+  margin-left: calc(var(--sw) * var(--u) / -2);
+  margin-top: calc(var(--sh) * var(--u) / -2);
+}
+
+/* where the wall meets the floor; runs past the stage on both sides */
+.floor {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--floor-y) * var(--u) - 6px);
+  width: 400vw;
+  margin-left: -200vw;
+  height: 12px;
+  overflow: visible;
+}
+
+.obj {
+  --s: 1;
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--s) * var(--u));
+  height: calc(var(--h) * var(--s) * var(--u));
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+button.obj { cursor: pointer; }
+/* small objects on small screens still get a 44px target */
+button.obj::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+.obj.deco { pointer-events: none; }
+.obj:focus { outline: none; }
+
+.obj[data-layer='backglow'] { z-index: 0; }
+.obj[data-layer='wall'] { z-index: 1; }
+.obj[data-layer='furniture'] { z-index: 2; }
+.obj[data-layer='glow'] { z-index: 3; }
+.obj[data-layer='objects'] { z-index: 4; }
+.obj[data-layer='foreground'] { z-index: 5; }
+button.obj:hover,
+button.obj:focus-visible { z-index: 6; }
+
+.art { display: block; width: 100%; height: 100%; overflow: visible; }
+button.obj .art { transition: transform 160ms ease-out; }
+button.obj:hover .art,
+button.obj:focus-visible .art { transform: translateY(-3px); }
+
+/* focus ring: a copy of the object's outline, drawn inside its own svg */
+.ring {
+  fill: none;
+  stroke: none;
+  stroke-width: 2.5;
+  stroke-dasharray: 9 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+button.obj:focus-visible .ring { stroke: var(--link); }
+
+.lab {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  transform: translateX(-50%) rotate(-2deg);
+  padding: 0 10px;
+  border: 1.5px solid var(--line);
+  border-radius: 3px 5px 4px 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: clamp(0.9375rem, calc(22 * var(--u)), 1.375rem);
+  line-height: 1.6;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+}
+button.obj:hover .lab,
+button.obj:focus-visible .lab { opacity: 1; }
+/* no hover on touch screens: labels stay up so the room explains itself */
+@media (hover: none) {
+  .lab { opacity: 1; }
+}
+
+.curve {
+  fill: none;
+  stroke: var(--link);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.cloud { fill: var(--paper); }
+.star { fill: var(--yellow); }
+.shade { fill: var(--sand); }
+.glow { fill: var(--yellow); fill-opacity: 0.22; }
+
+/* sky states */
+.sky-g,
+.obj-glow { display: none; }
+:root[data-sky='morning'] .sky-morning,
+:root[data-sky='afternoon'] .sky-afternoon,
+:root[data-sky='golden'] .sky-golden,
+:root[data-sky='night'] .sky-night { display: inline; }
+:root[data-sky='night'] .obj-glow-land { display: block; }
+:root[data-sky='night'] .shade { fill: var(--yellow); }
+
+/* landscape composition */
+.room { --floor-y: 700; }
+.obj-corkboard { --x: 90; --y: 150; --w: 290; --h: 230; }
+.obj-window { --x: 426; --y: 90; --w: 498; --h: 366; }
+.obj-shelves { --x: 1120; --y: 140; --w: 380; --h: 330; }
+.obj-lamp { --x: 940; --y: 290; --w: 120; --h: 100; }
+.obj-glow-land { --x: 690; --y: 380; --w: 640; --h: 440; }
+.obj-glow-port { --x: 0; --y: 438; --w: 800; --h: 997; }
+.obj-table-land { --x: 0; --y: 640; --w: 1600; --h: 360; }
+.obj-table-port { --x: 0; --y: 1135; --w: 800; --h: 440; display: none; }
+.obj-plant { --x: 190; --y: 530; --w: 115; --h: 225; }
+.obj-laptop { --x: 380; --y: 486; --w: 420; --h: 246; }
+.obj-mug { --x: 895; --y: 570; --w: 110; --h: 175; }
+.obj-mail { --x: 1105; --y: 675; --w: 295; --h: 120; }
+.obj-chair { --x: 640; --y: 896; --w: 320; --h: 104; }
+.obj-window .lab { top: auto; bottom: calc(100% + 6px); }
+
+/* portrait re-composition: window and lamp on top, corkboard and shelves
+   side by side, the table and everything on it across the bottom */
+@media (max-aspect-ratio: 1/1) {
+  .room { --sw: 800; --sh: 1600; --floor-y: 1195; }
+  .obj-window { --x: 40; --y: 160; }
+  .obj-window .lab { top: calc(100% + 4px); bottom: auto; }
+  .obj-lamp { --x: 590; --y: 330; --s: 1.2; }
+  .obj-corkboard { --x: 30; --y: 608; --s: 1.15; }
+  .obj-shelves { --x: 410; --y: 545; --s: 0.97; }
+  .obj-table-land,
+  :root[data-sky='night'] .obj-glow-land { display: none; }
+  .obj-table-port,
+  :root[data-sky='night'] .obj-glow-port { display: block; }
+  .obj-plant { --x: 655; --y: 950; --s: 1.1; }
+  .obj-laptop { --x: 150; --y: 940; --s: 1.1; }
+  .obj-mug { --x: 60; --y: 1180; --s: 1.2; }
+  .obj-mail { --x: 440; --y: 1253; --s: 1.1; }
+  .obj-chair { --x: 240; --y: 1520; }
+}
+
+/* short landscape screens (phones on their side): keep the header and the
+   window label clear of the art */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) {
+  .room-head { top: 8px; left: 12px; }
+  .room-head h1 { font-size: 1.125rem; }
+  .room-head p { display: none; }
+  .obj-window .lab { top: 8px; bottom: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.obj .art,
+  .lab { transition: none; }
+  button.obj:hover .art,
+  button.obj:focus-visible .art { transform: none; }
+}

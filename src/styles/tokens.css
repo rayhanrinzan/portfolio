@@ -56,3 +56,8 @@
   --window: #141C25;
   color-scheme: dark;
 }
+
+/* The window follows the sky state: accent-sky at 25% over --sky in the
+   morning, yellow at 45% over --sky at golden hour. Fills only. */
+:root[data-sky="morning"] { --window: #CEE8F8; }
+:root[data-sky="golden"] { --window: #EBE6BA; }
