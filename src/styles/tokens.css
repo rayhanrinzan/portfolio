@@ -1,0 +1,58 @@
+/* Source of truth for color and type tokens. Mirrors the table in CLAUDE.md. */
+:root {
+  --sky: #E4F2FC;
+  --paper: #F6FBFE;
+  --line: #9DB7CC;
+  --ink: #34495A;
+  --ink-soft: #5A7083;
+  --link: #2F6E99;
+
+  /* fills only, never text */
+  --accent-sky: #8CC8EE;
+  --yellow: #F4D86A;
+  --sand: #DDD2C0;
+  --stone: #C7D3DB;
+  --sage: #BFD0B8;
+  /* sky seen through the window: accent-sky at 40% over --sky */
+  --window: #C1E1F6;
+
+  --font-hand: "Klee One", "Hiragino Maru Gothic ProN", sans-serif;
+  --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sky: #1C2733;
+    --paper: #253241;
+    --line: #4F6578;
+    --ink: #DDE9F3;
+    --ink-soft: #9FB4C6;
+    --link: #8CC8EE;
+    --accent-sky: #92C1DE;
+    --yellow: #E6CF78;
+    --sand: #B5AC9C;
+    --stone: #7F93A5;
+    --sage: #93A88C;
+    --window: #141C25;
+    color-scheme: dark;
+  }
+}
+
+/* Set by the sky state and the lamp toggle (Phase 3–4). */
+:root[data-theme="night"] {
+  --sky: #1C2733;
+  --paper: #253241;
+  --line: #4F6578;
+  --ink: #DDE9F3;
+  --ink-soft: #9FB4C6;
+  --link: #8CC8EE;
+  --accent-sky: #92C1DE;
+  --yellow: #E6CF78;
+  --sand: #B5AC9C;
+  --stone: #7F93A5;
+  --sage: #93A88C;
+  --window: #141C25;
+  color-scheme: dark;
+}

@@ -111,7 +111,7 @@ Absent, and not to be fabricated:
 
 ## Accessibility & Inclusion
 
-WCAG AA contrast for all text (pastels never carry text). Every room object
+WCAG AA contrast for all text (fill colors never carry text). Every room object
 is a real `<button>` with an accessible name and a visible focus ring.
 Full keyboard operation (Tab, Enter, Escape; focus returns to the object).
 `prefers-reduced-motion`: no parallax, no boiling, no ambient loops; panels

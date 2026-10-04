@@ -13,7 +13,8 @@ at the end of each phase. Profile data: `content/profile.md`.
 ## Concept: "the room"
 
 The homepage is a single illustrated room in soft sky-blue daylight, drawn in
-a thin, wobbly, hand-drawn line style with flat pastel fills. Visitors explore
+a thin, wobbly, hand-drawn line style with flat fills: sky blue and yellow as
+the only colors, everything else neutral. Visitors explore
 by clicking objects:
 
 | object                  | opens                    |
@@ -81,14 +82,16 @@ Light (default):
 | --link       | #2F6E99   | link hover/focus (4.8:1)              |
 | --accent-sky | #8CC8EE   | fills only, never text                |
 | --yellow     | #F4D86A   | fills only                            |
-| --pink       | #F3BCC6   | fills only                            |
-| --green      | #B5D98A   | fills only                            |
+| --sand       | #DDD2C0   | fills only                            |
+| --stone      | #C7D3DB   | fills only                            |
+| --sage       | #BFD0B8   | fills only, plant leaves              |
 
 Night (dark mode and the night sky state): bg #1C2733, paper #253241,
-line #4F6578, ink #DDE9F3, ink-soft #9FB4C6, link #8CC8EE; pastels about 15%
-less saturated; lamp glow is a flat pale-yellow shape, not a blur.
+line #4F6578, ink #DDE9F3, ink-soft #9FB4C6, link #8CC8EE; fills: accent-sky
+#92C1DE, yellow #E6CF78, sand #B5AC9C, stone #7F93A5, sage #93A88C; lamp glow
+is a flat pale-yellow shape, not a blur.
 
-Check WCAG AA for any new color. Pastels never carry text.
+Check WCAG AA for any new color. Fill colors never carry text.
 
 Type: Klee One 600 for headings and handwritten labels; Zen Maru Gothic
 400/500/700 for body. Self-host with `@fontsource`. Sentence case.
@@ -97,7 +100,7 @@ Type: Klee One 600 for headings and handwritten labels; Zen Maru Gothic
 
 - Inline SVG components in `src/components/art/`, layered (wall, furniture,
   objects, foreground) so layers can parallax independently.
-- Strokes: `var(--line)`, 2–2.4px, round caps/joins. Fills: pastel tokens.
+- Strokes: `var(--line)`, 2–2.4px, round caps/joins. Fills: fill tokens.
 - "Boiling line" effect: a shared feTurbulence + feDisplacementMap filter
   whose seed steps through 3–4 values at about 8fps on hovered or active
   objects only (classic hand-drawn animation). Static otherwise.

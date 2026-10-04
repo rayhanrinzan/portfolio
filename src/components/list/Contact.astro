@@ -1,0 +1,27 @@
+---
+import { profile } from '../../content/profile';
+import { isTodo } from '../../lib/format';
+
+const { email, linkedin, github, resume } = profile.contact;
+const slots = [
+  { label: 'GitHub', value: github },
+  { label: 'Résumé (PDF)', value: resume },
+];
+---
+
+<section id="contact" aria-labelledby="contact-h">
+  <h2 id="contact-h">Say hi</h2>
+  <ul class="links" role="list">
+    <li><a href={`mailto:${email}`}>{email}</a></li>
+    <li><a href={linkedin}>LinkedIn</a></li>
+    {
+      slots.map(({ label, value }) =>
+        isTodo(value) ? <li class="todo slot">{value}</li> : <li><a href={value}>{label}</a></li>,
+      )
+    }
+  </ul>
+</section>
+
+<style>
+  .slot { flex-basis: 100%; }
+</style>

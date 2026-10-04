@@ -1,0 +1,16 @@
+---
+import { profile } from '../../content/profile';
+---
+
+<footer>
+  <svg viewBox="0 0 28 28" aria-hidden="true" focusable="false" filter="url(#wobble)">
+    <path class="l" d="M19,8 q8,0 8,6 q0,6 -8,6"></path>
+    <rect class="l f-yellow" x="3" y="5" width="16" height="19" rx="3"></rect>
+  </svg>
+  <span>{profile.name}, 2026.</span>
+</footer>
+
+<style>
+  footer { margin-top: 64px; color: var(--ink-soft); font-size: 0.875rem; display: flex; align-items: center; gap: 10px; }
+  svg { width: 28px; height: 28px; flex: none; }
+</style>

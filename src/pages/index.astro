@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Wobble from '../components/art/Wobble.astro';
+import Hero from '../components/list/Hero.astro';
+import Squiggle from '../components/list/Squiggle.astro';
+import Experience from '../components/list/Experience.astro';
+import Projects from '../components/list/Projects.astro';
+import Education from '../components/list/Education.astro';
+import About from '../components/list/About.astro';
+import Contact from '../components/list/Contact.astro';
+import Footer from '../components/list/Footer.astro';
+import { profile } from '../content/profile';
+
+const { name, education } = profile;
+---
+
+<Base title={name} description={`Portfolio of ${name}, computer science student at ${education.school}.`}>
+  <Wobble />
+  <div class="wrap">
+    <Hero />
+    <Squiggle />
+    <main id="main">
+      <Experience />
+      <Projects />
+      <Education />
+      <About />
+      <Contact />
+    </main>
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 24px 64px; }
+  main :global(section) { margin-top: 56px; }
+</style>

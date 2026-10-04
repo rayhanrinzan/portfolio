@@ -8,8 +8,9 @@
   --link: #2F6E99;
   --accent-sky: #8CC8EE;
   --yellow: #F4D86A;
-  --sand: #E9E1D3;
+  --sand: #DDD2C0;
   --stone: #C7D3DB;
+  --sage: #BFD0B8;
 }
 :root[data-theme="night"] {
   --sky: #1C2733;
@@ -21,8 +22,9 @@
   /* fills about 15% less saturated */
   --accent-sky: #92C1DE;
   --yellow: #E6CF78;
-  --sand: #BDB5A8;
+  --sand: #B5AC9C;
   --stone: #7F93A5;
+  --sage: #93A88C;
 }
 
 html, body { height: 100%; }
@@ -42,6 +44,7 @@ body {
 .f-yellow { fill: var(--yellow); }
 .f-sand { fill: var(--sand); }
 .f-stone { fill: var(--stone); }
+.f-sage { fill: var(--sage); }
 .f-accent { fill: var(--accent-sky); }
 .f-window { fill: var(--accent-sky); fill-opacity: .4; }
 :root[data-theme="night"] .f-window { fill: var(--paper); fill-opacity: 1; }
