@@ -24,26 +24,50 @@ by clicking objects:
 | bookshelf               | education + coursework   |
 | mug                     | about me                 |
 | phone / envelope        | contact + résumé         |
-| window                  | just the sky (easter egg: clouds you can push around) |
-| lamp                    | nothing; toggles day / night |
+| window                  | just the sky (clouds you can push around; at night, drag to throw a shooting star) |
+| lamp                    | nothing; toggles day / night (it can also be pulled and swings) |
+| watering can            | nothing; waters the plant (daytime only, see below) |
 
 Panels open as paper notebook pages that slide over the room, never as modals
-with dark overlays. The room stays visible and alive behind them.
+with dark overlays. The room stays visible and alive behind them: on wide
+screens it slides left and shrinks beside the page so every object stays
+clickable, and clicking another object turns the page.
 
 The laptop is the exception: clicking it zooms the camera into the screen,
 and the screen becomes the projects page. Closing it zooms back out to the
 room.
 
-The sky in the window follows the visitor's local time: morning, afternoon,
-golden hour, night (stars, the room lamp turns on). Default to afternoon if
-time is unknown.
+Sky and lamp. Daytime is always the blue afternoon sky, with the sun in the
+top left of the window; night has stars and the lamp on. The morning and
+golden-hour drawings still exist but are only reachable with `?sky=`. The
+sky does not follow the clock while the entrance plays (see below); a load
+without the entrance (reduced motion, a deep link) opens at night during
+night hours or in dark mode, otherwise in daylight.
 
-The lamp is clickable and toggles day / night by hand, overriding the
-local-time sky.
+The lamp is clickable and toggles day / night.
+
+Entrance, on every load of the room: the wall, shelves, corkboard, window and
+chair are already in place. The things on the table pop into the air one by
+one, left to right, each with a burst of short pop lines, then all drop onto
+the table together; the lamp drops with them. The room opens in daylight and,
+a beat after the landing, the lamp switches on and it becomes night. About
+1.2s, objects clickable throughout, skipped under reduced motion, on deep
+links and in the list view.
+
+Watering the plant. The plant starts as a sprout. By day a watering can
+stands on the table (right side in the landscape room, left of the laptop in
+the portrait room); it pops in when the lamp is switched to day, pops out at
+night, and is never there at load. Hovering the plant dims the room around
+the plant and the can with the hint "Try watering the plant" (until it has
+been watered once). Dragging the can to the plant, or clicking it, pours
+water: the sun moves to the middle of the window, lights up behind a flat
+corona and sends shafts of light to the plant, which grows. It is full grown
+after three waterings.
 
 Laptop screen shows a tiny live "training run": a loss curve that redraws,
-with a loss number ticking down. Clicking it while on the projects page
-restarts the run.
+with a loss number ticking down. It is real: a small neural net learning XOR
+in the browser. On the projects page the run can be restarted by clicking it
+and its learning rate changed.
 
 A persistent, obvious "list view" toggle shows all content as a plain,
 single-column page (the v0 mockup layout). This is also the no-JS,
@@ -108,17 +132,21 @@ Type: Klee One 600 for headings and handwritten labels; Zen Maru Gothic
   vectorize, layer, and animate them.
 - Every interactive object is a real `<button>` with an accessible name
   ("Open projects (laptop)"), visible focus ring that follows the object's
-  outline, and a small handwritten label on hover/focus.
+  outline, and a small handwritten label. The five labels that name a
+  destination (experience, projects, education, about, contact) are always
+  visible; the others ("sky", "night", "water") show on hover/focus, and
+  always on touch screens.
 
 ## Interaction and motion rules
 
 Allowed, and wanted:
-- Hover/focus: object boils, lifts 2–4px, label appears.
+- Hover/focus: object boils, lifts 2–4px, its label appears if not already shown.
 - Click: a short GSAP timeline (≤600ms) where the object reacts (mug steams
   harder, sticky note peels) and the notebook page slides in.
 - Laptop click: the camera zooms into the laptop screen, which becomes the
   projects page.
-- Lamp click: toggles day / night.
+- Lamp click: toggles day / night, as a short scene change (colours
+  cross-fade, moon or sun rises, stars pop in, the light cone unfolds).
 - Ambient life, all subtle: cloud drift, mug steam, plant sway, occasional
   blink of the laptop cursor. Pause everything when the tab is hidden.
 - Pointer parallax on desktop: layers shift at most 6–12px.
@@ -131,13 +159,18 @@ Banned:
 - Fade-and-slide-up on every block, hover lift on every element.
 - Anything that drops below 60fps on a mid-range phone.
 
-`prefers-reduced-motion`: no parallax, no boiling, no ambient loops; panels
+`prefers-reduced-motion`: no parallax, no boiling, no ambient loops, no
+entrance, no toys and no watering can (the plant is shown full grown); panels
 cross-fade instantly, and the laptop zoom becomes a cross-fade too. Room still
 clickable.
 
 ## Anti-slop rules (hard requirements)
 
 - No gradients, glassmorphism, glows, blurred blobs, neon, drop shadows.
+  "Glow" effects (lamp light, the sun's corona, sunbeams) are flat shapes and
+  drawn strokes only.
+- No dark overlays, with one exception: the flat scrim behind the "Try
+  watering the plant" hint.
 - No identical rounded cards, no ALL-CAPS eyebrow labels, no 01/02/03
   markers on non-sequences, no single highlighted word in a headline.
 - No emoji icons, no icon libraries. Original SVG doodles only.
@@ -174,7 +207,7 @@ clickable.
 
 ## Quality bar (every phase that touches UI)
 
-1. Playwright screenshots at 375 / 768 / 1280 / 1920, morning + night sky,
+1. Playwright screenshots at 375 / 768 / 1280 / 1920, day + night sky,
    room view + list view, one panel open. Look at them and fix issues.
 2. Run the `design-critic` subagent (`.claude/agents/design-critic.md`).
 3. Chrome DevTools MCP performance trace while hovering and opening panels:
