@@ -1,0 +1,80 @@
+/* Phase 1 throwaway sketches. Tokens copied from CLAUDE.md. */
+:root {
+  --sky: #E4F2FC;
+  --paper: #F6FBFE;
+  --line: #9DB7CC;
+  --ink: #34495A;
+  --ink-soft: #5A7083;
+  --link: #2F6E99;
+  --accent-sky: #8CC8EE;
+  --yellow: #F4D86A;
+  --pink: #F3BCC6;
+  --green: #B5D98A;
+}
+:root[data-theme="night"] {
+  --sky: #1C2733;
+  --paper: #253241;
+  --line: #4F6578;
+  --ink: #DDE9F3;
+  --ink-soft: #9FB4C6;
+  --link: #8CC8EE;
+  /* pastels about 15% less saturated */
+  --accent-sky: #92C1DE;
+  --yellow: #E6CF78;
+  --pink: #E6C0C8;
+  --green: #B3CF92;
+}
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--sky);
+  color: var(--ink);
+  font-family: "Zen Maru Gothic", sans-serif;
+  overflow: hidden;
+}
+
+.room { display: block; width: 100vw; height: 100vh; height: 100dvh; }
+
+.l { fill: none; stroke: var(--line); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.f-sky { fill: var(--sky); }
+.f-paper { fill: var(--paper); }
+.f-yellow { fill: var(--yellow); }
+.f-pink { fill: var(--pink); }
+.f-green { fill: var(--green); }
+.f-accent { fill: var(--accent-sky); }
+.f-window { fill: var(--accent-sky); fill-opacity: .4; }
+:root[data-theme="night"] .f-window { fill: var(--paper); fill-opacity: 1; }
+.curve { fill: none; stroke: var(--accent-sky); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.cloud { fill: var(--paper); stroke: none; }
+.star { fill: var(--yellow); stroke: none; }
+.glow { fill: var(--yellow); fill-opacity: .22; stroke: none; }
+
+.night-only { display: none; }
+:root[data-theme="night"] .night-only { display: inline; }
+:root[data-theme="night"] .day-only { display: none; }
+
+.lab {
+  font-family: "Klee One", "Zen Maru Gothic", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  fill: var(--ink);
+  text-anchor: middle;
+  stroke: var(--sky);
+  stroke-width: 6px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.caption {
+  position: fixed;
+  left: 16px;
+  bottom: 12px;
+  margin: 0;
+  font-family: "Klee One", "Zen Maru Gothic", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--sky);
+  padding: 2px 8px;
+}

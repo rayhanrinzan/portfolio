@@ -22,3 +22,6 @@ portfolio-kit.zip
 
 # third-party skills (reinstall with `bash setup.sh`; versions in skills-lock.json)
 .claude/skills/
+
+# Playwright MCP session logs
+.playwright-mcp/

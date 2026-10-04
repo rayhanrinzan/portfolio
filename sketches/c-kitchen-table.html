@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketch C: kitchen-table view</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Maru+Gothic:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<script>if (new URLSearchParams(location.search).get('sky') === 'night') document.documentElement.dataset.theme = 'night';</script>
+</head>
+<body>
+<svg class="room" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sketch C: a wide table across the foreground with a laptop, mug, envelope and phone; a window, corkboard and wall shelves behind">
+  <defs>
+    <filter id="wobble" filterUnits="userSpaceOnUse" x="0" y="0" width="1600" height="1000">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="5"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#wobble)">
+    <g id="wall">
+      <line class="l" x1="0" y1="700" x2="1600" y2="700"/>
+
+      <!-- corkboard -->
+      <rect class="l f-paper" x="90" y="150" width="290" height="230" rx="4"/>
+      <g transform="rotate(-5 149 204)"><rect class="l f-yellow" x="114" y="174" width="70" height="60" rx="2"/><line class="l" x1="126" y1="196" x2="170" y2="196"/><line class="l" x1="126" y1="212" x2="160" y2="212"/></g>
+      <g transform="rotate(4 238 202)"><rect class="l f-pink" x="202" y="170" width="72" height="64" rx="2"/><line class="l" x1="214" y1="194" x2="262" y2="194"/><line class="l" x1="214" y1="210" x2="248" y2="210"/></g>
+      <g transform="rotate(-3 326 205)"><rect class="l f-green" x="294" y="178" width="64" height="56" rx="2"/><path class="l" d="M308,206 l8,8 l18,-20"/></g>
+      <g transform="rotate(3 164 306)"><rect class="l f-accent" x="122" y="270" width="84" height="70" rx="2"/><line class="l" x1="134" y1="294" x2="192" y2="294"/><line class="l" x1="134" y1="312" x2="178" y2="312"/></g>
+      <g transform="rotate(-2 290 306)"><rect class="l f-sky" x="232" y="266" width="116" height="80" rx="2"/><polyline class="l" points="244,332 272,300 294,320 316,288 338,332"/></g>
+      <circle class="l f-pink" cx="149" cy="176" r="5"/><circle class="l f-yellow" cx="238" cy="172" r="5"/>
+      <circle class="l f-accent" cx="326" cy="180" r="5"/><circle class="l f-green" cx="164" cy="272" r="5"/><circle class="l f-pink" cx="290" cy="268" r="5"/>
+
+      <!-- window -->
+      <rect class="l f-window" x="450" y="90" width="450" height="350" rx="4"/>
+      <g class="day-only">
+        <path class="cloud" d="M500,200 a22,22 0 0 1 40,-14 a28,28 0 0 1 52,4 a20,20 0 0 1 22,34 h-110 a18,18 0 0 1 -4,-24 z"/>
+        <path class="cloud" d="M730,330 a22,22 0 0 1 40,-14 a28,28 0 0 1 52,4 a20,20 0 0 1 22,34 h-110 a18,18 0 0 1 -4,-24 z"/>
+        <path class="cloud" d="M760,160 a16,16 0 0 1 30,-10 a20,20 0 0 1 38,3 a14,14 0 0 1 14,24 h-80 a13,13 0 0 1 -2,-17 z"/>
+      </g>
+      <g class="night-only">
+        <circle class="star" cx="800" cy="180" r="26"/>
+        <circle class="f-window" cx="788" cy="172" r="22" style="stroke:none"/>
+        <circle class="star" cx="500" cy="150" r="3"/><circle class="star" cx="580" cy="230" r="2.5"/>
+        <circle class="star" cx="640" cy="140" r="3"/><circle class="star" cx="520" cy="360" r="2.5"/>
+        <circle class="star" cx="740" cy="380" r="3"/><circle class="star" cx="850" cy="310" r="2.5"/>
+      </g>
+      <line class="l" x1="675" y1="90" x2="675" y2="440"/>
+      <line class="l" x1="450" y1="265" x2="900" y2="265"/>
+      <polygon class="l f-paper" points="434,440 916,440 924,456 426,456"/>
+
+      <!-- wall shelves -->
+      <polygon class="l f-paper" points="1120,250 1500,250 1500,262 1120,262"/>
+      <polyline class="l" points="1150,262 1150,290 1178,262"/><polyline class="l" points="1470,262 1470,290 1442,262"/>
+      <rect class="l f-accent" x="1140" y="154" width="24" height="96" rx="2"/><rect class="l f-sky" x="1166" y="166" width="20" height="84" rx="2"/>
+      <rect class="l f-yellow" x="1188" y="146" width="26" height="104" rx="2"/><rect class="l f-pink" x="1216" y="160" width="22" height="90" rx="2"/>
+      <rect class="l f-green" x="1240" y="152" width="24" height="98" rx="2"/><rect class="l f-accent" x="1276" y="158" width="20" height="92" rx="2" transform="rotate(12 1286 250)"/>
+      <rect class="l f-sky" x="1400" y="178" width="60" height="72" rx="2"/><circle class="l f-pink" cx="1430" cy="212" r="14"/>
+      <polygon class="l f-paper" points="1120,420 1500,420 1500,432 1120,432"/>
+      <polyline class="l" points="1150,432 1150,460 1178,432"/><polyline class="l" points="1470,432 1470,460 1442,432"/>
+      <rect class="l f-green" x="1150" y="396" width="110" height="24" rx="2"/><rect class="l f-yellow" x="1158" y="374" width="92" height="22" rx="2"/>
+      <rect class="l f-pink" x="1300" y="320" width="26" height="100" rx="2"/><rect class="l f-sky" x="1328" y="332" width="22" height="88" rx="2"/>
+      <rect class="l f-accent" x="1352" y="312" width="24" height="108" rx="2"/><rect class="l f-yellow" x="1378" y="328" width="20" height="92" rx="2"/>
+      <rect class="l f-green" x="1402" y="324" width="26" height="96" rx="2"/>
+
+      <!-- pendant lamp -->
+      <line class="l" x1="1000" y1="0" x2="1000" y2="300"/>
+      <polygon class="l f-yellow" points="950,380 1050,380 1024,300 976,300"/>
+    </g>
+
+    <g id="furniture">
+      <polygon class="l f-paper" points="140,640 1460,640 1600,820 0,820"/>
+      <polygon class="l f-paper" points="0,820 1600,820 1600,854 0,854"/>
+      <line class="l" x1="70" y1="854" x2="70" y2="1000"/><line class="l" x1="1530" y1="854" x2="1530" y2="1000"/>
+    </g>
+
+    <g id="objects">
+      <polygon class="glow night-only" points="950,380 1050,380 1330,820 690,820"/>
+
+      <!-- plant -->
+      <ellipse class="l f-green" cx="222" cy="606" rx="15" ry="42" transform="rotate(-28 222 606)"/>
+      <ellipse class="l f-green" cx="270" cy="598" rx="15" ry="44" transform="rotate(22 270 598)"/>
+      <ellipse class="l f-green" cx="246" cy="580" rx="14" ry="42"/>
+      <polygon class="l f-pink" points="200,660 292,660 280,750 212,750"/>
+
+      <!-- laptop -->
+      <rect class="l f-paper" x="440" y="470" width="300" height="190" rx="8"/>
+      <polyline class="l" points="462,492 462,640 718,640"/>
+      <polyline class="curve" points="472,505 505,560 550,595 600,612 655,622 712,626"/>
+      <polygon class="l f-paper" points="415,668 765,668 800,716 380,716"/>
+      <line class="l" x1="560" y1="702" x2="620" y2="702"/>
+
+      <!-- mug -->
+      <path class="l" d="M970,680 q30,0 30,22 q0,22 -30,22"/>
+      <rect class="l f-yellow" x="900" y="660" width="70" height="80" rx="9"/>
+      <path class="l" d="M920,642 q-10,-16 0,-32 q10,-16 0,-32"/>
+      <path class="l" d="M950,642 q-10,-16 0,-32 q10,-16 0,-32"/>
+
+      <!-- envelope + phone -->
+      <g transform="rotate(-7 1185 732)">
+        <rect class="l f-pink" x="1120" y="690" width="130" height="84" rx="4"/>
+        <polyline class="l" points="1120,693 1185,740 1250,693"/>
+      </g>
+      <polygon class="l f-accent" points="1296,716 1372,716 1394,768 1306,768"/>
+      <line class="l" x1="1334" y1="758" x2="1362" y2="758"/>
+    </g>
+
+    <g id="foreground">
+      <!-- chair back -->
+      <line class="l" x1="670" y1="930" x2="670" y2="1000"/><line class="l" x1="930" y1="930" x2="930" y2="1000"/>
+      <rect class="l f-paper" x="640" y="896" width="320" height="44" rx="18"/>
+    </g>
+  </g>
+
+  <g id="labels">
+    <text class="lab" x="235" y="132">corkboard · experience</text>
+    <text class="lab" x="675" y="72">window · sky</text>
+    <text class="lab" x="1310" y="126">shelves · education</text>
+    <text class="lab" x="590" y="766">laptop · projects</text>
+    <text class="lab" x="940" y="790">mug · about</text>
+    <text class="lab" x="1250" y="806">envelope · contact</text>
+  </g>
+</svg>
+<p class="caption">Sketch C: kitchen-table view</p>
+</body>
+</html>
