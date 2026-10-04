@@ -66,7 +66,8 @@ Check WCAG AA for any new color. Pastels never carry text.
   layered, and animated.
 - Every interactive object is a real `<button>` with an accessible name
   ("Open projects (laptop)"), a visible focus ring that follows the object's
-  outline, and a small handwritten label on hover/focus.
+  outline, and a small handwritten label on hover/focus. The label names only
+  the destination ("projects", "about"), never the object.
 - All art is original. The third-party illustration that inspired the style
   is not recreated, traced, or imitated.
 
