@@ -8,8 +8,8 @@
   --link: #2F6E99;
   --accent-sky: #8CC8EE;
   --yellow: #F4D86A;
-  --pink: #F3BCC6;
-  --green: #B5D98A;
+  --sand: #E9E1D3;
+  --stone: #C7D3DB;
 }
 :root[data-theme="night"] {
   --sky: #1C2733;
@@ -18,11 +18,11 @@
   --ink: #DDE9F3;
   --ink-soft: #9FB4C6;
   --link: #8CC8EE;
-  /* pastels about 15% less saturated */
+  /* fills about 15% less saturated */
   --accent-sky: #92C1DE;
   --yellow: #E6CF78;
-  --pink: #E6C0C8;
-  --green: #B3CF92;
+  --sand: #BDB5A8;
+  --stone: #7F93A5;
 }
 
 html, body { height: 100%; }
@@ -40,8 +40,8 @@ body {
 .f-sky { fill: var(--sky); }
 .f-paper { fill: var(--paper); }
 .f-yellow { fill: var(--yellow); }
-.f-pink { fill: var(--pink); }
-.f-green { fill: var(--green); }
+.f-sand { fill: var(--sand); }
+.f-stone { fill: var(--stone); }
 .f-accent { fill: var(--accent-sky); }
 .f-window { fill: var(--accent-sky); fill-opacity: .4; }
 :root[data-theme="night"] .f-window { fill: var(--paper); fill-opacity: 1; }
