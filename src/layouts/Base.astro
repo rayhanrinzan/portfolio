@@ -37,7 +37,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 
     <!-- Before first paint: pick the sky from local time, show the room (or
          the list, if that is what this visitor chose last time), and hold the
-         drawings up for the drop-in entrance once per visit.
+         drawings up for the drop-in entrance.
          Without JS none of this runs and the page is the plain list view. -->
     <script is:inline>
       (function () {
@@ -50,14 +50,12 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
         d.dataset.sky = sky;
         d.dataset.theme = sky === 'night' ? 'night' : 'light';
         var view = 'room';
-        var entered = false;
         try {
           if (localStorage.getItem('view') === 'list') view = 'list';
-          entered = sessionStorage.getItem('entered') === '1';
         } catch (e) {}
         d.dataset.view = view;
         var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (view === 'room' && !entered && !still && location.hash.length < 2) d.dataset.enter = '';
+        if (view === 'room' && !still && location.hash.length < 2) d.dataset.enter = '';
       })();
     </script>
   </head>

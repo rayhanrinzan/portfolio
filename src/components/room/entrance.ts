@@ -1,6 +1,6 @@
 // The drop-in entrance. The head script holds every [data-drop] drawing a
 // little above its place (html[data-enter], see room.css); here each one falls
-// and settles, in data-drop order. Once per visit, transforms only, and the
+// and settles, in data-drop order. Every load of the room, transforms only, and the
 // buttons work the whole time.
 import { gsap, root, stage, unit } from './motion';
 import { leanPlant, puffSteam, swingLamp } from './toys';
@@ -27,12 +27,6 @@ export function initEntrance(): void {
 }
 
 function play(): void {
-  try {
-    sessionStorage.setItem('entered', '1');
-  } catch {
-    // private mode: the entrance simply plays again next time
-  }
-
   const height = DROP * unit();
   const drops = Array.from(stage.querySelectorAll<HTMLElement>('[data-drop]')).sort((a, b) => Number(a.dataset.drop) - Number(b.dataset.drop));
   const tl = gsap.timeline();

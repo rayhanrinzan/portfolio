@@ -138,7 +138,7 @@ Wanted:
   changed.
 - Day / night is a scene change: colours cross-fade (View Transitions where
   supported), the moon or sun rises, stars pop in, the light cone unfolds.
-- Drop-in entrance once per visit: each drawing falls a few centimetres and
+- Drop-in entrance on every load of the room: each drawing falls a few centimetres and
   settles, in `data-drop` order, under 1.2s, clickable throughout.
 - Toys, all optional and pointer-driven: a fast sweep of the pointer makes a
   breeze (notes flutter, steam bends, plant leans, lamp sways); books nudge
