@@ -7,7 +7,7 @@ source of truth for tokens will be `src/styles/tokens.css` (Phase 2).
 ## The world
 
 A single illustrated room in soft sky-blue daylight, drawn in a thin, wobbly,
-hand-drawn line style with flat pastel fills. Content opens as paper notebook
+hand-drawn line style with flat fills: sky blue and yellow are the only colors, the rest neutral. Content opens as paper notebook
 pages that slide over the room; never modals with dark overlays. The room
 stays visible and alive behind them.
 
@@ -36,8 +36,9 @@ Light (default):
 | --link       | #2F6E99   | link hover/focus (4.8:1)              |
 | --accent-sky | #8CC8EE   | fills only, never text                |
 | --yellow     | #F4D86A   | fills only                            |
-| --pink       | #F3BCC6   | fills only                            |
-| --green      | #B5D98A   | fills only                            |
+| --sand       | #DDD2C0   | fills only                            |
+| --stone      | #C7D3DB   | fills only                            |
+| --sage       | #BFD0B8   | fills only, plant leaves              |
 
 Night (dark mode and the night sky state):
 
@@ -50,10 +51,14 @@ Night (dark mode and the night sky state):
 | --ink-soft | #9FB4C6 |
 | --link     | #8CC8EE |
 
-Night pastels are about 15% less saturated. The lamp glow is a flat
-pale-yellow shape, not a blur.
+Night fills: accent-sky #92C1DE, yellow #E6CF78, sand #B5AC9C, stone #7F93A5,
+sage #93A88C. The lamp glow is a flat pale-yellow shape, not a blur.
 
-Check WCAG AA for any new color. Pastels never carry text.
+`src/styles/tokens.css` also defines `--window` (#C1E1F6 light, #141C25 night),
+the sky seen through the window: accent-sky at 40% over `--sky` in daylight, a
+darker flat fill at night. Added in Phase 2; not yet in the `CLAUDE.md` table.
+
+Check WCAG AA for any new color. Fill colors never carry text.
 
 ## Typography
 
@@ -66,7 +71,7 @@ Check WCAG AA for any new color. Pastels never carry text.
 
 - Inline SVG components in `src/components/art/`, layered (wall, furniture,
   objects, foreground) so layers can parallax independently.
-- Strokes: `var(--line)`, 2–2.4px, round caps and joins. Fills: pastel tokens.
+- Strokes: `var(--line)`, 2–2.4px, round caps and joins. Fills: fill tokens.
 - Boiling line: a shared feTurbulence + feDisplacementMap filter whose seed
   steps through 3–4 values at about 8fps, on hovered or active objects only.
   Static otherwise.

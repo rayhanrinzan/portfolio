@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import { isTodo } from '../../lib/format';
+
+const entries = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const projects = await Promise.all(
+  entries.map(async (entry) => ({
+    ...entry.data,
+    todo: isTodo(entry.body),
+    Content: (await render(entry)).Content,
+  })),
+);
+---
+
+<section id="projects" aria-labelledby="projects-h">
+  <h2 id="projects-h">Things I've made</h2>
+  {
+    projects.map(({ title, tools, links, todo, Content }) => (
+      <article class="project">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false" filter="url(#wobble)">
+          <rect class="l f-paper" x="6" y="8" width="36" height="32" rx="4" />
+          <polyline class="mini-curve" points="12,16 18,26 26,30 36,32" />
+        </svg>
+        <div>
+          <h3>{title}</h3>
+          <div class:list={{ todo }}>
+            <Content />
+          </div>
+          {tools.length > 0 && <p class="tools soft">{tools.join(', ')}</p>}
+          {links.length > 0 && (
+            <ul class="links" role="list">
+              {links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </article>
+    ))
+  }
+</section>
+
+<style>
+  .project { display: grid; grid-template-columns: 48px 1fr; gap: 18px; }
+  .project + .project { margin-top: 32px; }
+  svg { width: 48px; height: 48px; }
+  .mini-curve { fill: none; stroke: var(--link); stroke-width: 2.6; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+  .tools, .links { font-size: 0.9375rem; }
+  .tools { margin-top: 6px; }
+</style>

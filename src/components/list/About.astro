@@ -1,0 +1,9 @@
+---
+import { profile } from '../../content/profile';
+import { isTodo } from '../../lib/format';
+---
+
+<section id="about" aria-labelledby="about-h">
+  <h2 id="about-h">About me</h2>
+  <p class:list={{ todo: isTodo(profile.intro) }}>{profile.intro}</p>
+</section>

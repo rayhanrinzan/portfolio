@@ -1,0 +1,28 @@
+---
+import { profile } from '../../content/profile';
+
+const { school, degree, start, end, coursework, activities } = profile.education;
+---
+
+<section id="education" aria-labelledby="education-h">
+  <h2 id="education-h">Where I study</h2>
+  <div class="school">
+    <h3>{school}</h3>
+    <span class="soft when"><time datetime={start}>{start}</time> to <time datetime={end}>{end}</time></span>
+  </div>
+  <p>{degree}</p>
+  <dl>
+    <dt>Coursework</dt>
+    <dd>{coursework.join(', ')}</dd>
+    <dt>Activities</dt>
+    <dd>{activities.join(', ')}</dd>
+  </dl>
+</section>
+
+<style>
+  .school { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 16px; flex-wrap: wrap; }
+  .when { font-size: 0.9375rem; white-space: nowrap; }
+  dl { margin: 12px 0 0; }
+  dt { font-weight: 500; margin-top: 10px; }
+  dd { margin: 0; }
+</style>

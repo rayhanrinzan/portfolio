@@ -1,0 +1,26 @@
+---
+import DeskScene from '../art/DeskScene.astro';
+import { profile } from '../../content/profile';
+import { isTodo } from '../../lib/format';
+
+const { name, location, lookingFor, education, contact } = profile;
+---
+
+<header class="hero">
+  <DeskScene />
+  <h1>{name}</h1>
+  <p class="facts">
+    {education.degree} at {education.school}, {education.start} to {education.end}. {location}.
+  </p>
+  <p class:list={{ todo: isTodo(lookingFor) }}>{lookingFor}</p>
+  <ul class="links" role="list">
+    <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+    <li><a href={contact.linkedin}>LinkedIn</a></li>
+  </ul>
+</header>
+
+<style>
+  .hero :global(.scene) { margin: 24px 0 8px; }
+  .facts { font-weight: 500; max-width: 34em; }
+  .links { margin-top: 4px; }
+</style>

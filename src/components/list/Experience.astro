@@ -1,0 +1,59 @@
+---
+import { getCollection, render } from 'astro:content';
+import { formatMonth, isTodo } from '../../lib/format';
+
+const entries = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+const jobs = await Promise.all(
+  entries.map(async (entry) => ({
+    ...entry.data,
+    todo: isTodo(entry.body),
+    Content: (await render(entry)).Content,
+  })),
+);
+---
+
+<section id="experience" aria-labelledby="experience-h">
+  <h2 id="experience-h">Where I've worked</h2>
+  <ol role="list">
+    {
+      jobs.map(({ org, location, roles, todo, Content }) => (
+        <li class="job">
+          <h3>{org}</h3>
+          {location && <p class="place soft">{location}</p>}
+          <ul role="list">
+            {roles.map((role) => (
+              <li class="role">
+                <span>{role.title}</span>
+                <span class="when soft">
+                  <time datetime={role.start}>{formatMonth(role.start)}</time> to{' '}
+                  {role.end ? <time datetime={role.end}>{formatMonth(role.end)}</time> : 'now'}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div class:list={['what', { todo }]}>
+            <Content />
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .job + .job { margin-top: 28px; }
+  .place { font-size: 0.9375rem; }
+  .role {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0 16px;
+    font-weight: 500;
+  }
+  .when { font-weight: 400; font-size: 0.9375rem; white-space: nowrap; }
+  .what { margin-top: 2px; }
+
+  @media (max-width: 480px) {
+    .role { flex-direction: column; }
+  }
+</style>
