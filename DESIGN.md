@@ -140,8 +140,10 @@ Wanted:
   supported), the moon or sun rises, stars pop in, the light cone unfolds.
 - Entrance on every load of the room: the wall, shelves, window and chair
   are simply there. The things on the table pop into the air one by one,
-  left to right, then drop onto the table together; the lamp comes down on
-  its cord at the same moment and swings. About 1.2s, clickable throughout.
+  left to right, each with a burst of short pop lines, then drop onto the
+  table together; the lamp comes down on its cord at the same moment and
+  swings. About 1.2s, clickable throughout. The room opens in daylight and,
+  a beat after the landing, the lamp switches on and it becomes night.
 - Toys, all optional and pointer-driven: a fast sweep of the pointer makes a
   breeze (notes flutter, steam bends, plant leans, lamp sways); books nudge
   as the pointer runs along them; the envelope opens on hover; the lamp can

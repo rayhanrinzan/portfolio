@@ -264,6 +264,9 @@ html[data-motion] .room .obj[data-layer='foreground'] { translate: calc(var(--px
 html[data-enter] .room :is(.obj[data-layer='objects'], .obj-lamp) { transform: translateY(calc(-110 * var(--u))); }
 html[data-enter] .room .obj[data-layer='objects'] { opacity: 0; }
 html[data-enter=''] .room :is(.obj[data-layer='objects'], .obj-lamp) { animation: enter-fallback 300ms 2s ease-in forwards; }
+/* pop lines around a drawing as it appears (entrance.ts) */
+.pop { position: absolute; z-index: 7; overflow: visible; pointer-events: none; }
+.pop path { fill: none; stroke: var(--line); stroke-width: 2.6; stroke-linecap: round; }
 @keyframes enter-fallback {
   to { transform: none; opacity: 1; }
 }

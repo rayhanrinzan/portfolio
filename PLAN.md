@@ -56,7 +56,8 @@ End each UI phase with `/critique` and show me screenshots.
    left to right, then all drop onto the table at the same time; the lamp
    drops with them. Whole sequence about 1.2s, objects clickable from the
    first frame, on every load, transforms and opacity only, skipped under
-   reduced motion.
+   reduced motion. Each pop has a burst of short lines. The room opens in
+   daylight; after the drop the lamp switches on and it becomes night.
 
 ## Phase 5: Polish
 
