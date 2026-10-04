@@ -150,6 +150,13 @@ button.obj:focus-visible .lab { opacity: 1; }
 :root[data-sky='golden'] .sky-golden,
 :root[data-sky='night'] .sky-night { display: inline; }
 :root[data-sky='night'] .obj-glow-land { display: block; }
+/* no JS: the list-view drawing still gets a sky */
+:root:not([data-sky]) .sky-afternoon { display: inline; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-sky]) .sky-afternoon { display: none; }
+  :root:not([data-sky]) .sky-night { display: inline; }
+  :root:not([data-sky]) .shade { fill: var(--yellow); }
+}
 :root[data-sky='night'] .shade { fill: var(--yellow); }
 
 /* landscape composition */
@@ -173,20 +180,20 @@ button.obj:focus-visible .lab { opacity: 1; }
    side by side, the table and everything on it across the bottom */
 @media (max-aspect-ratio: 1/1) {
   .room { --sw: 800; --sh: 1600; --floor-y: 1195; }
-  .obj-window { --x: 40; --y: 160; }
-  .obj-window .lab { top: calc(100% + 4px); bottom: auto; }
-  .obj-lamp { --x: 590; --y: 330; --s: 1.2; }
-  .obj-corkboard { --x: 30; --y: 608; --s: 1.15; }
-  .obj-shelves { --x: 410; --y: 545; --s: 0.97; }
-  .obj-table-land,
-  :root[data-sky='night'] .obj-glow-land { display: none; }
-  .obj-table-port,
-  :root[data-sky='night'] .obj-glow-port { display: block; }
-  .obj-plant { --x: 655; --y: 950; --s: 1.1; }
-  .obj-laptop { --x: 150; --y: 940; --s: 1.1; }
-  .obj-mug { --x: 60; --y: 1180; --s: 1.2; }
-  .obj-mail { --x: 440; --y: 1253; --s: 1.1; }
-  .obj-chair { --x: 240; --y: 1520; }
+  .room .obj-window { --x: 40; --y: 160; }
+  .room .obj-window .lab { top: calc(100% + 4px); bottom: auto; }
+  .room .obj-lamp { --x: 590; --y: 330; --s: 1.2; }
+  .room .obj-corkboard { --x: 30; --y: 608; --s: 1.15; }
+  .room .obj-shelves { --x: 410; --y: 545; --s: 0.97; }
+  .room .obj-table-land,
+  :root[data-sky='night'] .room .obj-glow-land { display: none; }
+  .room .obj-table-port,
+  :root[data-sky='night'] .room .obj-glow-port { display: block; }
+  .room .obj-plant { --x: 655; --y: 950; --s: 1.1; }
+  .room .obj-laptop { --x: 150; --y: 940; --s: 1.1; }
+  .room .obj-mug { --x: 60; --y: 1180; --s: 1.2; }
+  .room .obj-mail { --x: 440; --y: 1253; --s: 1.1; }
+  .room .obj-chair { --x: 240; --y: 1520; }
 }
 
 /* short landscape screens (phones on their side): keep the header and the

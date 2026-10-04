@@ -107,6 +107,9 @@ screenshots. The lamp shade is sand by day and yellow when lit.
 - Labels show on hover/focus; on touch screens (no hover) they stay visible.
 - Until the notebook panels exist, clicking an object opens its section in
   the list view; the back button returns to the room and to that object.
+- The list-view header drawing (`DeskScene.astro`) is the same room in
+  miniature: the same art components at the landscape positions, scaled by
+  container width, with nothing to click.
 
 ## Motion
 
