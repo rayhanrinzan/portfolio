@@ -133,6 +133,13 @@ export function swingLamp(degrees: number): void {
   gsap.to(swing, { angle: degrees, duration: 0.18, ease: 'power2.out', onUpdate: applySwing, overwrite: true, onComplete: settleLamp });
 }
 
+/** A short rattle on the cord that dies away within `duration` seconds:
+    what the lamp does on its way down in the entrance. */
+export function shakeLamp(duration: number): void {
+  if (!motionOK()) return;
+  gsap.to(swing, { keyframes: { angle: [5, -4, 3, -2, 1, 0], ease: 'sine.inOut' }, duration, onUpdate: applySwing, overwrite: true });
+}
+
 /** The lamp can be pulled aside and let go; a plain click calls onToggle. */
 export function initLamp(onToggle: () => Promise<void>): void {
   if (!lamp) return;

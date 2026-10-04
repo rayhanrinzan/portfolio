@@ -1,14 +1,15 @@
 // The entrance. The wall, the shelves, the window and the chair are simply
 // there. The things on the table pop into the air one by one, left to right,
 // each with a burst of pop lines, then all drop onto the table together; the
-// lamp comes down on its cord at the same moment and, a beat later, switches
-// on and brings the night. The head script sets html[data-enter] and room.css holds
-// the start positions until this runs. Every load of the room, transforms
-// and opacity only, and the buttons work the whole time.
+// lamp comes down on its cord at the same moment, rattling as it falls, and
+// a beat later flickers on and brings the night. The head script sets
+// html[data-enter] and room.css holds the start positions until this runs.
+// Every load of the room, transforms and opacity only (plus the bulb's fill
+// as it flickers), and the buttons work the whole time.
 import { gsap, root, stage, unit } from './motion';
 import { toggleSky } from './daynight';
 import { burst } from './pop';
-import { leanPlant, puffSteam, swingLamp } from './toys';
+import { leanPlant, puffSteam, shakeLamp } from './toys';
 
 /** How far above the table things appear, in stage units; room.css matches. */
 const DROP = 110;
@@ -62,24 +63,30 @@ function play(): void {
     .call(puffSteam, [], landing + FALL)
     .call(() => leanPlant(1), [], landing + FALL);
 
-  // when the lamp is about to bring the night, its swing waits for that: a
-  // lamp moving under the cross-fade would show twice
-  const dusk = 'dusk' in root.dataset;
   if (lamp) {
-    // hangs from its cord: no squash, it swings instead
-    tl.fromTo(lamp, { y: -height }, { y: 0, duration: FALL, ease: 'power2.in' }, landing);
-    if (!dusk) tl.call(() => swingLamp(3), [], landing + FALL);
+    // hangs from its cord: no squash; it rattles on the cord as it comes down
+    // and is still again before the light comes on
+    tl.fromTo(lamp, { y: -height }, { y: 0, duration: FALL, ease: 'power2.in' }, landing).call(() => shakeLamp(FALL + 0.3), [], landing);
   }
 
-  // daylight until everything has landed; then the lamp comes on
-  tl.call(
-    () => {
-      if (!dusk) return;
-      delete root.dataset.dusk;
-      if (root.dataset.sky !== 'night') void toggleSky().then(() => swingLamp(3));
-      else swingLamp(3);
-    },
-    [],
-    landing + FALL + 0.45,
-  );
+  // daylight until everything has landed; then the bulb flickers twice,
+  // catches, and brings the night
+  if (!('dusk' in root.dataset)) return;
+  const on = landing + FALL + 0.45;
+  const bulb = (lit: boolean) => (): void => void root.toggleAttribute('data-flicker', lit);
+  tl.call(bulb(true), [], on)
+    .call(bulb(false), [], on + 0.07)
+    .call(bulb(true), [], on + 0.15)
+    .call(bulb(false), [], on + 0.2)
+    .call(
+      () => {
+        delete root.dataset.dusk;
+        root.toggleAttribute('data-flicker', true);
+        const lit = (): void => void root.removeAttribute('data-flicker');
+        if (root.dataset.sky !== 'night') void toggleSky().then(lit);
+        else lit();
+      },
+      [],
+      on + 0.32,
+    );
 }

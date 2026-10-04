@@ -186,7 +186,9 @@ button.obj[data-target] .lab { opacity: 1; }
   :root:not([data-sky]) .sky-night { display: inline; }
   :root:not([data-sky]) .shade { fill: var(--yellow); }
 }
-:root[data-sky='night'] .shade { fill: var(--yellow); }
+:root[data-sky='night'] .shade,
+/* the bulb catching, just before the lamp brings the night (entrance.ts) */
+html[data-flicker] .shade { fill: var(--yellow); }
 
 /* landscape composition */
 .room { --floor-y: 700; }

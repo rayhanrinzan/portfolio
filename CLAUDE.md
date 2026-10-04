@@ -53,9 +53,9 @@ The lamp is clickable and toggles day / night.
 Entrance, on every load of the room: the wall, shelves, corkboard, window and
 chair are already in place. The things on the table pop into the air one by
 one, left to right, each with a burst of short pop lines, then all drop onto
-the table together; the lamp drops with them. The room opens in daylight and,
-a beat after the landing, the lamp switches on and it becomes night. About
-1.2s, objects clickable throughout, skipped under reduced motion, on deep
+the table together; the lamp drops with them, shaking on its cord as it
+falls. The room opens in daylight and, a beat after the landing, the lamp
+flickers on and it becomes night. About 1.5s, objects clickable throughout, skipped under reduced motion, on deep
 links and in the list view.
 
 Watering the plant. The plant starts as a sprout. By day a watering can
