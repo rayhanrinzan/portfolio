@@ -6,10 +6,10 @@ interface Props {
   name: string;
   /** Handwritten label; names only the destination. */
   label?: string;
-  /** List-view section this opens until the notebook panels exist (Phase 4). */
+  /** Section this opens: on a notebook page, or on the laptop screen for projects. */
   target?: string;
   layer: 'wall' | 'objects';
-  /** Order in the Phase 4 drop-in entrance. */
+  /** Reading order of the room, back to front. The entrance no longer uses it. */
   drop: number;
 }
 

@@ -102,11 +102,22 @@ screenshots. The lamp shade is sand by day and yellow when lit.
   sketch C at 1600 x 1000; portrait (viewport taller than wide) is an
   800 x 1600 re-composition of the same drawings, positioned in `room.css`.
 - Every drawing is its own positioned element with `data-layer` (wall,
-  furniture, glow, objects, foreground) and `data-drop` (entrance order).
+  furniture, glow, objects, foreground).
   Interactive ones are HTML `<button>`s wrapped around an inline SVG.
-- Labels show on hover/focus; on touch screens (no hover) they stay visible.
-- Until the notebook panels exist, clicking an object opens its section in
-  the list view; the back button returns to the room and to that object.
+- The five labels that name a destination (experience, projects, education,
+  about, contact) are always visible; "sky" and "night" show on hover/focus
+  (always on touch screens).
+- Clicking an object opens its section on a notebook page that slides over
+  the room (from the right on wide screens, from the bottom on narrow ones).
+  The section is the same element the list view shows, moved onto the page
+  and put back on close, so the content exists once. Beside an open page the
+  room slides left and shrinks so every object stays in reach; clicking
+  another object turns the page. No overlay, ever.
+- The laptop is the exception: the camera zooms into its screen, which
+  becomes the projects page, and zooms back out on close.
+- The URL hash is the state (`/#experience`); back closes, Escape closes,
+  focus returns to the object. The room / list choice is remembered in
+  localStorage.
 - The list-view header drawing (`DeskScene.astro`) is the same room in
   miniature: the same art components at the landscape positions, scaled by
   container width, with nothing to click.
@@ -121,8 +132,42 @@ Wanted:
 - Ambient, all subtle: cloud drift, mug steam, plant sway, occasional blink of
   the laptop cursor. Everything pauses when the tab is hidden.
 - Pointer parallax on desktop: layers shift at most 6–12px.
-- Laptop screen: a tiny live training run, a loss curve that redraws with a
-  loss number ticking down.
+- Laptop screen: a live training run. It is real: a 2-4-1 net learning XOR by
+  gradient descent in the browser (`net.ts`); the curve and number are its
+  loss. On the projects screen the run can be restarted and its learning rate
+  changed.
+- Day / night is a scene change: colours cross-fade (View Transitions where
+  supported), the moon or sun rises, stars pop in, the light cone unfolds.
+- Entrance on every load of the room: the wall, shelves, window and chair
+  are simply there. The things on the table pop into the air one by one,
+  left to right, each with a burst of short pop lines, then drop onto the
+  table together; the lamp comes down on its cord at the same moment and
+  swings. About 1.2s, clickable throughout. The room opens in daylight and,
+  a beat after the landing, the lamp switches on and it becomes night.
+- Toys, all optional and pointer-driven: a fast sweep of the pointer makes a
+  breeze (notes flutter, steam bends, plant leans, lamp sways); books nudge
+  as the pointer runs along them; the envelope opens on hover; the lamp can
+  be pulled and swings like a pendulum; clouds can be pushed around the
+  window, and at night a drag throws a shooting star. When nobody touches
+  the room for a while it fidgets a little.
+- Watering the plant: by day a watering can stands on the table. It pops in
+  when the lamp is switched off and out again at night, and is never there at
+  load. Hovering the plant dims the room (a flat scrim, the only one on the
+  site) around the plant and the can, with the hint "Try watering the plant";
+  the hint stops once the plant has been watered. Drag the can to the plant,
+  or click / tap / press Enter on it, and it pours: water falls, the sun
+  slides to the middle of the window and lights up behind a flat corona
+  (discs and drawn strokes, no blur), three flat shafts of light shoot to the
+  plant with pulses running down them and glints where they land, and the
+  plant grows. It starts as a sprout and is full grown after three waterings,
+  with a new leaf on each of the last two. Daytime is always the blue
+  afternoon sky (morning and golden hour remain only behind `?sky=`).
+  In the portrait room the can stands left of the laptop.
+- Room and list: the room folds down into the miniature drawing that heads
+  the list view, and grows back out of it.
+- Every drawing sits on its own compositor layer and anything that moves
+  continuously lives outside the wobble filter (see the stacked `.art.top`
+  drawings), so motion never re-runs the filter.
 
 Banned:
 
@@ -131,8 +176,9 @@ Banned:
 - Fade-and-slide-up on every block, hover lift on every element.
 - Anything that drops below 60fps on a mid-range phone.
 
-`prefers-reduced-motion`: no parallax, no boiling, no ambient loops; panels
-cross-fade instantly. The room stays clickable.
+`prefers-reduced-motion`: no parallax, no boiling, no ambient loops, no
+entrance, no toys; panels and the laptop zoom become a 150ms cross-fade; the
+training run is shown finished. The room stays clickable.
 
 ## Hard bans
 

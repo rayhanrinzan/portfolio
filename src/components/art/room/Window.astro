@@ -1,47 +1,69 @@
 ---
-// Window (sky). One group per sky state; room.css shows the one that matches
-// html[data-sky]. Sky marks sit outside the wobble filter so Phase 4 can move
-// them without re-rendering it.
+// Window (sky). Two stacked drawings: the sky (one group per sky state;
+// room.css shows the one that matches html[data-sky]) and, on top, the wobbly
+// frame. Keeping them apart lets the sky move without redrawing the frame.
 interface Props {
   /** Unique clip-path id; the window is drawn in both the room and the list header. */
   clipId?: string;
 }
 
 const { clipId = 'room-pane' } = Astro.props;
+
+// The sun's corona, drawn round the middle of the pane; it only shows while
+// the sun is feeding the plant (water.ts).
+const corona = Array.from({ length: 14 }, (_, i) => {
+  const a = (i / 14) * Math.PI * 2;
+  const r1 = i % 2 ? 124 : 120;
+  const r2 = i % 2 ? 138 : 150;
+  return { x1: 675 + Math.cos(a) * r1, y1: 265 + Math.sin(a) * r1, x2: 675 + Math.cos(a) * r2, y2: 265 + Math.sin(a) * r2 };
+});
 ---
 
-<svg class="art" viewBox="426 90 498 366" aria-hidden="true" focusable="false">
+<svg class="art sky" viewBox="426 90 498 366" aria-hidden="true" focusable="false">
   <defs>
     <clipPath id={clipId}><rect x="450" y="90" width="450" height="350" rx="4" /></clipPath>
   </defs>
   <rect class="f-window" x="450" y="90" width="450" height="350" rx="4" />
   <g clip-path={`url(#${clipId})`}>
+    <g class="halo">
+      <circle class="halo-disc" cx="675" cy="265" r="110" />
+      <circle class="halo-disc" cx="675" cy="265" r="76" />
+      <g class="halo-rays">
+        {corona.map((l) => <line x1={l.x1.toFixed(1)} y1={l.y1.toFixed(1)} x2={l.x2.toFixed(1)} y2={l.y2.toFixed(1)} />)}
+      </g>
+    </g>
     <g class="sky-g sky-morning">
-      <circle class="l f-yellow" cx="548" cy="372" r="30" />
-      <path class="cloud" d="M696,222 a20,20 0 0 1 34,-18 a24,24 0 0 1 44,-2 a26,26 0 0 1 46,12 a14,14 0 0 1 -6,27 h-112 a12,12 0 0 1 -6,-19 z" />
+      <circle class="l f-yellow sun" cx="548" cy="372" r="30" />
+      <g class="cloud-d"><path class="cloud" d="M696,222 a20,20 0 0 1 34,-18 a24,24 0 0 1 44,-2 a26,26 0 0 1 46,12 a14,14 0 0 1 -6,27 h-112 a12,12 0 0 1 -6,-19 z" /></g>
     </g>
     <g class="sky-g sky-afternoon">
-      <circle class="l f-yellow" cx="520" cy="152" r="28" />
-      <path class="cloud" d="M560,236 a18,18 0 0 1 30,-16 a30,30 0 0 1 56,-6 a24,24 0 0 1 40,14 a17,17 0 0 1 6,33 h-124 a15,15 0 0 1 -8,-25 z" />
-      <path class="cloud" d="M716,352 a20,20 0 0 1 34,-18 a24,24 0 0 1 44,-2 a26,26 0 0 1 46,12 a14,14 0 0 1 -6,27 h-112 a12,12 0 0 1 -6,-19 z" />
-      <path class="cloud" d="M760,160 a16,16 0 0 1 30,-10 a20,20 0 0 1 38,3 a14,14 0 0 1 14,24 h-80 a13,13 0 0 1 -2,-17 z" />
+      <circle class="l f-yellow sun" cx="520" cy="152" r="28" />
+      <g class="cloud-d"><path class="cloud" d="M560,236 a18,18 0 0 1 30,-16 a30,30 0 0 1 56,-6 a24,24 0 0 1 40,14 a17,17 0 0 1 6,33 h-124 a15,15 0 0 1 -8,-25 z" /></g>
+      <g class="cloud-d"><path class="cloud" d="M716,352 a20,20 0 0 1 34,-18 a24,24 0 0 1 44,-2 a26,26 0 0 1 46,12 a14,14 0 0 1 -6,27 h-112 a12,12 0 0 1 -6,-19 z" /></g>
+      <g class="cloud-d"><path class="cloud" d="M760,160 a16,16 0 0 1 30,-10 a20,20 0 0 1 38,3 a14,14 0 0 1 14,24 h-80 a13,13 0 0 1 -2,-17 z" /></g>
     </g>
     <g class="sky-g sky-golden">
-      <circle class="l f-yellow" cx="790" cy="436" r="52" />
-      <path class="cloud" d="M492,190 a18,18 0 0 1 30,-16 a30,30 0 0 1 56,-6 a24,24 0 0 1 40,14 a17,17 0 0 1 6,33 h-124 a15,15 0 0 1 -8,-25 z" />
-      <path class="cloud" d="M720,300 a16,16 0 0 1 30,-10 a20,20 0 0 1 38,3 a14,14 0 0 1 14,24 h-80 a13,13 0 0 1 -2,-17 z" />
+      <circle class="l f-yellow sun" cx="790" cy="436" r="52" />
+      <g class="cloud-d"><path class="cloud" d="M492,190 a18,18 0 0 1 30,-16 a30,30 0 0 1 56,-6 a24,24 0 0 1 40,14 a17,17 0 0 1 6,33 h-124 a15,15 0 0 1 -8,-25 z" /></g>
+      <g class="cloud-d"><path class="cloud" d="M720,300 a16,16 0 0 1 30,-10 a20,20 0 0 1 38,3 a14,14 0 0 1 14,24 h-80 a13,13 0 0 1 -2,-17 z" /></g>
     </g>
     <g class="sky-g sky-night">
-      <circle class="star" cx="800" cy="180" r="26" />
-      <circle class="f-window" cx="788" cy="172" r="22" />
-      <circle class="star" cx="500" cy="150" r="3" />
-      <circle class="star" cx="580" cy="230" r="2.5" />
-      <circle class="star" cx="640" cy="140" r="3" />
-      <circle class="star" cx="520" cy="360" r="2.5" />
-      <circle class="star" cx="740" cy="380" r="3" />
-      <circle class="star" cx="850" cy="310" r="2.5" />
+      <g class="moon">
+        <circle class="star" cx="800" cy="180" r="26" />
+        <circle class="f-window" cx="788" cy="172" r="22" />
+      </g>
+      <circle class="star tw" cx="500" cy="150" r="3" />
+      <circle class="star tw" cx="580" cy="230" r="2.5" />
+      <circle class="star tw" cx="640" cy="140" r="3" />
+      <circle class="star tw" cx="520" cy="360" r="2.5" />
+      <circle class="star tw" cx="740" cy="380" r="3" />
+      <circle class="star tw" cx="850" cy="310" r="2.5" />
     </g>
+    <path class="shoot" d="M560,130 L680,196" />
+    <path class="l f-paper plane" d="M0,0 l34,-12 l-12,24 l-6,-9 z M16,3 l18,-15" />
   </g>
+</svg>
+<svg class="art top" viewBox="426 90 498 366" aria-hidden="true" focusable="false">
   <g filter="url(#wobble)">
     <rect class="l" x="450" y="90" width="450" height="350" rx="4" />
     <line class="l" x1="675" y1="90" x2="675" y2="440" />
