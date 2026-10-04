@@ -15,6 +15,8 @@ html:not([data-view='room']) .room { display: none; }
   height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   min-height: 320px;
   overflow: hidden;
+  /* clip, where supported: a #hash target inside a page must not scroll the room */
+  overflow: clip;
 }
 
 .room-head {
@@ -128,7 +130,10 @@ button.obj:focus-visible .ring { stroke: var(--link); }
   transform-origin: 50% 0;
 }
 button.obj:hover .lab,
-button.obj:focus-visible .lab { opacity: 1; }
+button.obj:focus-visible .lab,
+/* the five that open something are named at rest, so nobody has to probe
+   the room to find experience; "sky" and "night" wait for hover */
+button.obj[data-target] .lab { opacity: 1; }
 /* no hover on touch screens: labels stay up so the room explains itself */
 @media (hover: none) {
   .lab { opacity: 1; }
@@ -145,7 +150,8 @@ button.obj:focus-visible .lab { opacity: 1; }
 .cloud { fill: var(--paper); }
 .star { fill: var(--yellow); }
 .shade { fill: var(--sand); }
-.glow { fill: var(--yellow); fill-opacity: 0.22; }
+/* lamp light: flat and pale, so it warms the navy instead of turning it olive */
+.glow { fill: #F2E7B5; fill-opacity: 0.17; }
 
 /* sky states */
 .sky-g,
@@ -293,7 +299,7 @@ html[data-enter] .room [data-drop] {
   top: 72px;
   right: 16px;
   bottom: 16px;
-  width: min(520px, 46vw);
+  width: clamp(380px, 38vw, 520px);
   display: flex;
   flex-direction: column;
   border: 2px solid var(--line);
@@ -350,25 +356,49 @@ html[data-enter] .room [data-drop] {
   .page-grab svg { display: block; width: 56px; height: 12px; margin: 6px auto 0; overflow: visible; }
   .page-body { padding-right: 20px; }
 }
+@media (max-aspect-ratio: 1/1) and (min-width: 700px) {
+  .page { top: 44%; }
+}
 
 /* ---- laptop screen (projects) ---- */
+/* the wall, with the laptop's lid drawn on it */
 .screen {
   position: absolute;
   inset: 0;
   z-index: 26;
+  padding: 4px 6px 8px;
+  background: var(--sky);
+}
+.lid {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
   padding: 0 10px 10px;
+  border: 2px solid var(--line);
+  border-radius: 16px 20px 14px 18px;
   background: var(--paper);
 }
-/* close sits here, above the scrolling screen; the right end stays clear
-   for the view toggle */
-.screen-bar { display: flex; align-items: center; height: 68px; padding-left: 6px; }
+/* close sits here, above the scrolling screen; on narrower screens the view
+   toggle lands in the right end of the bar */
+.screen-bar { position: relative; display: flex; align-items: center; height: 62px; }
+.lid-cam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 2px solid var(--line);
+  border-radius: 55% 45% 50% 50%;
+  background: var(--sky);
+}
 .screen-in {
   flex: 1;
   min-height: 0;
   border: 2px solid var(--line);
-  border-radius: 12px 16px 12px 18px;
+  border-radius: 8px 10px 8px 12px;
   background: var(--sky);
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -410,7 +440,37 @@ html[data-enter] .room [data-drop] {
 .run-chart:hover .run-hint { color: var(--link); }
 .run-lr { display: block; font-weight: 500; }
 .run-lr output { font-variant-numeric: tabular-nums; }
-.run-lr input { display: block; width: 100%; height: 44px; margin: 0; accent-color: var(--link); cursor: pointer; }
+/* the slider, drawn: a pencil line and a knob */
+.run-lr input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.run-lr input:focus { outline: none; }
+.run-lr input:focus-visible { outline: 2px dashed var(--link); outline-offset: 2px; border-radius: 6px; }
+.run-lr input::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: var(--line); }
+.run-lr input::-moz-range-track { height: 3px; border-radius: 2px; background: var(--line); }
+.run-lr input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -10px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 54% 46% 52% 48%;
+  background: var(--yellow);
+}
+.run-lr input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 54% 46% 52% 48%;
+  background: var(--yellow);
+}
 .run-note { font-size: 0.9375rem; min-height: 3.4em; }
 .preds { margin-top: 10px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
 .preds li { display: grid; grid-template-columns: 4.6em 1fr 2.6em; gap: 10px; align-items: center; }

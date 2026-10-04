@@ -13,6 +13,8 @@ const screenBody = room.querySelector<HTMLElement>('[data-screen-body]')!;
 const grab = room.querySelector<HTMLElement>('[data-page-grab]');
 
 const narrow = window.matchMedia('(max-aspect-ratio: 1/1), (max-width: 760px)');
+/** Tablets in portrait get a shorter page, with the wall still in reach above it. */
+const roomy = window.matchMedia('(max-aspect-ratio: 1/1) and (min-width: 700px)');
 
 const opener = (id: string): HTMLButtonElement | null =>
   stage.querySelector<HTMLButtonElement>(`button[data-target="${id}"]`);
@@ -47,7 +49,7 @@ function mark(id: string | null): void {
     delete root.dataset.open;
   }
   // under the laptop screen, or under a page that covers it, the room is out of reach
-  stage.inert = id === 'projects' || (id !== null && narrow.matches);
+  stage.inert = id === 'projects' || (id !== null && narrow.matches && !roomy.matches);
 }
 
 /** Beside an open page the room steps aside: it slides left and shrinks just
@@ -67,7 +69,9 @@ function stepAside(on: boolean, animate: boolean): void {
   const to = {
     scale,
     x: gap + (free - stage.offsetWidth * scale) / 2 - stage.offsetLeft,
-    y: (stage.offsetHeight * (1 - scale)) / 2,
+    // stand it on the bottom edge, like stepping back from the table: the
+    // spare space becomes wall above, where the lamp's cord already runs
+    y: scale < 1 ? room.clientHeight - stage.offsetTop - stage.offsetHeight * scale : 0,
   };
   gsap.set(stage, { transformOrigin: '0 0' });
   stage.style.setProperty('--shrink', scale.toFixed(3));
@@ -205,6 +209,8 @@ function hide(animate: boolean, refocus: boolean): void {
 export function sync(animate: boolean): void {
   if (root.dataset.view !== 'room') return;
   const id = location.hash.slice(1);
+  // older browsers scroll the room to a #hash target; it never should move
+  room.scrollTop = 0;
   if (isPanel(id)) show(id, animate);
   else hide(animate, true);
 }

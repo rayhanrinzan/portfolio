@@ -104,7 +104,9 @@ screenshots. The lamp shade is sand by day and yellow when lit.
 - Every drawing is its own positioned element with `data-layer` (wall,
   furniture, glow, objects, foreground) and `data-drop` (entrance order).
   Interactive ones are HTML `<button>`s wrapped around an inline SVG.
-- Labels show on hover/focus; on touch screens (no hover) they stay visible.
+- The five labels that name a destination (experience, projects, education,
+  about, contact) are always visible; "sky" and "night" show on hover/focus
+  (always on touch screens).
 - Clicking an object opens its section on a notebook page that slides over
   the room (from the right on wide screens, from the bottom on narrow ones).
   The section is the same element the list view shows, moved onto the page
