@@ -159,7 +159,9 @@ Wanted:
   slides to the middle of the window and lights up behind a flat corona
   (discs and drawn strokes, no blur), three flat shafts of light shoot to the
   plant with pulses running down them and glints where they land, and the
-  plant grows (two new leaves, then a little taller, up to three waterings).
+  plant grows. It starts as a sprout and is full grown after three waterings,
+  with a new leaf on each of the last two. Daytime is always the blue
+  afternoon sky (morning and golden hour remain only behind `?sky=`).
   In the portrait room the can stands left of the laptop.
 - Room and list: the room folds down into the miniature drawing that heads
   the list view, and grows back out of it.

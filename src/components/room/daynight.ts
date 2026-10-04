@@ -3,12 +3,8 @@
 // comes up, the stars pop in and the lamp's light unfolds.
 import { gsap, motionOK, room, root, stage } from './motion';
 
-function daySky(): string {
-  const h = new Date().getHours();
-  if (h >= 5 && h < 11) return 'morning';
-  if (h >= 17 && h < 20) return 'golden';
-  return 'afternoon';
-}
+/** Daytime is always the blue afternoon sky, whatever the clock says. */
+const DAY = 'afternoon';
 
 const lamp = stage.querySelector<HTMLButtonElement>('[data-obj="lamp"]');
 
@@ -42,9 +38,9 @@ function arrive(sky: string): void {
   }
 }
 
-/** The lamp: night if it is day, back to the local-time sky if it is night. */
+/** The lamp: night if it is day, day if it is night. */
 export function toggleSky(): void {
-  const next = root.dataset.sky === 'night' ? daySky() : 'night';
+  const next = root.dataset.sky === 'night' ? DAY : 'night';
   if (!motionOK()) return setSky(next);
   const change = (): void => {
     setSky(next);

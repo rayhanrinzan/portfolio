@@ -45,7 +45,9 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
       (function () {
         var d = document.documentElement;
         var h = new Date().getHours();
-        var day = h >= 5 && h < 11 ? 'morning' : h >= 17 && h < 20 ? 'golden' : 'afternoon';
+        // daytime is always the blue afternoon sky; morning and golden hour
+        // remain as drawings, reachable with ?sky=
+        var day = 'afternoon';
         var sky = h < 5 || h >= 20 ? 'night' : day;
         var asked = new URLSearchParams(location.search).get('sky');
         if (['morning', 'afternoon', 'golden', 'night'].indexOf(asked) > -1) sky = asked;

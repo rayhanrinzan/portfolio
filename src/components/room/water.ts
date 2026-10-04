@@ -17,8 +17,9 @@ const pane = stage.querySelector<HTMLElement>('.obj-window');
 /** Where the rose (the spout's head) sits in the can's box, from its centre. */
 const ROSE = { x: -0.425, y: -0.23 };
 const TILT = 32;
-/** The leaves stop getting bigger after this many waterings. */
-const FULL = 3;
+/** How big the leaves are after 0, 1, 2 and 3 waterings (--grow in room.css):
+    a sprout to begin with, full grown after three. */
+const SIZES = [0.38, 0.6, 0.82, 1];
 
 let busy = false;
 let watered = false;
@@ -245,9 +246,11 @@ function sunlight(p: Box): void {
 /** Water from the rose down onto the leaves: short dashes running along arcs. */
 function shower(rose: { x: number; y: number }, p: Box): void {
   const svg = overlay('water');
+  // the top of the leaves, which is lower while the plant is small
+  const top = 0.58 - 0.44 * SIZES[Math.min(grown, SIZES.length - 1)]!;
   for (let i = 0; i < 6; i++) {
-    const endX = p.x + p.w * (0.2 + 0.12 * i);
-    const endY = p.y + p.h * gsap.utils.random(0.14, 0.3);
+    const endX = p.x + p.w * (0.5 + (i - 2.5) * 0.12 * Math.max(0.5, 1.4 - top * 2));
+    const endY = p.y + p.h * (top + gsap.utils.random(0, 0.12));
     const d = `M${rose.x.toFixed(1)},${rose.y.toFixed(1)} Q${(endX + (rose.x - endX) * 0.35).toFixed(1)},${(rose.y + 4).toFixed(1)} ${endX.toFixed(1)},${endY.toFixed(1)}`;
     const stream = add(svg, 'path', { d });
     gsap.fromTo(
@@ -269,8 +272,11 @@ function shower(rose: { x: number; y: number }, p: Box): void {
 
 function grow(): void {
   if (!leaves) return;
+  const before = SIZES[Math.min(grown, SIZES.length - 1)]!;
   grown++;
-  const sprout = sprouts[grown - 1];
+  const after = SIZES[Math.min(grown, SIZES.length - 1)]!;
+  // the last two waterings each add a leaf
+  const sprout = sprouts[grown - 2];
   if (sprout) {
     sprout.style.display = 'inline';
     // grows out of the pot's rim (246,660 in the drawing); the transform is
@@ -280,12 +286,13 @@ function grow(): void {
     apply();
     gsap.to(size, { k: 1, duration: 0.9, ease: 'elastic.out(1, 0.45)', onUpdate: apply });
   }
-  const size = 1 + 0.09 * Math.min(grown, FULL);
+  const size = { k: before };
   gsap
     .timeline({ defaults: { transformOrigin: '49% 58%' } })
     // drinks: a little squash, then up
-    .to(leaves, { scaleY: size * 0.94, scaleX: size * 1.04, duration: 0.14, ease: 'power1.out' })
-    .to(leaves, { scaleX: size, scaleY: size, duration: 1, ease: 'elastic.out(1.2, 0.35)' });
+    .to(leaves, { scaleY: 0.92, scaleX: 1.06, duration: 0.14, ease: 'power1.out' })
+    .to(leaves, { scaleX: 1, scaleY: 1, duration: 0.5, ease: 'back.out(3)' })
+    .to(size, { k: after, duration: 1.1, ease: 'elastic.out(1.1, 0.4)', onUpdate: () => leaves.style.setProperty('--grow', size.k.toFixed(3)) }, 0.14);
 }
 
 /** The whole thing: the can goes to the plant, pours, and goes home. */
