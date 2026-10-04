@@ -1,14 +1,18 @@
-// The drop-in entrance. The head script holds every [data-drop] drawing a
-// little above its place (html[data-enter], see room.css); here each one falls
-// and settles, in data-drop order. Every load of the room, transforms only, and the
-// buttons work the whole time.
+// The entrance. The wall, the shelves, the window and the chair are simply
+// there. The things on the table pop into the air one by one, left to right,
+// then all drop onto the table together; the lamp comes down on its cord at
+// the same moment. The head script sets html[data-enter] and room.css holds
+// the start positions until this runs. Every load of the room, transforms
+// and opacity only, and the buttons work the whole time.
 import { gsap, root, stage, unit } from './motion';
 import { leanPlant, puffSteam, swingLamp } from './toys';
 
-const STAGGER = 0.065;
-/** How far each drawing falls, in stage units; room.css holds it there. */
+/** How far above the table things appear, in stage units; room.css matches. */
 const DROP = 110;
-const FALL = 0.32;
+const POP = 0.2;
+const POP_STAGGER = 0.12;
+const HANG = 0.08;
+const FALL = 0.28;
 
 export function initEntrance(): void {
   if (!root.hasAttribute('data-enter')) return;
@@ -28,31 +32,34 @@ export function initEntrance(): void {
 
 function play(): void {
   const height = DROP * unit();
-  const drops = Array.from(stage.querySelectorAll<HTMLElement>('[data-drop]')).sort((a, b) => Number(a.dataset.drop) - Number(b.dataset.drop));
+  // left to right as drawn, which differs between the landscape and portrait rooms
+  const things = Array.from(stage.querySelectorAll<HTMLElement>('.obj[data-layer="objects"]')).sort(
+    (a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left,
+  );
+  const lamp = stage.querySelector<HTMLElement>('.obj-lamp');
+  const landing = (things.length - 1) * POP_STAGGER + POP + HANG;
+  // take over the hold from room.css before letting it go, so nothing flashes
+  gsap.set(things, { y: -height, scale: 0.4, opacity: 0 });
+  gsap.set(lamp, { y: -height });
+  root.removeAttribute('data-enter');
   const tl = gsap.timeline();
 
-  drops.forEach((el, i) => {
-    const at = i * STAGGER;
-    const onWall = el.dataset.layer === 'wall';
-    tl.fromTo(el, { y: -height }, { y: 0, duration: FALL, ease: 'power2.in' }, at);
-    if (el.classList.contains('obj-lamp')) {
-      // hangs from its cord: no squash, it swings instead
-      tl.call(() => swingLamp(3), [], at + FALL);
-    } else if (onWall) {
-      // caught by its nail: a small rock from side to side
-      tl.fromTo(el, { rotation: i % 2 ? 0.9 : -0.9 }, { rotation: 0, duration: 0.5, ease: 'elastic.out(1.4, 0.3)', clearProps: 'transform' }, at + FALL);
-    } else {
-      // lands on the table: squash, then back
-      tl.to(el, { scaleY: 0.93, scaleX: 1.03, transformOrigin: '50% 100%', duration: 0.07, ease: 'power1.out' }, at + FALL).to(
-        el,
-        { scaleY: 1, scaleX: 1, duration: 0.22, ease: 'back.out(3)', clearProps: 'transform' },
-        at + FALL + 0.07,
-      );
-    }
-    if (el.classList.contains('obj-mug')) tl.call(puffSteam, [], at + FALL);
-    if (el.classList.contains('obj-plant')) tl.call(() => leanPlant(1), [], at + FALL);
-  });
+  tl.fromTo(
+    things,
+    { y: -height, scale: 0.4, opacity: 0, transformOrigin: '50% 50%' },
+    { scale: 1, opacity: 1, duration: POP, ease: 'back.out(2.6)', stagger: POP_STAGGER },
+    0,
+  );
+  // all together: fall, squash on the table, spring back
+  tl.to(things, { y: 0, duration: FALL, ease: 'power2.in' }, landing)
+    .set(things, { transformOrigin: '50% 100%' }, landing + FALL)
+    .to(things, { scaleY: 0.92, scaleX: 1.04, duration: 0.07, ease: 'power1.out' }, landing + FALL)
+    .to(things, { scaleY: 1, scaleX: 1, duration: 0.2, ease: 'back.out(3)', clearProps: 'transform,opacity' }, landing + FALL + 0.07)
+    .call(puffSteam, [], landing + FALL)
+    .call(() => leanPlant(1), [], landing + FALL);
 
-  // GSAP now holds every start position, so the CSS hold can go
-  root.removeAttribute('data-enter');
+  if (lamp) {
+    // hangs from its cord: no squash, it swings instead
+    tl.fromTo(lamp, { y: -height }, { y: 0, duration: FALL, ease: 'power2.in' }, landing).call(() => swingLamp(3), [], landing + FALL);
+  }
 }

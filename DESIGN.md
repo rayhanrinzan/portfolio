@@ -102,7 +102,7 @@ screenshots. The lamp shade is sand by day and yellow when lit.
   sketch C at 1600 x 1000; portrait (viewport taller than wide) is an
   800 x 1600 re-composition of the same drawings, positioned in `room.css`.
 - Every drawing is its own positioned element with `data-layer` (wall,
-  furniture, glow, objects, foreground) and `data-drop` (entrance order).
+  furniture, glow, objects, foreground).
   Interactive ones are HTML `<button>`s wrapped around an inline SVG.
 - The five labels that name a destination (experience, projects, education,
   about, contact) are always visible; "sky" and "night" show on hover/focus
@@ -138,8 +138,10 @@ Wanted:
   changed.
 - Day / night is a scene change: colours cross-fade (View Transitions where
   supported), the moon or sun rises, stars pop in, the light cone unfolds.
-- Drop-in entrance on every load of the room: each drawing falls a few centimetres and
-  settles, in `data-drop` order, under 1.2s, clickable throughout.
+- Entrance on every load of the room: the wall, shelves, window and chair
+  are simply there. The things on the table pop into the air one by one,
+  left to right, then drop onto the table together; the lamp comes down on
+  its cord at the same moment and swings. About 1.2s, clickable throughout.
 - Toys, all optional and pointer-driven: a fast sweep of the pointer makes a
   breeze (notes flutter, steam bends, plant leans, lamp sways); books nudge
   as the pointer runs along them; the envelope opens on hover; the lamp can

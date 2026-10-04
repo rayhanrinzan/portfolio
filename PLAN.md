@@ -51,11 +51,12 @@ End each UI phase with `/critique` and show me screenshots.
 5. Deep links, back-button behavior, focus management, reduced-motion tier.
 6. View toggle between room and list, remembered per visitor (localStorage,
    try/catch).
-7. Drop-in entrance: on page load every object except the table falls a few
-   centimetres onto the table, wall or shelf where it lives, with a small
-   settle. Stagger by `data-drop` (set in Phase 3). Whole sequence under about
-   1.2s, objects clickable from the first frame, on every load, transforms
-   only, skipped under reduced motion.
+7. Entrance: on page load the wall, shelves, corkboard, window and chair are
+   already in place. The things on the table pop into the air one by one,
+   left to right, then all drop onto the table at the same time; the lamp
+   drops with them. Whole sequence about 1.2s, objects clickable from the
+   first frame, on every load, transforms and opacity only, skipped under
+   reduced motion.
 
 ## Phase 5: Polish
 

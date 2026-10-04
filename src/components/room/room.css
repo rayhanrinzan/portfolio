@@ -258,12 +258,14 @@ html[data-motion] .room .obj[data-layer='foreground'] { translate: calc(var(--px
 .obj-window,
 .obj-lamp { touch-action: none; }
 
-/* drop-in entrance: held just above its resting place until room.ts lets go.
-   If the island never starts, the fallback lets go on its own. */
-html[data-enter] .room [data-drop] { transform: translateY(calc(-110 * var(--u))); }
-html[data-enter=''] .room [data-drop] { animation: enter-fallback 300ms 2s ease-in forwards; }
+/* entrance: the things on the table wait unseen in the air, and the lamp a
+   little up its cord, until room.ts lets go. If the island never starts, the
+   fallback lets go on its own. */
+html[data-enter] .room :is(.obj[data-layer='objects'], .obj-lamp) { transform: translateY(calc(-110 * var(--u))); }
+html[data-enter] .room .obj[data-layer='objects'] { opacity: 0; }
+html[data-enter=''] .room :is(.obj[data-layer='objects'], .obj-lamp) { animation: enter-fallback 300ms 2s ease-in forwards; }
 @keyframes enter-fallback {
-  to { transform: none; }
+  to { transform: none; opacity: 1; }
 }
 
 /* day / night cross-fade */
