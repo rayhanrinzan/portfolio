@@ -11,8 +11,12 @@ hand-drawn line style with flat pastel fills. Content opens as paper notebook
 pages that slide over the room; never modals with dark overlays. The room
 stays visible and alive behind them.
 
-Room composition: TODO(rinzan): pick one of the three sketches in
-`sketches/` (Phase 1).
+Room composition: sketch C, the kitchen-table view
+(`sketches/c-kitchen-table.html`), chosen by Rayhan in Phase 1. A wide table
+runs across the foreground with the laptop, mug, envelope and phone spread
+out on it; the window, corkboard and two wall shelves sit on the wall behind;
+a pendant lamp hangs between the window and the shelves; a chair back sits in
+the foreground. The wall shelves stand in for the bookshelf (education).
 
 ## Color
 
