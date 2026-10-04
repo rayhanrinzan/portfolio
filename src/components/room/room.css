@@ -275,7 +275,7 @@ html[data-enter=''] .room :is(.obj[data-layer='objects'], .obj-lamp) { animation
 /* the plant starts as a sprout and grows when watered (--grow, water.ts).
    Without motion there is no watering can, so it is simply full grown. */
 @media (prefers-reduced-motion: no-preference) {
-  .room .leaves { scale: var(--grow, 0.38); transform-origin: 49% 58%; }
+  .room .grow { transform: scale(var(--grow, 0.38)); transform-origin: 246px 664px; }
 }
 .obj-plant { pointer-events: none; }
 .obj-can { touch-action: none; }

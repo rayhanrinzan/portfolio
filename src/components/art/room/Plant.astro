@@ -4,13 +4,17 @@
 ---
 
 <svg class="art top leaves" viewBox="190 530 115 225" aria-hidden="true" focusable="false">
-  <g filter="url(#wobble)">
-    <!-- new leaves, hidden until the plant has been watered (water.ts) -->
-    <g class="sprout"><ellipse class="l f-sage" cx="225" cy="638" rx="10" ry="27" transform="rotate(-50 225 638)" /></g>
-    <g class="sprout"><ellipse class="l f-sage" cx="266" cy="637" rx="10" ry="27" transform="rotate(48 266 637)" /></g>
-    <ellipse class="l f-sage" cx="222" cy="606" rx="15" ry="42" transform="rotate(-28 222 606)" />
-    <ellipse class="l f-sage" cx="270" cy="598" rx="15" ry="44" transform="rotate(22 270 598)" />
-    <ellipse class="l f-sage" cx="246" cy="580" rx="14" ry="42" />
+  <!-- .grow scales about the point where the leaves meet, just inside the
+       pot (246,664), so the plant stays rooted at every size -->
+  <g class="grow">
+    <g filter="url(#wobble)">
+      <!-- new leaves, hidden until the plant has been watered (water.ts) -->
+      <g class="sprout"><ellipse class="l f-sage" cx="221" cy="653" rx="10" ry="27" transform="rotate(-66 221 653)" /></g>
+      <g class="sprout"><ellipse class="l f-sage" cx="270" cy="652" rx="10" ry="27" transform="rotate(64 270 652)" /></g>
+      <ellipse class="l f-sage" cx="222" cy="630" rx="15" ry="42" transform="rotate(-28 222 630)" />
+      <ellipse class="l f-sage" cx="270" cy="622" rx="15" ry="44" transform="rotate(22 270 622)" />
+      <ellipse class="l f-sage" cx="246" cy="604" rx="14" ry="42" />
+    </g>
   </g>
 </svg>
 <svg class="art top" viewBox="190 530 115 225" aria-hidden="true" focusable="false">

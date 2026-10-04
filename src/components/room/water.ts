@@ -11,6 +11,7 @@ const SVG = 'http://www.w3.org/2000/svg';
 const can = stage.querySelector<HTMLButtonElement>('.obj-can');
 const plant = stage.querySelector<HTMLElement>('.obj-plant');
 const leaves = plant?.querySelector<SVGSVGElement>('.leaves') ?? null;
+const growth = plant?.querySelector<SVGGElement>('.grow') ?? null;
 const sprouts = Array.from(plant?.querySelectorAll<SVGGElement>('.sprout') ?? []);
 const pane = stage.querySelector<HTMLElement>('.obj-window');
 
@@ -247,7 +248,7 @@ function sunlight(p: Box): void {
 function shower(rose: { x: number; y: number }, p: Box): void {
   const svg = overlay('water');
   // the top of the leaves, which is lower while the plant is small
-  const top = 0.58 - 0.44 * SIZES[Math.min(grown, SIZES.length - 1)]!;
+  const top = 0.595 - 0.455 * SIZES[Math.min(grown, SIZES.length - 1)]!;
   for (let i = 0; i < 6; i++) {
     const endX = p.x + p.w * (0.5 + (i - 2.5) * 0.12 * Math.max(0.5, 1.4 - top * 2));
     const endY = p.y + p.h * (top + gsap.utils.random(0, 0.12));
@@ -279,10 +280,10 @@ function grow(): void {
   const sprout = sprouts[grown - 2];
   if (sprout) {
     sprout.style.display = 'inline';
-    // grows out of the pot's rim (246,660 in the drawing); the transform is
+    // grows out of the pot (246,664 in the drawing); the transform is
     // written by hand because the leaf has only just been given a box
     const size = { k: 0 };
-    const apply = (): void => sprout.setAttribute('transform', `translate(246 660) scale(${size.k.toFixed(3)}) translate(-246 -660)`);
+    const apply = (): void => sprout.setAttribute('transform', `translate(246 664) scale(${size.k.toFixed(3)}) translate(-246 -664)`);
     apply();
     gsap.to(size, { k: 1, duration: 0.9, ease: 'elastic.out(1, 0.45)', onUpdate: apply });
   }
@@ -292,7 +293,7 @@ function grow(): void {
     // drinks: a little squash, then up
     .to(leaves, { scaleY: 0.92, scaleX: 1.06, duration: 0.14, ease: 'power1.out' })
     .to(leaves, { scaleX: 1, scaleY: 1, duration: 0.5, ease: 'back.out(3)' })
-    .to(size, { k: after, duration: 1.1, ease: 'elastic.out(1.1, 0.4)', onUpdate: () => leaves.style.setProperty('--grow', size.k.toFixed(3)) }, 0.14);
+    .to(size, { k: after, duration: 1.1, ease: 'elastic.out(1.1, 0.4)', onUpdate: () => growth?.style.setProperty('--grow', size.k.toFixed(3)) }, 0.14);
 }
 
 /** The whole thing: the can goes to the plant, pours, and goes home. */
