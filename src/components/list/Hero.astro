@@ -10,7 +10,7 @@ const { name, location, lookingFor, education, contact } = profile;
   <DeskScene />
   <h1>{name}</h1>
   <p class="facts">
-    {education.degree} at {education.school}, {education.start} to {education.end}. {location}.
+    {education.degree} @ {education.school}, {education.start} - {education.end}. {location}.
   </p>
   <p class:list={{ todo: isTodo(lookingFor) }}>{lookingFor}</p>
   <ul class="links" role="list">

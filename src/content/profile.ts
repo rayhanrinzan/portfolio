@@ -2,13 +2,13 @@
 // visible TODO(rinzan) string; never fill these in by guessing.
 export const profile = {
   name: 'Rayhan Rinzan',
-  location: 'Ithaca, New York',
+  location: 'Ithaca, NY',
   lookingFor: 'Exploring opportunities in software engineering, machine learning, and data science.',
   intro:
     "I'm Rayhan, a computer science student at Cornell University interested in intelligent systems, with a focus on machine learning, autonomy, and data engineering. My experience spans software engineering, robotics, and applied machine learning.",
   education: {
     school: 'Cornell University',
-    degree: 'BS Computer Science',
+    degree: 'BS in Computer Science',
     start: '2025',
     end: '2029',
     coursework: [
