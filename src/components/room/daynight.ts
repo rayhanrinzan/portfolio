@@ -29,7 +29,12 @@ function arrive(sky: string): void {
   if (sky === 'night') {
     gsap.from(pane.querySelector('.moon'), { y: 150, duration: 0.6, ease: 'power3.out' });
     gsap.from(pane.querySelectorAll('.tw'), { scale: 0, transformOrigin: '50% 50%', duration: 0.3, ease: 'back.out(3)', stagger: 0.06, delay: 0.15 });
-    gsap.from(stage.querySelectorAll('.obj-glow'), { scaleY: 0, transformOrigin: '50% 0%', duration: 0.45, ease: 'power2.out', clearProps: 'transform' });
+    // the drawing inside each light, not its wrapper: the wrapper's transform
+    // belongs to the parallax and the lamp's swing. Skipped while the lamp is
+    // still dark (the entrance), which opens the light itself.
+    if (!root.dataset.lamp) {
+      gsap.from(stage.querySelectorAll('.obj-glow .art'), { scaleY: 0, transformOrigin: '50% 0%', duration: 0.45, ease: 'power2.out', clearProps: 'transform' });
+    }
   } else {
     const group = pane.querySelector(`.sky-${sky}`);
     if (!group) return;

@@ -1,6 +1,7 @@
 ---
 // Two wall shelves with books; they stand in for the bookshelf (education).
-// Upright books carry .book so the room island can nudge them one by one.
+// Books carry .book so the room island can nudge them one by one; the last
+// one on the top shelf (.tilt) tips over and rights itself when the shelves open.
 ---
 
 <svg class="art" viewBox="1120 140 380 330" aria-hidden="true" focusable="false">
@@ -14,7 +15,7 @@
     <rect class="l f-sand book" x="1216" y="160" width="22" height="90" rx="2" />
     <rect class="l f-stone book" x="1240" y="152" width="24" height="98" rx="2" />
     <g class="book tilt">
-      <rect class="l f-accent" x="1276" y="158" width="20" height="92" rx="2" transform="rotate(12 1286 250)" />
+      <rect class="l f-accent" x="1266" y="158" width="20" height="92" rx="2" />
     </g>
     <rect class="l f-sky" x="1400" y="178" width="60" height="72" rx="2" />
     <circle class="l f-sand" cx="1430" cy="212" r="14" />

@@ -96,6 +96,9 @@ button.obj::before {
 .obj[data-layer='foreground'] { z-index: 5; }
 button.obj:hover,
 button.obj:focus-visible { z-index: 6; }
+/* the entrance: what pops up over the table is in front of everything on the
+   wall, hovered or not */
+html[data-entering] .room .obj[data-layer='objects'] { z-index: 7; }
 
 .art { display: block; width: 100%; height: 100%; overflow: visible; }
 /* a second drawing stacked on the first (see Laptop, Window, Plant) */
@@ -186,9 +189,11 @@ button.obj[data-target] .lab { opacity: 1; }
   :root:not([data-sky]) .sky-night { display: inline; }
   :root:not([data-sky]) .shade { fill: var(--yellow); }
 }
-:root[data-sky='night'] .shade,
-/* the bulb catching, just before the lamp brings the night (entrance.ts) */
-html[data-flicker] .shade { fill: var(--yellow); }
+:root[data-sky='night'] .shade { fill: var(--yellow); }
+/* the lamp in a dark room before it is properly on (toys.ts): 'off' is the
+   bulb dark, 'catch' the bulb lit; neither throws any light yet */
+html[data-lamp='off'] .room .shade { fill: var(--sand); }
+html[data-lamp] .room .obj-glow.obj-glow { display: none; }
 
 /* landscape composition */
 .room { --floor-y: 700; }

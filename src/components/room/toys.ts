@@ -2,7 +2,7 @@
 // when it opens, the breeze a fast pointer makes, the row of books, the
 // envelope, the lamp you can swing and the clouds you can push. All of it is
 // play on top of the buttons; none of it is needed to reach any content.
-import { gsap, motionOK, rand, stage, svgPoint } from './motion';
+import { gsap, motionOK, rand, root, stage, svgPoint } from './motion';
 
 const all = <T extends Element>(selector: string): T[] => Array.from(stage.querySelectorAll<T>(selector));
 const one = <T extends Element>(selector: string): T | null => stage.querySelector<T>(selector);
@@ -82,7 +82,8 @@ function tipBook(): void {
   gsap.killTweensOf(tilt, 'rotation');
   gsap
     .timeline({ defaults: { svgOrigin: '1286 250' } })
-    .to(tilt, { rotation: -22, duration: 0.2, ease: 'power2.inOut' })
+    // tips away from the row, about its outer foot, and rocks back upright
+    .to(tilt, { rotation: 14, duration: 0.2, ease: 'power2.inOut' })
     .to(tilt, { rotation: 0, duration: 0.5, ease: 'bounce.out' });
 }
 
@@ -115,13 +116,16 @@ const CORD = 8.9;
 const swing = { angle: 0 };
 let lampDragged = false;
 
+/** Where the shade sits along the top edge of each light drawing. */
+const glowOrigin = (_i: number, el: Element): string => (el.closest('.obj-glow-land') ? '48.4% 0%' : '82.75% 0%');
+
 function applySwing(): void {
   if (!lamp) return;
   const length = lamp.offsetHeight * CORD;
   gsap.set(lamp, { rotation: swing.angle, transformOrigin: `50% ${-CORD * 100}%` });
   // the light on the table follows the shade
   const shift = Math.sin((swing.angle * Math.PI) / 180) * -length;
-  gsap.set(glows, { x: shift, rotation: swing.angle * 1.4, transformOrigin: (_i: number, el: Element) => (el.classList.contains('obj-glow-land') ? '48.4% 0%' : '82.75% 0%') });
+  gsap.set(glows, { x: shift, rotation: swing.angle * 1.4, transformOrigin: glowOrigin });
 }
 
 function settleLamp(): void {
@@ -133,11 +137,34 @@ export function swingLamp(degrees: number): void {
   gsap.to(swing, { angle: degrees, duration: 0.18, ease: 'power2.out', onUpdate: applySwing, overwrite: true, onComplete: settleLamp });
 }
 
-/** A short rattle on the cord that dies away within `duration` seconds:
-    what the lamp does on its way down in the entrance. */
-export function shakeLamp(duration: number): void {
-  if (!motionOK()) return;
-  gsap.to(swing, { keyframes: { angle: [5, -4, 3, -2, 1, 0], ease: 'sine.inOut' }, duration, onUpdate: applySwing, overwrite: true });
+/** The shade rattles on the end of its cord and comes to rest within
+    `duration` seconds: what the lamp does on its way down in the entrance.
+    Only the shade tilts, about the point the cord holds it by; the cord
+    stays straight, so nothing whips sideways. */
+export function rattleLamp(duration: number): void {
+  const shade = lamp?.querySelector('g[filter]');
+  if (!shade || !motionOK()) return;
+  gsap.set(shade, { svgOrigin: '1000 300' });
+  gsap.to(shade, { keyframes: { rotation: [0, 6, -4.5, 3, -1.5, 0.5, 0], easeEach: 'sine.inOut' }, duration, clearProps: 'transform' });
+}
+
+/** The light coming on in a room that is already dark: the bulb stutters
+    twice (the shade only), then catches, and the cone of light opens out from
+    the shade once. room.css: html[data-lamp='off'] is the lamp dark,
+    'catch' the bulb lit with no light thrown yet. */
+export function flickerOn(): void {
+  const cones = glows.map((glow) => glow.querySelector('.art'));
+  const bulb = (state: 'off' | 'catch') => (): void => void (root.dataset.lamp = state);
+  gsap.killTweensOf(cones);
+  gsap
+    .timeline()
+    .call(bulb('catch'), [], 0.1)
+    .call(bulb('off'), [], 0.18)
+    .call(bulb('catch'), [], 0.28)
+    .call(bulb('off'), [], 0.4)
+    .call(() => void delete root.dataset.lamp, [], 0.46)
+    // the cone opens out from the shade, keeping its shape
+    .fromTo(cones, { scale: 0, transformOrigin: glowOrigin }, { scale: 1, duration: 0.35, ease: 'power2.out', clearProps: 'transform', immediateRender: false }, 0.46);
 }
 
 /** The lamp can be pulled aside and let go; a plain click calls onToggle. */
