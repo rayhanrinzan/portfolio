@@ -9,4 +9,4 @@ roles:
 order: 2
 ---
 
-TODO(rinzan): subsystem you own (perception? controls? power?), stack, result
+I write perception software for Cornell's autonomous boat. I added quaternion-derived yaw to the exponential moving averages used for vessel tracking, and buoy color and sign validation, so the autonomy stack gets more consistent information about tracked objects.

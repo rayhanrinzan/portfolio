@@ -7,4 +7,4 @@ roles:
 order: 5
 ---
 
-TODO(rinzan): topic, methods, result
+I wrote Python tools to analyze experimental data for research on ladder-type electromagnetically induced transparency in cesium. They were used to study the system's optical response and to help interpret the measurements.
