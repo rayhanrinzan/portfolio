@@ -6,7 +6,7 @@ const { email, linkedin, github, resume } = profile.contact;
 const slots = [
   { label: 'GitHub', value: github },
   { label: 'Résumé (PDF)', value: resume },
-];
+].filter(({ value }) => value !== '');
 ---
 
 <section id="contact" aria-labelledby="contact-h">

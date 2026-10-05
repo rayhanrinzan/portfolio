@@ -7,19 +7,19 @@ const jobs = await Promise.all(
   entries.map(async (entry) => ({
     ...entry.data,
     todo: isTodo(entry.body),
+    empty: !entry.body?.trim(),
     Content: (await render(entry)).Content,
   })),
 );
 ---
 
 <section id="experience" aria-labelledby="experience-h">
-  <h2 id="experience-h">Where I've worked</h2>
+  <h2 id="experience-h">Where I've been</h2>
   <ol role="list">
     {
-      jobs.map(({ org, location, roles, todo, Content }) => (
+      jobs.map(({ org, roles, todo, empty, Content }) => (
         <li class="job">
           <h3>{org}</h3>
-          {location && <p class="place soft">{location}</p>}
           <ul role="list">
             {roles.map((role) => (
               <li class="role">
@@ -28,12 +28,15 @@ const jobs = await Promise.all(
                   <time datetime={role.start}>{formatMonth(role.start)}</time> to{' '}
                   {role.end ? <time datetime={role.end}>{formatMonth(role.end)}</time> : 'now'}
                 </span>
+                {role.what && <p class="role-what">{role.what}</p>}
               </li>
             ))}
           </ul>
-          <div class:list={['what', { todo }]}>
-            <Content />
-          </div>
+          {!empty && (
+            <div class:list={['what', { todo }]}>
+              <Content />
+            </div>
+          )}
         </li>
       ))
     }
@@ -42,14 +45,16 @@ const jobs = await Promise.all(
 
 <style>
   .job + .job { margin-top: 28px; }
-  .place { font-size: 0.9375rem; }
   .role {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 0 16px;
+    flex-wrap: wrap;
     font-weight: 500;
   }
+  .role-what { flex-basis: 100%; margin-top: 2px; font-weight: 400; }
+  .role:has(.role-what) + .role { margin-top: 12px; }
   .when { font-weight: 400; font-size: 0.9375rem; white-space: nowrap; }
   .what { margin-top: 2px; }
 

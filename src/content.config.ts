@@ -9,7 +9,6 @@ const experience = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/experience' }),
   schema: z.object({
     org: z.string(),
-    location: z.string().optional(),
     roles: z
       .array(
         z.object({
@@ -17,6 +16,9 @@ const experience = defineCollection({
           start: month,
           // omitted means the role is current
           end: month.optional(),
+          // for an org with several roles: what this one was; the body
+          // then stays empty
+          what: z.string().optional(),
         }),
       )
       .min(1),

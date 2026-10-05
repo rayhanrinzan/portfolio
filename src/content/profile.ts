@@ -2,12 +2,13 @@
 // visible TODO(rinzan) string; never fill these in by guessing.
 export const profile = {
   name: 'Rayhan Rinzan',
-  location: 'Ithaca, New York',
-  lookingFor: 'TODO(rinzan): what you are recruiting for (season, role types)',
-  intro: 'TODO(rinzan): intro paragraph',
+  location: 'Ithaca, NY',
+  lookingFor: 'Exploring opportunities in software engineering, machine learning, and data science.',
+  intro:
+    "I'm Rayhan, a computer science student at Cornell University interested in intelligent systems, with a focus on machine learning, autonomy, and data engineering. My experience spans software engineering, robotics, and applied machine learning.",
   education: {
     school: 'Cornell University',
-    degree: 'BS Computer Science',
+    degree: 'BS in Computer Science',
     start: '2025',
     end: '2029',
     coursework: [
@@ -19,12 +20,23 @@ export const profile = {
       'Differential Equations',
       'Circuits',
     ],
-    activities: ['Autonomous Boat Project Team (Software)', 'AI Alignment'],
+    activities: [
+      'Autonomous Boat Project Team (Software)',
+      'Institute of Electrical and Electronics Engineers (PR Team)',
+      'South Asian Council (Publicity Team)',
+      'Society of Asian Scientists and Engineers',
+      'AI Alignment',
+      'Muslim Educational & Cultural Association',
+      'Notion Campus Leader',
+      'Adobe Campus Ambassador',
+    ],
   },
   contact: {
     email: 'rmr326@cornell.edu',
     linkedin: 'https://www.linkedin.com/in/rinzan',
-    github: 'TODO(rinzan): GitHub URL',
-    resume: 'TODO(rinzan): résumé PDF at public/resume.pdf',
+    github: 'https://github.com/rayhanrinzan',
+    // No résumé yet. Put the PDF at public/resume.pdf and set this to
+    // '/resume.pdf'; the contact links leave it out while it is empty.
+    resume: '',
   },
 } as const;

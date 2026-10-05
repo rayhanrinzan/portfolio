@@ -6,4 +6,4 @@ roles:
 order: 1
 ---
 
-TODO(rinzan): what you're building, stack, outcome
+I'm building Sienna AI, an AI employee for small businesses.
