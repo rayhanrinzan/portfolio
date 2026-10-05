@@ -1,5 +1,5 @@
 ---
-title: FIFA World Cup predictor, an ML forecasting and Monte Carlo simulation engine
+title: FIFA World Cup predictor, an ML tournament forecaster
 tools: [Python, scikit-learn, pandas, Jupyter, Streamlit]
 links:
   - label: GitHub
