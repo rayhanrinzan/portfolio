@@ -17,10 +17,9 @@ const jobs = await Promise.all(
   <h2 id="experience-h">Where I've been</h2>
   <ol role="list">
     {
-      jobs.map(({ org, location, roles, todo, empty, Content }) => (
+      jobs.map(({ org, roles, todo, empty, Content }) => (
         <li class="job">
           <h3>{org}</h3>
-          {location && <p class="place soft">{location}</p>}
           <ul role="list">
             {roles.map((role) => (
               <li class="role">
@@ -46,7 +45,6 @@ const jobs = await Promise.all(
 
 <style>
   .job + .job { margin-top: 28px; }
-  .place { font-size: 0.9375rem; }
   .role {
     display: flex;
     justify-content: space-between;

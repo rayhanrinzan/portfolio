@@ -1,6 +1,5 @@
 ---
 org: Syracuse University College of Engineering and Computer Science
-location: Syracuse, NY
 roles:
   - title: Robotics Systems Engineer
     start: "2025-06"

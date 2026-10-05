@@ -9,7 +9,6 @@ const experience = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/experience' }),
   schema: z.object({
     org: z.string(),
-    location: z.string().optional(),
     roles: z
       .array(
         z.object({

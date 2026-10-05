@@ -1,6 +1,5 @@
 ---
 org: Weill Cornell Medicine
-location: New York, NY
 roles:
   - title: ML Research Intern
     start: "2026-05"

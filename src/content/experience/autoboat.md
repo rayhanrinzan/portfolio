@@ -1,6 +1,5 @@
 ---
 org: Cornell University AutoBoat Project Team
-location: Ithaca, NY
 roles:
   - title: Software Engineer
     start: "2026-08"
