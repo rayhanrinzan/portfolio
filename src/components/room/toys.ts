@@ -2,7 +2,7 @@
 // when it opens, the breeze a fast pointer makes, the row of books, the
 // envelope, the lamp you can swing and the clouds you can push. All of it is
 // play on top of the buttons; none of it is needed to reach any content.
-import { gsap, motionOK, rand, root, stage, svgPoint } from './motion';
+import { gsap, motionOK, openCone, rand, root, stage, svgPoint } from './motion';
 
 const all = <T extends Element>(selector: string): T[] => Array.from(stage.querySelectorAll<T>(selector));
 const one = <T extends Element>(selector: string): T | null => stage.querySelector<T>(selector);
@@ -11,9 +11,9 @@ const notes = all<SVGGElement>('.note');
 const steam = all<SVGPathElement>('.steam');
 const leaves = one<SVGSVGElement>('.leaves');
 const lamp = one<HTMLButtonElement>('.obj-lamp');
-const glows = all<HTMLElement>('.obj-glow');
 const envelope = one<SVGGElement>('.env');
 const flap = one<SVGPolylineElement>('.flap');
+const flapBack = one<SVGPolygonElement>('.flap-back');
 const letter = one<SVGRectElement>('.letter');
 const phone = one<SVGGElement>('.phone');
 const ping = one<SVGCircleElement>('.ping');
@@ -72,9 +72,19 @@ function hopEnvelope(): void {
 }
 
 function openEnvelope(openIt: boolean): void {
-  if (!flap || !letter || !motionOK()) return;
-  gsap.to(flap, { attr: { points: openIt ? '1120,693 1185,654 1250,693' : '1120,693 1185,740 1250,693' }, duration: 0.25, ease: 'power2.out', overwrite: true });
-  gsap.to(letter, { y: openIt ? -26 : 0, duration: 0.3, delay: openIt ? 0.1 : 0, ease: 'power2.out', overwrite: true });
+  if (!flap || !flapBack || !letter || !motionOK()) return;
+  const SHUT = '1120,693 1185,740 1250,693';
+  const FLAT = '1120,693 1185,693 1250,693';
+  const OPEN = '1120,693 1185,654 1250,693';
+  gsap.killTweensOf([flap, flapBack, letter]);
+  // the flap folds flat along the top edge, then carries on up behind the
+  // letter (or comes back the same way)
+  const tl = gsap.timeline({ defaults: { duration: 0.12, ease: 'none' } });
+  if (openIt) {
+    tl.to(flap, { attr: { points: FLAT } }).to(flapBack, { attr: { points: OPEN }, ease: 'power2.out' }).to(letter, { y: -26, duration: 0.3, ease: 'power2.out' }, 0.1);
+  } else {
+    tl.to(letter, { y: 0, duration: 0.2, ease: 'power2.out' }).to(flapBack, { attr: { points: FLAT } }, 0.08).to(flap, { attr: { points: SHUT }, ease: 'power2.out' });
+  }
 }
 
 function tipBook(): void {
@@ -116,16 +126,11 @@ const CORD = 8.9;
 const swing = { angle: 0 };
 let lampDragged = false;
 
-/** Where the shade sits along the top edge of each light drawing. */
-const glowOrigin = (_i: number, el: Element): string => (el.closest('.obj-glow-land') ? '48.4% 0%' : '82.75% 0%');
-
 function applySwing(): void {
   if (!lamp) return;
-  const length = lamp.offsetHeight * CORD;
   gsap.set(lamp, { rotation: swing.angle, transformOrigin: `50% ${-CORD * 100}%` });
-  // the light on the table follows the shade
-  const shift = Math.sin((swing.angle * Math.PI) / 180) * -length;
-  gsap.set(glows, { x: shift, rotation: swing.angle * 1.4, transformOrigin: glowOrigin });
+  // the light turns with the lamp, about the same point (room.css)
+  stage.style.setProperty('--swing', `${swing.angle.toFixed(3)}deg`);
 }
 
 function settleLamp(): void {
@@ -153,18 +158,21 @@ export function rattleLamp(duration: number): void {
     the shade once. room.css: html[data-lamp='off'] is the lamp dark,
     'catch' the bulb lit with no light thrown yet. */
 export function flickerOn(): void {
-  const cones = glows.map((glow) => glow.querySelector('.art'));
   const bulb = (state: 'off' | 'catch') => (): void => void (root.dataset.lamp = state);
-  gsap.killTweensOf(cones);
   gsap
     .timeline()
     .call(bulb('catch'), [], 0.1)
     .call(bulb('off'), [], 0.18)
     .call(bulb('catch'), [], 0.28)
     .call(bulb('off'), [], 0.4)
-    .call(() => void delete root.dataset.lamp, [], 0.46)
-    // the cone opens out from the shade, keeping its shape
-    .fromTo(cones, { scale: 0, transformOrigin: glowOrigin }, { scale: 1, duration: 0.35, ease: 'power2.out', clearProps: 'transform', immediateRender: false }, 0.46);
+    .call(
+      () => {
+        delete root.dataset.lamp;
+        openCone();
+      },
+      [],
+      0.46,
+    );
 }
 
 /** The lamp can be pulled aside and let go; a plain click calls onToggle. */

@@ -61,4 +61,14 @@ export function toTop(el: HTMLElement | null): void {
   if (document.readyState !== 'complete') window.addEventListener('load', top, { once: true });
 }
 
+/** The lamp's light opens out from the shade. A plain element animation:
+    where the light sits and what it scales from are in room.css, so nothing
+    is left behind on the element afterwards. */
+export function openCone(): void {
+  if (!motionOK()) return;
+  stage.querySelectorAll('.obj-glow .art').forEach((cone) => {
+    cone.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 350, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+  });
+}
+
 export const rand = gsap.utils.random;

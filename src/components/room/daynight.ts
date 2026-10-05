@@ -1,7 +1,7 @@
 // The sky state, and the lamp that overrides it. Changing between day and
 // night is a short scene change: the page colours cross-fade, the moon or sun
 // comes up, the stars pop in and the lamp's light unfolds.
-import { gsap, motionOK, room, root, stage } from './motion';
+import { gsap, motionOK, openCone, room, root, stage } from './motion';
 
 /** Daytime is always the blue afternoon sky, whatever the clock says. */
 const DAY = 'afternoon';
@@ -29,12 +29,8 @@ function arrive(sky: string): void {
   if (sky === 'night') {
     gsap.from(pane.querySelector('.moon'), { y: 150, duration: 0.6, ease: 'power3.out' });
     gsap.from(pane.querySelectorAll('.tw'), { scale: 0, transformOrigin: '50% 50%', duration: 0.3, ease: 'back.out(3)', stagger: 0.06, delay: 0.15 });
-    // the drawing inside each light, not its wrapper: the wrapper's transform
-    // belongs to the parallax and the lamp's swing. Skipped while the lamp is
-    // still dark (the entrance), which opens the light itself.
-    if (!root.dataset.lamp) {
-      gsap.from(stage.querySelectorAll('.obj-glow .art'), { scaleY: 0, transformOrigin: '50% 0%', duration: 0.45, ease: 'power2.out', clearProps: 'transform' });
-    }
+    // not while the lamp is still dark (the entrance): that opens the light itself
+    if (!root.dataset.lamp) openCone();
   } else {
     const group = pane.querySelector(`.sky-${sky}`);
     if (!group) return;

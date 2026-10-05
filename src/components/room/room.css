@@ -284,6 +284,21 @@ html[data-motion] .room .obj:is([data-layer='furniture'], [data-layer='glow']) {
 html[data-motion] .room .obj[data-layer='objects'] { translate: calc(var(--px) * -10px) calc(var(--py) * -6px); }
 html[data-motion] .room .obj[data-layer='foreground'] { translate: calc(var(--px) * -12px) calc(var(--py) * -7px); }
 
+/* The lamp's light is fixed to the lamp. It turns about the same point far up
+   the cord that the lamp swings from (--swing, set by toys.ts), so the cone
+   stays under the shade however far the lamp is pulled. Neither takes part in
+   the parallax, and no script writes a transform on the light. */
+.obj-glow { transform: rotate(var(--swing, 0deg)); }
+.obj-glow-land { transform-origin: 48.4375% -222.727%; }
+.obj-glow-port { transform-origin: 82.75% -117.954%; }
+/* the cone opens out from the shade (openCone in motion.ts) */
+.obj-glow-land .art { transform-origin: 48.4375% 0; }
+.obj-glow-port .art { transform-origin: 82.75% 0; }
+html[data-motion] .room .stage .obj:is(.obj-lamp, .obj-glow) { translate: none; }
+/* a hovered object lifts a little; the lamp takes its light with it */
+.obj-glow .art { transition: translate 160ms ease-out; }
+button.obj-lamp:is(:hover, :focus-visible) ~ .obj-glow .art { translate: 0 -3px; }
+
 /* things you can drag */
 .obj-window,
 .obj-lamp { touch-action: none; }
@@ -605,9 +620,11 @@ html[data-hint] .hint { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   button.obj .art,
+  .obj-glow .art,
   .lab { transition: none; }
   button.obj:hover .art,
   button.obj:focus-visible .art { transform: none; }
+  button.obj-lamp:is(:hover, :focus-visible) ~ .obj-glow .art { translate: none; }
   ::view-transition-old(root),
   ::view-transition-new(root) { animation-duration: 0.01ms; }
 }
