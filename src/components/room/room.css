@@ -557,8 +557,8 @@ html[data-hint] .hint { opacity: 1; }
 }
 .screen-col { max-width: 640px; margin: 0 auto; padding: 40px 24px 64px; }
 
-.run { margin-top: 56px; }
-.run h3 { font-family: var(--font-hand); font-weight: 600; font-size: 1.3rem; margin-bottom: 6px; }
+.run { margin-bottom: 56px; }
+.run h2 { font-family: var(--font-hand); font-weight: 600; font-size: 1.3rem; margin-bottom: 6px; }
 .run-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
