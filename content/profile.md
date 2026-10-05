@@ -38,10 +38,11 @@ one-line "what I did + result" from Rayhan.
 2. Cornell University AutoBoat Project Team, Ithaca NY, on-site
    - Software Engineer, Aug 2026 – present
    - Electrical Systems, Feb 2026 – present
-   - Perception software: quaternion-derived yaw in the exponential moving averages for vessel tracking; buoy color and sign validation so tracked object information is more consistent for the autonomy stack.
-3. Machine Learning Research Intern — Weill Cornell Medicine, New York NY, on-site, May 2026 – Aug 2026
+   - Software Engineer: perception software: quaternion-derived yaw in the exponential moving averages for vessel tracking; buoy color and sign validation so tracked object information is more consistent for the autonomy stack.
+   - Electrical Systems: "Contributed to Robotics Power Distribution + Binary Relay Board"
+3. ML Research Intern (site title; LinkedIn says Machine Learning Research Intern) — Weill Cornell Medicine, New York NY, on-site, May 2026 – Aug 2026
    - Deep learning pipelines for automated abdominal-organ segmentation in MRI for radiotherapy planning. Dataset infrastructure, preprocessing, GPU training (Python, PyTorch, Linux); hundreds of experiments; about 0.94 Dice.
-4. Robotics Systems Engineer (internship) — Syracuse University College of
+4. Robotics Systems Engineer (internship on LinkedIn; site title drops it) — Syracuse University College of
    Engineering and Computer Science, Syracuse NY, on-site, Jun 2025 – Aug 2025
    - Radar-equipped hexacopter (Pixhawk, ArduPilot, Raspberry Pi): sensor integration and synthetic aperture radar processing; image reconstruction with motion compensation and backprojection.
 5. Computational Research Intern — SUNY Oswego, Jun 2024 – Oct 2024
