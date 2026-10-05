@@ -10,7 +10,15 @@ import { pictures, placeholders } from '../../content/gallery';
         {pictures.map((pic) => (
           <li>
             <figure>
-              <img src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} loading="lazy" decoding="async" />
+              <img
+                src={pic.src}
+                alt={pic.alt}
+                width={pic.width}
+                height={pic.height}
+                style={pic.focus && `object-position: ${pic.focus}`}
+                loading="lazy"
+                decoding="async"
+              />
               {pic.caption && <figcaption class="soft">{pic.caption}</figcaption>}
             </figure>
           </li>

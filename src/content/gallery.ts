@@ -7,6 +7,8 @@ export interface Picture {
   /** What the picture shows, for people who cannot see it. */
   alt: string;
   caption?: string;
+  /** CSS object-position for the 4:3 crop, when the middle is the wrong part. */
+  focus?: string;
   width: number;
   height: number;
 }
@@ -35,6 +37,31 @@ export const pictures: Picture[] = [
     alt: 'A selfie of two people smiling in a park, with a fountain in a pond behind them.',
     width: 1200,
     height: 900,
+  },
+  {
+    src: '/gallery/pasta.webp',
+    alt: 'A plate of pesto fettuccine topped with a seared chicken thigh and a sprig of cilantro.',
+    width: 1200,
+    height: 900,
+  },
+  {
+    src: '/gallery/rowing.webp',
+    alt: 'An eight-person rowing crew and their coxswain on choppy blue water, seen from above.',
+    width: 1200,
+    height: 677,
+  },
+  {
+    src: '/gallery/beach.webp',
+    alt: 'Someone walking barefoot across the sand towards the sea, with ships on the horizon under a wide blue sky.',
+    width: 900,
+    height: 1200,
+  },
+  {
+    src: '/gallery/frog-statue.webp',
+    alt: 'Someone in sunglasses smiling next to a bronze statue of a frog in a flat cap, leaning on a cane outside an art gallery.',
+    width: 900,
+    height: 1200,
+    focus: 'center 30%',
   },
 ];
 
