@@ -76,3 +76,11 @@
   --stone: color-mix(in srgb, #7F93A5 58%, var(--unlit));
   --sage: color-mix(in srgb, #93A88C 58%, var(--unlit));
 }
+/* ...and neither is the laptop's screen: it makes its own light. */
+:root[data-theme="night"][data-lamp="off"] .obj-laptop :is([data-screen-rect], [data-screen-rect] + polyline, .curve, .loss, .caret) {
+  --sky: #1C2733;
+  --line: #4F6578;
+  --ink: #DDE9F3;
+  --ink-soft: #9FB4C6;
+  --link: #8CC8EE;
+}

@@ -136,6 +136,11 @@ function typeKeys(): void {
 const CORD = 8.9;
 const swing = { angle: 0 };
 let lampDragged = false;
+/** True from pressing the lamp until it is let go. */
+let lampHeld = false;
+/** After a pull, the breeze leaves the lamp alone until this time, so moving
+    the pointer away does not look like it is still holding the lamp. */
+let lampQuiet = 0;
 
 function applySwing(): void {
   if (!lamp) return;
@@ -190,15 +195,32 @@ export function flickerOn(): void {
 export function initLamp(onToggle: () => Promise<void>): void {
   if (!lamp) return;
   let startX = 0;
-  let down = false;
   lamp.addEventListener('pointerdown', (e) => {
-    down = true;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    lampHeld = true;
     lampDragged = false;
     startX = e.clientX;
-    lamp.setPointerCapture(e.pointerId);
+    try {
+      lamp.setPointerCapture(e.pointerId);
+    } catch {
+      // no capture: the moves over the lamp still arrive
+    }
   });
+  // Letting go, however the browser tells us. A release outside the window
+  // or over another frame may never arrive as pointerup, so losing the
+  // capture, the window losing focus, and a mouse that moves with no button
+  // down all count: the lamp must never be left following the pointer.
+  const release = (): void => {
+    if (!lampHeld) return;
+    lampHeld = false;
+    if (lampDragged) {
+      lampQuiet = performance.now() + 1500;
+      settleLamp();
+    }
+  };
   lamp.addEventListener('pointermove', (e) => {
-    if (!down || !motionOK()) return;
+    if (!lampHeld || !motionOK()) return;
+    if (e.pointerType === 'mouse' && (e.buttons & 1) === 0) return release();
     const dx = e.clientX - startX;
     if (Math.abs(dx) > 4) lampDragged = true;
     if (!lampDragged) return;
@@ -207,12 +229,10 @@ export function initLamp(onToggle: () => Promise<void>): void {
     swing.angle = gsap.utils.clamp(-7, 7, (Math.atan2(-dx, length) * 180) / Math.PI);
     applySwing();
   });
-  const up = (): void => {
-    if (down && lampDragged) settleLamp();
-    down = false;
-  };
-  lamp.addEventListener('pointerup', up);
-  lamp.addEventListener('pointercancel', up);
+  lamp.addEventListener('pointerup', release);
+  lamp.addEventListener('pointercancel', release);
+  lamp.addEventListener('lostpointercapture', release);
+  window.addEventListener('blur', release);
   lamp.addEventListener('click', () => {
     if (lampDragged) {
       lampDragged = false;
@@ -335,7 +355,7 @@ function initBreeze(): void {
     ...notes.map((note) => ({ el: note as Element, gust: (dir: number) => swingNote(note, 9 * dir), rest: 0 })),
     ...(steam[0] ? [{ el: steam[0] as Element, gust: bendSteam, rest: 0 }] : []),
     ...(leaves ? [{ el: leaves as Element, gust: leanPlant, rest: 0 }] : []),
-    ...(lamp ? [{ el: lamp as Element, gust: (dir: number) => swingLamp(-2.5 * dir), rest: 0 }] : []),
+    ...(lamp ? [{ el: lamp as Element, gust: (dir: number) => void (!lampHeld && performance.now() > lampQuiet && swingLamp(-2.5 * dir)), rest: 0 }] : []),
   ];
   let last = { x: 0, t: 0 };
   let checked = 0;
