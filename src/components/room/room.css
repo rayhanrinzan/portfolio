@@ -203,6 +203,8 @@ button.obj[data-target] .lab { opacity: 1; }
    bulb dark, 'catch' the bulb lit; neither throws any light yet */
 html[data-lamp='off'] .room .shade { fill: var(--sand); }
 html[data-lamp] .room .obj-glow.obj-glow { display: none; }
+/* the moon and stars are outside: they do not dim with the room (tokens.css) */
+html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
 
 /* landscape composition */
 .room { --floor-y: 700; }
