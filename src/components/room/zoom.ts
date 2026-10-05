@@ -1,12 +1,13 @@
 // The laptop is the one object that does not open a notebook page: the camera
 // pushes in until its screen fills the view, and the screen becomes the
 // projects page. Closing pulls back out to the room.
-import { gsap, motionOK, room, stage } from './motion';
+import { gsap, motionOK, room, stage, toTop } from './motion';
 
 const screen = room.querySelector<HTMLElement>('[data-screen]')!;
 const head = room.querySelector<HTMLElement>('[data-head]');
 const chair = room.querySelector<HTMLElement>('.obj-chair');
 const screenRect = room.querySelector<SVGRectElement>('.obj-laptop [data-screen-rect]');
+const scroller = screen.querySelector<HTMLElement>('.screen-in');
 
 let zoomed = false;
 
@@ -35,6 +36,7 @@ function target(): { x: number; y: number; scale: number } {
 export function openScreen(animate: boolean, done?: () => void): void {
   gsap.killTweensOf([stage, screen, head, chair]);
   screen.hidden = false;
+  toTop(scroller);
   if (!zoomed) gsap.set(stage, { transformOrigin: '0 0', willChange: 'transform' });
   const to = zoomed ? null : target();
   zoomed = true;

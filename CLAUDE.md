@@ -23,6 +23,7 @@ by clicking objects:
 | corkboard / sticky notes| experience               |
 | bookshelf               | education + coursework   |
 | mug                     | about me                 |
+| picture frame (a cat, on the top shelf) | gallery of pictures |
 | phone / envelope        | contact + résumé         |
 | window                  | just the sky (clouds you can push around; at night, drag to throw a shooting star) |
 | lamp                    | nothing; toggles day / night (it can also be pulled and swings) |
@@ -37,21 +38,26 @@ The laptop is the exception: clicking it zooms the camera into the screen,
 and the screen becomes the projects page. Closing it zooms back out to the
 room.
 
+The room's header, top left, carries the name and degree line and, in the
+landscape room, email and LinkedIn links, so the fastest facts never need a
+click.
+
 Sky and lamp. Daytime is always the blue afternoon sky, with the sun in the
-top left of the window; night has stars and the lamp on. The morning and
-golden-hour drawings still exist but are only reachable with `?sky=`. The
-sky does not follow the clock while the entrance plays (see below); a load
-without the entrance (reduced motion, a deep link) opens at night during
-night hours or in dark mode, otherwise in daylight.
+top left of the window; night has stars and the lamp on. `?sky=afternoon`
+or `?sky=night` forces one. The sky does not follow the clock while the
+entrance plays (see below); a load without the entrance (reduced motion, a
+deep link) opens at night during night hours or in dark mode, otherwise in
+daylight.
 
 The lamp is clickable and toggles day / night.
 
 Entrance, on every load of the room: the wall, shelves, corkboard, window and
 chair are already in place. The things on the table pop into the air one by
 one, left to right, each with a burst of short pop lines, then all drop onto
-the table together; the lamp drops with them. The room opens in daylight and,
-a beat after the landing, the lamp switches on and it becomes night. About
-1.2s, objects clickable throughout, skipped under reduced motion, on deep
+the table together; the lamp drops with them, its shade rattling on the cord
+as it falls. The room opens in daylight; a beat after the landing night
+falls, and the lamp flickers on. About 1.3s to the dusk and the lamp is lit
+a second later, objects clickable throughout, skipped under reduced motion, on deep
 links and in the list view.
 
 Watering the plant. The plant starts as a sprout. By day a watering can
@@ -60,9 +66,9 @@ the portrait room); it pops in when the lamp is switched to day, pops out at
 night, and is never there at load. Hovering the plant dims the room around
 the plant and the can with the hint "Try watering the plant" (until it has
 been watered once). Dragging the can to the plant, or clicking it, pours
-water: the sun moves to the middle of the window, lights up behind a flat
-corona and sends shafts of light to the plant, which grows. It is full grown
-after three waterings.
+water: the sun moves to the middle of the window, in front of the clouds,
+lights up behind a flat corona and sends shafts of light to the plant, which
+grows. It is full grown after three waterings.
 
 Laptop screen shows a tiny live "training run": a loss curve that redraws,
 with a loss number ticking down. It is real: a small neural net learning XOR
@@ -132,9 +138,9 @@ Type: Klee One 600 for headings and handwritten labels; Zen Maru Gothic
   vectorize, layer, and animate them.
 - Every interactive object is a real `<button>` with an accessible name
   ("Open projects (laptop)"), visible focus ring that follows the object's
-  outline, and a small handwritten label. The five labels that name a
-  destination (experience, projects, education, about, contact) are always
-  visible; the others ("sky", "night", "water") show on hover/focus, and
+  outline, and a small handwritten label. The six labels that name a
+  destination (experience, projects, education, about, gallery, contact) are
+  always visible; the others ("sky", "night", "water") show on hover/focus, and
   always on touch screens.
 
 ## Interaction and motion rules

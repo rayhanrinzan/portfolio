@@ -2,7 +2,7 @@
 // in the list view; opening moves that element onto the notebook page (or the
 // laptop screen), closing puts it back. The URL hash is the source of truth,
 // so deep links and the back button work.
-import { gsap, motionOK, room, root, stage } from './motion';
+import { gsap, motionOK, room, root, stage, toTop } from './motion';
 import { closeScreen, openScreen } from './zoom';
 import { react } from './toys';
 
@@ -91,7 +91,7 @@ function fillPage(id: string): void {
   page.dataset.id = id;
   page.setAttribute('aria-labelledby', `${id}-h`);
   mount(id, pageBody);
-  pageBody.scrollTop = 0;
+  toTop(pageBody);
   drawDoodle(id);
 }
 

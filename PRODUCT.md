@@ -42,12 +42,13 @@ single-column list. Both are first-class.
 ## Operating Context
 
 - Object-to-content map: laptop → projects; corkboard / sticky notes →
-  experience; bookshelf → education + coursework; mug → about me; phone /
+  experience; bookshelf → education + coursework; mug → about me; picture
+  frame → gallery of pictures; phone /
   envelope → contact + résumé; window → the sky (easter egg).
 - Content opens as paper notebook pages that slide over the room. The room
   stays visible behind them.
-- The window sky follows the visitor's local time (morning, afternoon, golden
-  hour, night); afternoon when unknown.
+- The window sky is the blue afternoon by day and stars at night; the lamp
+  toggles between them.
 - Deep links (`/#projects`, `/#experience`, …) open the matching panel; the
   back button closes it.
 - The list view is also the no-JS, reduced-motion, and screen-reader-first

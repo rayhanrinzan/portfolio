@@ -50,4 +50,25 @@ export function svgPoint(svg: SVGSVGElement, e: { clientX: number; clientY: numb
   return matrix ? new DOMPoint(e.clientX, e.clientY).matrixTransform(matrix.inverse()) : null;
 }
 
+/** Open a scrolling surface at its top. A #hash deep link makes the browser
+    scroll the matching heading to the top edge, now and again once the page
+    has loaded, so the reset is repeated then. */
+export function toTop(el: HTMLElement | null): void {
+  if (!el) return;
+  const top = (): void => void (el.scrollTop = 0);
+  top();
+  requestAnimationFrame(top);
+  if (document.readyState !== 'complete') window.addEventListener('load', top, { once: true });
+}
+
+/** The lamp's light opens out from the shade. A plain element animation:
+    where the light sits and what it scales from are in room.css, so nothing
+    is left behind on the element afterwards. */
+export function openCone(): void {
+  if (!motionOK()) return;
+  stage.querySelectorAll('.obj-glow .art').forEach((cone) => {
+    cone.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 350, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+  });
+}
+
 export const rand = gsap.utils.random;

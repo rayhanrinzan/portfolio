@@ -57,7 +57,30 @@
   color-scheme: dark;
 }
 
-/* The window follows the sky state: accent-sky at 25% over --sky in the
-   morning, yellow at 45% over --sky at golden hour. Fills only. */
-:root[data-sky="morning"] { --window: #CEE8F8; }
-:root[data-sky="golden"] { --window: #EBE6BA; }
+/* Night with the lamp not yet on: the same colours taken down toward a
+   near-black navy. Shown only in the dark beats of the entrance's flicker
+   (html[data-lamp="off"], toys.ts); the moment the bulb is lit the room is
+   back to the night colours above. The sky outside the window is not the
+   lamp's to dim, so --window stays as it is. */
+:root[data-theme="night"][data-lamp="off"] {
+  --unlit: #080C11;
+  --sky: color-mix(in srgb, #1C2733 58%, var(--unlit));
+  --paper: color-mix(in srgb, #253241 58%, var(--unlit));
+  --line: color-mix(in srgb, #4F6578 58%, var(--unlit));
+  --ink: color-mix(in srgb, #DDE9F3 58%, var(--unlit));
+  --ink-soft: color-mix(in srgb, #9FB4C6 58%, var(--unlit));
+  --link: color-mix(in srgb, #8CC8EE 58%, var(--unlit));
+  --accent-sky: color-mix(in srgb, #92C1DE 58%, var(--unlit));
+  --yellow: color-mix(in srgb, #E6CF78 58%, var(--unlit));
+  --sand: color-mix(in srgb, #B5AC9C 58%, var(--unlit));
+  --stone: color-mix(in srgb, #7F93A5 58%, var(--unlit));
+  --sage: color-mix(in srgb, #93A88C 58%, var(--unlit));
+}
+/* ...and neither is the laptop's screen: it makes its own light. */
+:root[data-theme="night"][data-lamp="off"] .obj-laptop :is([data-screen-rect], [data-screen-rect] + polyline, .curve, .loss, .caret) {
+  --sky: #1C2733;
+  --line: #4F6578;
+  --ink: #DDE9F3;
+  --ink-soft: #9FB4C6;
+  --link: #8CC8EE;
+}

@@ -238,10 +238,12 @@ function sunlight(p: Box): void {
       { scale: 1, rotation: 20, duration: 0.28, ease: 'back.out(3)', yoyo: true, repeat: 1, stagger: { each: 0.16, from: 'random' } },
       LIT + 0.4,
     )
-    // and lets go: light fades, the sun goes back to where it was
-    .to([shafts, pool], { opacity: 0, duration: 0.45, ease: 'power1.in' }, DONE)
-    .to(halo, { opacity: 0, duration: 0.4 }, DONE)
-    .to(sun, { x: 0, y: 0, scale: 1, duration: 0.7, ease: 'power2.inOut' }, DONE + 0.1);
+    // and lets go: the light goes out first, quickly, and only then does the
+    // sun go back to where it was
+    .to([shafts, pulses, pool, glints], { opacity: 0, duration: 0.2, ease: 'power2.out', overwrite: 'auto' }, DONE)
+    .to(halo, { opacity: 0, duration: 0.2, ease: 'power2.out' }, DONE)
+    .to(sun, { scale: 1, duration: 0.2, ease: 'power2.out' }, DONE)
+    .to(sun, { x: 0, y: 0, duration: 0.6, ease: 'power2.inOut' }, DONE + 0.2);
 }
 
 /** Water from the rose down onto the leaves: short dashes running along arcs. */
@@ -289,10 +291,10 @@ function grow(): void {
   }
   const size = { k: before };
   gsap
-    .timeline({ defaults: { transformOrigin: '49% 58%' } })
+    .timeline()
     // drinks: a little squash, then up
-    .to(leaves, { scaleY: 0.92, scaleX: 1.06, duration: 0.14, ease: 'power1.out' })
-    .to(leaves, { scaleX: 1, scaleY: 1, duration: 0.5, ease: 'back.out(3)' })
+    .to(leaves, { scaleY: 0.92, scaleX: 1.06, transformOrigin: '49% 58%', duration: 0.14, ease: 'power1.out' })
+    .to(leaves, { scaleX: 1, scaleY: 1, transformOrigin: '49% 58%', duration: 0.5, ease: 'back.out(3)' })
     .to(size, { k: after, duration: 1.1, ease: 'elastic.out(1.1, 0.4)', onUpdate: () => growth?.style.setProperty('--grow', size.k.toFixed(3)) }, 0.14);
 }
 

@@ -2,7 +2,7 @@
 // when it opens, the breeze a fast pointer makes, the row of books, the
 // envelope, the lamp you can swing and the clouds you can push. All of it is
 // play on top of the buttons; none of it is needed to reach any content.
-import { gsap, motionOK, rand, stage, svgPoint } from './motion';
+import { gsap, motionOK, openCone, rand, root, stage, svgPoint } from './motion';
 
 const all = <T extends Element>(selector: string): T[] => Array.from(stage.querySelectorAll<T>(selector));
 const one = <T extends Element>(selector: string): T | null => stage.querySelector<T>(selector);
@@ -11,9 +11,9 @@ const notes = all<SVGGElement>('.note');
 const steam = all<SVGPathElement>('.steam');
 const leaves = one<SVGSVGElement>('.leaves');
 const lamp = one<HTMLButtonElement>('.obj-lamp');
-const glows = all<HTMLElement>('.obj-glow');
 const envelope = one<SVGGElement>('.env');
 const flap = one<SVGPolylineElement>('.flap');
+const flapBack = one<SVGPolygonElement>('.flap-back');
 const letter = one<SVGRectElement>('.letter');
 const phone = one<SVGGElement>('.phone');
 const ping = one<SVGCircleElement>('.ping');
@@ -72,9 +72,30 @@ function hopEnvelope(): void {
 }
 
 function openEnvelope(openIt: boolean): void {
-  if (!flap || !letter || !motionOK()) return;
-  gsap.to(flap, { attr: { points: openIt ? '1120,693 1185,654 1250,693' : '1120,693 1185,740 1250,693' }, duration: 0.25, ease: 'power2.out', overwrite: true });
-  gsap.to(letter, { y: openIt ? -26 : 0, duration: 0.3, delay: openIt ? 0.1 : 0, ease: 'power2.out', overwrite: true });
+  if (!flap || !flapBack || !letter || !motionOK()) return;
+  const SHUT = '1120,693 1185,740 1250,693';
+  const FLAT = '1120,693 1185,693 1250,693';
+  const OPEN = '1120,693 1185,654 1250,693';
+  gsap.killTweensOf([flap, flapBack, letter]);
+  // the flap folds flat along the top edge, then carries on up behind the
+  // letter (or comes back the same way)
+  const tl = gsap.timeline({ defaults: { duration: 0.12, ease: 'none' } });
+  if (openIt) {
+    tl.to(flap, { attr: { points: FLAT } }).to(flapBack, { attr: { points: OPEN }, ease: 'power2.out' }).to(letter, { y: -26, duration: 0.3, ease: 'power2.out' }, 0.1);
+  } else {
+    tl.to(letter, { y: 0, duration: 0.2, ease: 'power2.out' }).to(flapBack, { attr: { points: FLAT } }, 0.08).to(flap, { attr: { points: SHUT }, ease: 'power2.out' });
+  }
+}
+
+/** The picture frame rocks on the shelf and settles. */
+function rockFrame(): void {
+  const frame = one<SVGGElement>('.obj-frame .frame-art');
+  if (!frame) return;
+  gsap.killTweensOf(frame);
+  gsap
+    .timeline({ defaults: { svgOrigin: '1428 250' } })
+    .to(frame, { rotation: -7, duration: 0.12, ease: 'power2.out' })
+    .to(frame, { rotation: 0, duration: 0.7, ease: 'elastic.out(1.2, 0.3)' });
 }
 
 function tipBook(): void {
@@ -82,7 +103,8 @@ function tipBook(): void {
   gsap.killTweensOf(tilt, 'rotation');
   gsap
     .timeline({ defaults: { svgOrigin: '1286 250' } })
-    .to(tilt, { rotation: -22, duration: 0.2, ease: 'power2.inOut' })
+    // tips away from the row, about its outer foot, and rocks back upright
+    .to(tilt, { rotation: 14, duration: 0.2, ease: 'power2.inOut' })
     .to(tilt, { rotation: 0, duration: 0.5, ease: 'bounce.out' });
 }
 
@@ -114,14 +136,17 @@ function typeKeys(): void {
 const CORD = 8.9;
 const swing = { angle: 0 };
 let lampDragged = false;
+/** True from pressing the lamp until it is let go. */
+let lampHeld = false;
+/** After a pull, the breeze leaves the lamp alone until this time, so moving
+    the pointer away does not look like it is still holding the lamp. */
+let lampQuiet = 0;
 
 function applySwing(): void {
   if (!lamp) return;
-  const length = lamp.offsetHeight * CORD;
   gsap.set(lamp, { rotation: swing.angle, transformOrigin: `50% ${-CORD * 100}%` });
-  // the light on the table follows the shade
-  const shift = Math.sin((swing.angle * Math.PI) / 180) * -length;
-  gsap.set(glows, { x: shift, rotation: swing.angle * 1.4, transformOrigin: (_i: number, el: Element) => (el.classList.contains('obj-glow-land') ? '48.4% 0%' : '82.75% 0%') });
+  // the light turns with the lamp, about the same point (room.css)
+  stage.style.setProperty('--swing', `${swing.angle.toFixed(3)}deg`);
 }
 
 function settleLamp(): void {
@@ -133,19 +158,69 @@ export function swingLamp(degrees: number): void {
   gsap.to(swing, { angle: degrees, duration: 0.18, ease: 'power2.out', onUpdate: applySwing, overwrite: true, onComplete: settleLamp });
 }
 
+/** The shade rattles on the end of its cord and comes to rest within
+    `duration` seconds: what the lamp does on its way down in the entrance.
+    Only the shade tilts, about the point the cord holds it by; the cord
+    stays straight, so nothing whips sideways. */
+export function rattleLamp(duration: number): void {
+  const shade = lamp?.querySelector('g[filter]');
+  if (!shade || !motionOK()) return;
+  gsap.set(shade, { svgOrigin: '1000 300' });
+  gsap.to(shade, { keyframes: { rotation: [0, 6, -4.5, 3, -1.5, 0.5, 0], easeEach: 'sine.inOut' }, duration, clearProps: 'transform' });
+}
+
+/** The light coming on in a room that is already dark: the bulb stutters
+    twice (the shade only), then catches, and the cone of light opens out from
+    the shade once. room.css: html[data-lamp='off'] is the lamp dark,
+    'catch' the bulb lit with no light thrown yet. */
+export function flickerOn(): void {
+  const bulb = (state: 'off' | 'catch') => (): void => void (root.dataset.lamp = state);
+  gsap
+    .timeline()
+    .call(bulb('catch'), [], 0.1)
+    .call(bulb('off'), [], 0.18)
+    .call(bulb('catch'), [], 0.28)
+    .call(bulb('off'), [], 0.4)
+    .call(
+      () => {
+        delete root.dataset.lamp;
+        openCone();
+      },
+      [],
+      0.46,
+    );
+}
+
 /** The lamp can be pulled aside and let go; a plain click calls onToggle. */
-export function initLamp(onToggle: () => void): void {
+export function initLamp(onToggle: () => Promise<void>): void {
   if (!lamp) return;
   let startX = 0;
-  let down = false;
   lamp.addEventListener('pointerdown', (e) => {
-    down = true;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    lampHeld = true;
     lampDragged = false;
     startX = e.clientX;
-    lamp.setPointerCapture(e.pointerId);
+    try {
+      lamp.setPointerCapture(e.pointerId);
+    } catch {
+      // no capture: the moves over the lamp still arrive
+    }
   });
+  // Letting go, however the browser tells us. A release outside the window
+  // or over another frame may never arrive as pointerup, so losing the
+  // capture, the window losing focus, and a mouse that moves with no button
+  // down all count: the lamp must never be left following the pointer.
+  const release = (): void => {
+    if (!lampHeld) return;
+    lampHeld = false;
+    if (lampDragged) {
+      lampQuiet = performance.now() + 1500;
+      settleLamp();
+    }
+  };
   lamp.addEventListener('pointermove', (e) => {
-    if (!down || !motionOK()) return;
+    if (!lampHeld || !motionOK()) return;
+    if (e.pointerType === 'mouse' && (e.buttons & 1) === 0) return release();
     const dx = e.clientX - startX;
     if (Math.abs(dx) > 4) lampDragged = true;
     if (!lampDragged) return;
@@ -154,19 +229,17 @@ export function initLamp(onToggle: () => void): void {
     swing.angle = gsap.utils.clamp(-7, 7, (Math.atan2(-dx, length) * 180) / Math.PI);
     applySwing();
   });
-  const up = (): void => {
-    if (down && lampDragged) settleLamp();
-    down = false;
-  };
-  lamp.addEventListener('pointerup', up);
-  lamp.addEventListener('pointercancel', up);
+  lamp.addEventListener('pointerup', release);
+  lamp.addEventListener('pointercancel', release);
+  lamp.addEventListener('lostpointercapture', release);
+  window.addEventListener('blur', release);
   lamp.addEventListener('click', () => {
     if (lampDragged) {
       lampDragged = false;
       return;
     }
-    onToggle();
-    swingLamp(2.2);
+    // the swing waits for the cross-fade: a lamp moving under it shows twice
+    void onToggle().then(() => swingLamp(2.2));
   });
 }
 
@@ -282,7 +355,7 @@ function initBreeze(): void {
     ...notes.map((note) => ({ el: note as Element, gust: (dir: number) => swingNote(note, 9 * dir), rest: 0 })),
     ...(steam[0] ? [{ el: steam[0] as Element, gust: bendSteam, rest: 0 }] : []),
     ...(leaves ? [{ el: leaves as Element, gust: leanPlant, rest: 0 }] : []),
-    ...(lamp ? [{ el: lamp as Element, gust: (dir: number) => swingLamp(-2.5 * dir), rest: 0 }] : []),
+    ...(lamp ? [{ el: lamp as Element, gust: (dir: number) => void (!lampHeld && performance.now() > lampQuiet && swingLamp(-2.5 * dir)), rest: 0 }] : []),
   ];
   let last = { x: 0, t: 0 };
   let checked = 0;
@@ -313,6 +386,7 @@ export function react(id: string): void {
   if (id === 'experience' && notes[0]) swingNote(notes[0], 16);
   else if (id === 'education') tipBook();
   else if (id === 'about') puffSteam();
+  else if (id === 'gallery') rockFrame();
   else if (id === 'contact') {
     hopEnvelope();
     buzzPhone();

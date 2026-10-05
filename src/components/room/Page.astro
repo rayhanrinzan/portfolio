@@ -5,7 +5,7 @@
 // camera zooms into for projects.
 ---
 
-<aside class="page" data-page tabindex="-1" hidden>
+<section class="page" data-page tabindex="-1" hidden>
   <div class="page-grab" data-page-grab aria-hidden="true">
     <svg viewBox="0 0 56 12" focusable="false"><path class="l" d="M3,7 q8,-5 16,0 t16,0 t16,0" /></svg>
   </div>
@@ -38,13 +38,18 @@
       <path class="l" d="M48,36 q13,0 12,10 q-1,9 -13,8" />
       <path class="l" d="M26,22 q-5,-7 0,-14 M38,22 q-5,-7 0,-14" />
     </svg>
+    <svg viewBox="0 0 72 72" data-doodle="gallery" focusable="false">
+      <path class="l" d="M12,16 q24,-3 48,0 q3,20 0,42 q-24,3 -48,0 q-3,-21 0,-42 z" />
+      <path class="l" d="M20,48 q7,-12 14,-4 q6,-14 18,4" />
+      <path class="l" d="M25,27 a4,4 0 1 1 0.1,0" />
+    </svg>
     <svg viewBox="0 0 72 72" data-doodle="contact" focusable="false">
       <path class="l" d="M10,22 q26,-3 52,0 q2,18 0,34 q-26,3 -52,0 q-2,-17 0,-34 z" />
       <path class="l" d="M11,23 q13,14 25,19 q13,-6 25,-19" />
     </svg>
   </div>
   <div class="page-body" data-page-body></div>
-</aside>
+</section>
 
 <div class="screen" data-screen role="region" aria-labelledby="projects-h" tabindex="-1" hidden>
   <div class="lid">
@@ -68,10 +73,8 @@
         <div class="run-grid">
           <button type="button" class="run-chart" data-restart aria-label="Restart the training run">
             <svg viewBox="0 0 320 150" aria-hidden="true" focusable="false">
-              <g filter="url(#wobble)">
-                <rect class="l f-sky" x="3" y="3" width="314" height="144" rx="5" />
-                <polyline class="l" points="16,12 16,134 308,134" />
-              </g>
+              <path class="l f-sky" d="M8,4 q76,-2 152,0 t152,-1 q5,1 5,6 q2,34 0,68 t1,66 q0,5 -6,5 q-76,2 -152,0 t-152,1 q-5,-1 -5,-6 q-2,-34 0,-68 t-1,-66 q0,-5 6,-5 z" />
+              <path class="l" d="M16,12 q-1,61 0,122 q146,-2 292,0" />
               <polyline class="curve" data-curve points="24,22 60,76 110,108 170,122 240,128 300,130" />
             </svg>
             <span class="run-loss" data-loss>loss 0.02</span>

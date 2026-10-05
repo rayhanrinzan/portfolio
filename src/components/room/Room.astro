@@ -8,6 +8,7 @@ import Page from './Page.astro';
 import Corkboard from '../art/room/Corkboard.astro';
 import Window from '../art/room/Window.astro';
 import Shelves from '../art/room/Shelves.astro';
+import Frame from '../art/room/Frame.astro';
 import Lamp from '../art/room/Lamp.astro';
 import Glow from '../art/room/Glow.astro';
 import Table from '../art/room/Table.astro';
@@ -19,13 +20,17 @@ import Chair from '../art/room/Chair.astro';
 import WateringCan from '../art/room/WateringCan.astro';
 import { profile } from '../../content/profile';
 
-const { name, education } = profile;
+const { name, education, contact } = profile;
 ---
 
-<div class="room" data-room>
+<main class="room" data-room>
   <header class="room-head" data-head>
     <h1>{name}</h1>
     <p>{education.degree} at {education.school}</p>
+    <ul class="links" role="list">
+      <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+      <li><a href={contact.linkedin}>LinkedIn</a></li>
+    </ul>
   </header>
 
   <div class="stage" data-stage>
@@ -41,6 +46,9 @@ const { name, education } = profile;
     </RoomObject>
     <RoomObject id="shelves" name="Open education (bookshelf)" label="education" target="education" layer="wall" drop={3}>
       <Shelves />
+    </RoomObject>
+    <RoomObject id="frame" name="Open pictures (picture frame)" label="gallery" target="gallery" layer="wall" drop={4}>
+      <Frame />
     </RoomObject>
     <RoomObject id="mug" name="Open about me (mug)" label="about" target="about" layer="objects" drop={7}>
       <Mug />
@@ -72,7 +80,7 @@ const { name, education } = profile;
   </div>
 
   <Page />
-</div>
+</main>
 
 <script>
   import './room.ts';

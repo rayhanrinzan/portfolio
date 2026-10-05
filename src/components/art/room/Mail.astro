@@ -1,13 +1,16 @@
 ---
-// Envelope and phone (contact and résumé). The letter hides behind the
-// envelope until the room island lifts it out.
+// Envelope and phone (contact and résumé). The letter hides inside the
+// envelope until the room island lifts it out. The flap is two drawings: shut,
+// it is the line across the front; open, it is the filled one behind the
+// letter, so nothing shows through the paper.
 ---
 
 <svg class="art" viewBox="1105 675 295 120" aria-hidden="true" focusable="false">
   <g filter="url(#wobble)">
     <g class="env">
       <g transform="rotate(-7 1185 732)">
-        <rect class="l f-paper letter" x="1134" y="698" width="102" height="60" rx="2" />
+        <polygon class="l f-sand flap-back" points="1120,693 1185,693 1250,693" />
+        <rect class="l f-yellow letter" x="1134" y="698" width="102" height="60" rx="2" />
         <rect class="l f-sand" x="1120" y="690" width="130" height="84" rx="4" />
         <polyline class="l flap" points="1120,693 1185,740 1250,693" />
       </g>

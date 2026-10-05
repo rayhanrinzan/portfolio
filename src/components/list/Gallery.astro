@@ -1,0 +1,53 @@
+---
+import { pictures, placeholders } from '../../content/gallery';
+---
+
+<section id="gallery" aria-labelledby="gallery-h">
+  <h2 id="gallery-h">Pictures</h2>
+  {
+    pictures.length > 0 ? (
+      <ul class="pics" role="list">
+        {pictures.map((pic) => (
+          <li>
+            <figure>
+              <img src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} loading="lazy" decoding="async" />
+              {pic.caption && <figcaption class="soft">{pic.caption}</figcaption>}
+            </figure>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <ul class="pics" role="list">
+        {Array.from({ length: placeholders }, () => (
+          <li>
+            <figure>
+              <div class="empty todo">TODO(rinzan): picture</div>
+              <figcaption class="todo">TODO(rinzan): caption</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
+
+<style>
+  .pics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; }
+  figure { margin: 0; }
+  img,
+  .empty {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1.5px solid var(--line);
+    background: var(--paper);
+  }
+  img { height: auto; object-fit: cover; }
+  .empty { display: grid; place-items: center; padding: 8px; font-size: 0.9375rem; text-align: center; }
+  /* hung by hand: no two frames quite alike */
+  li:nth-child(4n + 1) :is(img, .empty) { border-radius: 3px 6px 4px 7px; rotate: -0.6deg; }
+  li:nth-child(4n + 2) :is(img, .empty) { border-radius: 6px 3px 7px 4px; rotate: 0.5deg; }
+  li:nth-child(4n + 3) :is(img, .empty) { border-radius: 4px 7px 3px 6px; rotate: 0.4deg; }
+  li:nth-child(4n + 4) :is(img, .empty) { border-radius: 7px 4px 6px 3px; rotate: -0.5deg; }
+  figcaption { margin-top: 6px; font-size: 0.9375rem; line-height: 1.5; }
+</style>

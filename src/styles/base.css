@@ -6,6 +6,8 @@ html {
   scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 24px);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* scrollbars (the notebook page, the laptop screen) in the drawing's line */
+  scrollbar-color: var(--line) transparent;
 }
 
 body {
