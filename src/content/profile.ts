@@ -20,7 +20,16 @@ export const profile = {
       'Differential Equations',
       'Circuits',
     ],
-    activities: ['Autonomous Boat Project Team (Software)', 'AI Alignment'],
+    activities: [
+      'Autonomous Boat Project Team (Software)',
+      'Institute of Electrical and Electronics Engineers (PR Team)',
+      'South Asian Council (Publicity Team)',
+      'Society of Asian Scientists and Engineers',
+      'AI Alignment',
+      'Muslim Educational & Cultural Association',
+      'Notion Campus Leader',
+      'Adobe Campus Ambassador',
+    ],
   },
   contact: {
     email: 'rmr326@cornell.edu',

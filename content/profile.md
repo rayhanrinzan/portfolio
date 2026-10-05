@@ -61,5 +61,8 @@ Provided by Rayhan on 2026-10-05; full entries are in `src/content/projects/`.
 - Intro draft: "I'm a computer science student at Cornell (class of 2029).
   I work on machine learning and robotics, most recently ML research at
   Weill Cornell Medicine and autonomy software for Cornell's AutoBoat team."
-- Activities are long; on the site show at most AutoBoat and AI Alignment,
-  or skip activities entirely.
+- Activities: Rayhan asked (2026-10-05) for the site to list all of them:
+  AutoBoat (Software), IEEE spelled out (PR Team), South Asian Council
+  (Publicity Team), SASE, AI Alignment, MECA, Notion Campus Leader, Adobe
+  Campus Ambassador. Underrepresented Minorities in Computing was not in
+  his list and is left off.
