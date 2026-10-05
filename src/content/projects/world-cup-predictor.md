@@ -1,5 +1,5 @@
 ---
-title: FIFA World Cup predictor
+title: FIFA World Cup ML forecasting engine
 tools: [Python, scikit-learn, pandas, Jupyter, Streamlit]
 links:
   - label: GitHub
