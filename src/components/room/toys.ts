@@ -87,6 +87,17 @@ function openEnvelope(openIt: boolean): void {
   }
 }
 
+/** The picture frame rocks on the shelf and settles. */
+function rockFrame(): void {
+  const frame = one<SVGGElement>('.obj-frame .frame-art');
+  if (!frame) return;
+  gsap.killTweensOf(frame);
+  gsap
+    .timeline({ defaults: { svgOrigin: '1428 250' } })
+    .to(frame, { rotation: -7, duration: 0.12, ease: 'power2.out' })
+    .to(frame, { rotation: 0, duration: 0.7, ease: 'elastic.out(1.2, 0.3)' });
+}
+
 function tipBook(): void {
   if (!tilt) return;
   gsap.killTweensOf(tilt, 'rotation');
@@ -355,6 +366,7 @@ export function react(id: string): void {
   if (id === 'experience' && notes[0]) swingNote(notes[0], 16);
   else if (id === 'education') tipBook();
   else if (id === 'about') puffSteam();
+  else if (id === 'gallery') rockFrame();
   else if (id === 'contact') {
     hopEnvelope();
     buzzPhone();

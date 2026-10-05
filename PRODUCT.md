@@ -42,7 +42,8 @@ single-column list. Both are first-class.
 ## Operating Context
 
 - Object-to-content map: laptop → projects; corkboard / sticky notes →
-  experience; bookshelf → education + coursework; mug → about me; phone /
+  experience; bookshelf → education + coursework; mug → about me; picture
+  frame → gallery of pictures; phone /
   envelope → contact + résumé; window → the sky (easter egg).
 - Content opens as paper notebook pages that slide over the room. The room
   stays visible behind them.

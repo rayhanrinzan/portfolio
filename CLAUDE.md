@@ -23,6 +23,7 @@ by clicking objects:
 | corkboard / sticky notes| experience               |
 | bookshelf               | education + coursework   |
 | mug                     | about me                 |
+| picture frame (a cat, on the top shelf) | gallery of pictures |
 | phone / envelope        | contact + résumé         |
 | window                  | just the sky (clouds you can push around; at night, drag to throw a shooting star) |
 | lamp                    | nothing; toggles day / night (it can also be pulled and swings) |
@@ -137,9 +138,9 @@ Type: Klee One 600 for headings and handwritten labels; Zen Maru Gothic
   vectorize, layer, and animate them.
 - Every interactive object is a real `<button>` with an accessible name
   ("Open projects (laptop)"), visible focus ring that follows the object's
-  outline, and a small handwritten label. The five labels that name a
-  destination (experience, projects, education, about, contact) are always
-  visible; the others ("sky", "night", "water") show on hover/focus, and
+  outline, and a small handwritten label. The six labels that name a
+  destination (experience, projects, education, about, gallery, contact) are
+  always visible; the others ("sky", "night", "water") show on hover/focus, and
   always on touch screens.
 
 ## Interaction and motion rules

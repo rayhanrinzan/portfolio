@@ -6,6 +6,7 @@ import '../room/room.css';
 import Corkboard from './room/Corkboard.astro';
 import Window from './room/Window.astro';
 import Shelves from './room/Shelves.astro';
+import Frame from './room/Frame.astro';
 import Lamp from './room/Lamp.astro';
 import Glow from './room/Glow.astro';
 import Table from './room/Table.astro';
@@ -18,12 +19,13 @@ import Mail from './room/Mail.astro';
 <div
   class="scene"
   role="img"
-  aria-label="A room with a wide table holding a laptop that shows a falling loss curve, a steaming mug, a plant, an envelope and a phone; a corkboard, a window, a pendant lamp and two bookshelves on the wall behind"
+  aria-label="A room with a wide table holding a laptop that shows a falling loss curve, a steaming mug, a plant, an envelope and a phone; a corkboard, a window, a pendant lamp and two bookshelves with a framed picture of a cat on the wall behind"
 >
   <div class="scene-stage">
     <div class="obj deco obj-corkboard" data-layer="wall"><Corkboard /></div>
     <div class="obj deco obj-window" data-layer="wall"><Window clipId="scene-pane" /></div>
     <div class="obj deco obj-shelves" data-layer="wall"><Shelves /></div>
+    <div class="obj deco obj-frame" data-layer="wall"><Frame /></div>
     <div class="obj deco obj-lamp" data-layer="wall"><Lamp /></div>
     <div class="obj deco obj-table-land" data-layer="furniture"><Table variant="land" /></div>
     <div class="obj deco obj-glow obj-glow-land" data-layer="glow"><Glow variant="land" /></div>

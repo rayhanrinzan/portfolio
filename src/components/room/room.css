@@ -31,11 +31,17 @@ html:not([data-view='room']) .room { display: none; }
 .room-head h1 { font-size: clamp(1.5rem, 2.2vw, 2.4rem); margin: 0; }
 .room-head p { font-size: clamp(0.9375rem, 1.05vw, 1.125rem); line-height: 1.4; color: var(--ink-soft); }
 /* email and LinkedIn, for the visitor who will not click an object. Only
-   where the wall has room above the drawing: landscape, and not too short */
+   where the wall has room above the drawing: landscape, and tall enough */
 .room-head .links { display: none; font-size: 0.9375rem; gap: 0 22px; }
 .room-head .links a { padding-block: 5px; }
-@media (min-aspect-ratio: 1/1) and (min-height: 501px) {
+@media (min-aspect-ratio: 1/1) and (min-height: 700px) {
   .room-head .links { display: flex; }
+}
+/* short phones: the wall has no room for a second line, and labels run smaller */
+@media (max-aspect-ratio: 1/1) and (max-height: 700px) {
+  .room-head p { display: none; }
+  .room .lab { font-size: 0.8125rem; }
+  html .room { --lab-gap: 6px; }
 }
 
 .stage {
@@ -120,9 +126,12 @@ button.obj:focus-visible .art { transform: translateY(-3px); }
 button.obj:focus-visible .ring { stroke: var(--link); }
 
 .lab {
+  /* clear space between an object and its label; the same on screen when the
+     room shrinks beside an open page */
+  --gap: calc(var(--lab-gap, 7px) / var(--shrink, 1));
   position: absolute;
   left: 50%;
-  top: calc(100% + 4px);
+  top: calc(100% + var(--gap));
   transform: translateX(-50%) rotate(-2deg);
   padding: 0 10px;
   border: 1.5px solid var(--line);
@@ -201,39 +210,55 @@ html[data-lamp] .room .obj-glow.obj-glow { display: none; }
 .obj-window { --x: 426; --y: 90; --w: 498; --h: 366; }
 .obj-shelves { --x: 1120; --y: 140; --w: 380; --h: 330; }
 .obj-lamp { --x: 940; --y: 290; --w: 120; --h: 100; }
+/* stands on the top shelf, inside the shelves' own box: kept above them even
+   while they are hovered, so it can always be reached */
+.obj-frame { --x: 1384; --y: 158; --w: 88; --h: 100; }
+.room .stage button.obj-frame { z-index: 6; }
+/* the frame is small: its label takes taps too, and on touch the target is wider */
+.obj-frame .lab { top: auto; bottom: calc(100% + var(--gap) * 0.8); pointer-events: auto; cursor: pointer; }
+@media (hover: none) {
+  button.obj-frame::before { width: max(100%, 56px); height: max(100%, 56px); }
+}
+.cat { stroke-width: 1.6; }
 .obj-glow-land { --x: 690; --y: 380; --w: 640; --h: 440; }
-.obj-glow-port { --x: 0; --y: 438; --w: 800; --h: 997; }
+.obj-glow-port { --x: 0; --y: 398; --w: 800; --h: 1082; }
 .obj-table-land { --x: 0; --y: 640; --w: 1600; --h: 360; }
-.obj-table-port { --x: 0; --y: 1135; --w: 800; --h: 440; display: none; }
+.obj-table-port { --x: 0; --y: 1135; --w: 800; --h: 485; display: none; }
 .obj-plant { --x: 190; --y: 530; --w: 115; --h: 225; }
 .obj-laptop { --x: 380; --y: 486; --w: 420; --h: 246; }
 .obj-mug { --x: 895; --y: 570; --w: 110; --h: 175; }
 .obj-mail { --x: 1105; --y: 675; --w: 295; --h: 120; }
 .obj-chair { --x: 640; --y: 896; --w: 320; --h: 104; }
 .obj-can { --x: 1300; --y: 560; --w: 160; --h: 140; }
-.obj-can .lab { top: auto; bottom: calc(100% + 4px); }
-.obj-window .lab { top: auto; bottom: calc(100% + 6px); }
+.obj-can .lab { top: auto; bottom: calc(100% + var(--gap)); }
+/* a label above its object stays put at its bottom edge when it is rescaled */
+:is(.obj-can, .obj-window, .obj-frame) .lab { transform-origin: 50% 100%; }
+.obj-window .lab { top: auto; bottom: calc(100% + var(--gap)); }
 
 /* portrait re-composition: window and lamp on top, corkboard and shelves
-   side by side, the table and everything on it across the bottom */
+   side by side, the table and everything on it across the bottom. Sized so
+   each label has clear wall or table around it on a phone. */
 @media (max-aspect-ratio: 1/1) {
   .room { --sw: 800; --sh: 1600; --floor-y: 1195; }
-  .room .obj-window { --x: 40; --y: 160; }
-  .room .obj-window .lab { top: calc(100% + 4px); bottom: auto; }
-  .room .obj-lamp { --x: 590; --y: 330; --s: 1.2; }
-  .room .obj-corkboard { --x: 30; --y: 608; --s: 1.15; }
-  .room .obj-shelves { --x: 410; --y: 545; --s: 0.97; }
+  .room .obj-window { --x: 40; --y: 160; --s: 0.9; }
+  .room { --lab-gap: 9px; }
+  .room .obj-window .lab { top: calc(100% + var(--gap)); bottom: auto; transform-origin: 50% 0; }
+  .room .obj-lamp { --x: 590; --y: 290; --s: 1.2; }
+  .room .obj-corkboard { --x: 40; --y: 590; }
+  .room .obj-shelves { --x: 440; --y: 565; --s: 0.82; }
+  /* where the shelves put it: 264 across and 18 down their own drawing */
+  .room .obj-frame { --x: 656.5; --y: 579.8; --s: 0.82; }
   .room .obj-table-land,
   :root[data-sky='night'] .room .obj-glow-land { display: none; }
   .room .obj-table-port,
   :root[data-sky='night'] .room .obj-glow-port { display: block; }
-  .room .obj-plant { --x: 655; --y: 950; --s: 1.1; }
-  .room .obj-laptop { --x: 150; --y: 940; --s: 1.1; }
-  .room .obj-mug { --x: 60; --y: 1180; --s: 1.2; }
-  .room .obj-mail { --x: 440; --y: 1253; --s: 1.1; }
-  .room .obj-chair { --x: 240; --y: 1520; }
+  .room .obj-plant { --x: 665; --y: 968; }
+  .room .obj-laptop { --x: 190; --y: 940; }
+  .room .obj-mug { --x: 60; --y: 1200; }
+  .room .obj-mail { --x: 505; --y: 1270; --s: 0.95; }
+  .room .obj-chair { --x: 240; --y: 1540; }
   /* left of the laptop, at the back of the table */
-  .room .obj-can { --x: 30; --y: 1060; --s: 0.8; }
+  .room .obj-can { --x: 20; --y: 1040; --s: 0.75; }
   .room .hint { transform: translateX(-82%) rotate(-2deg); }
 }
 
@@ -290,7 +315,7 @@ html[data-motion] .room .obj[data-layer='foreground'] { translate: calc(var(--px
    the parallax, and no script writes a transform on the light. */
 .obj-glow { transform: rotate(var(--swing, 0deg)); }
 .obj-glow-land { transform-origin: 48.4375% -222.727%; }
-.obj-glow-port { transform-origin: 82.75% -117.954%; }
+.obj-glow-port { transform-origin: 82.75% -108.688%; }
 /* the cone opens out from the shade (openCone in motion.ts) */
 .obj-glow-land .art { transform-origin: 48.4375% 0; }
 .obj-glow-port .art { transform-origin: 82.75% 0; }
@@ -434,6 +459,7 @@ html[data-hint] .hint { opacity: 1; }
 .page[data-id='experience'] [data-doodle='experience'],
 .page[data-id='education'] [data-doodle='education'],
 .page[data-id='about'] [data-doodle='about'],
+.page[data-id='gallery'] [data-doodle='gallery'],
 .page[data-id='contact'] [data-doodle='contact'] { display: block; }
 .page-body {
   flex: 1;
