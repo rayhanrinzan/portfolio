@@ -5,6 +5,7 @@
 import { gsap, motionOK, room, root, stage, toTop } from './motion';
 import { closeScreen, openScreen } from './zoom';
 import { react } from './toys';
+import { closeViewer, viewing } from './viewer';
 
 const page = room.querySelector<HTMLElement>('[data-page]')!;
 const pageBody = room.querySelector<HTMLElement>('[data-page-body]')!;
@@ -174,6 +175,7 @@ function hidePage(animate: boolean): void {
 
 function show(id: string, animate: boolean): void {
   if (open === id) return;
+  closeViewer();
   const from = open;
   open = id;
   mark(id);
@@ -195,6 +197,7 @@ function show(id: string, animate: boolean): void {
 function hide(animate: boolean, refocus: boolean): void {
   const id = open;
   if (!id) return;
+  closeViewer();
   open = null;
   mark(null);
   if (id === 'projects') closeScreen(animate, () => unmount('projects'));
@@ -282,7 +285,8 @@ export function initPanels(): void {
   });
   room.querySelectorAll('[data-close]').forEach((button) => button.addEventListener('click', close));
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && open) close();
+    // Escape puts an expanded picture away first; the page stays
+    if (e.key === 'Escape' && open && !viewing()) close();
   });
   window.addEventListener('popstate', () => sync(true));
   narrow.addEventListener('change', () => mark(open));
