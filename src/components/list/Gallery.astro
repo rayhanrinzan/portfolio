@@ -4,21 +4,24 @@ import { pictures, placeholders } from '../../content/gallery';
 
 <section id="gallery" aria-labelledby="gallery-h">
   <h2 id="gallery-h">Gallery</h2>
+  {pictures.length > 0 && <p class="soft hint">Pick a picture to see all of it.</p>}
   {
     pictures.length > 0 ? (
       <ul class="pics" role="list">
-        {pictures.map((pic) => (
+        {pictures.map((pic, n) => (
           <li>
             <figure>
-              <img
-                src={pic.src}
-                alt={pic.alt}
-                width={pic.width}
-                height={pic.height}
-                style={pic.focus && `object-position: ${pic.focus}`}
-                loading="lazy"
-                decoding="async"
-              />
+              <a class="pic" href={pic.src} data-pic={n}>
+                <img
+                  src={pic.src}
+                  alt={pic.alt}
+                  width={pic.width}
+                  height={pic.height}
+                  style={pic.focus && `object-position: ${pic.focus}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
               {pic.caption && <figcaption class="soft">{pic.caption}</figcaption>}
             </figure>
           </li>
@@ -35,6 +38,34 @@ import { pictures, placeholders } from '../../content/gallery';
           </li>
         ))}
       </ul>
+    )
+  }
+
+  {/* The expanded picture: the frame from the shelf, at full size. Without JS
+      a thumbnail is a plain link to its picture and this stays closed. */}
+  {
+    pictures.length > 0 && (
+      <dialog class="viewer" data-viewer aria-label="Picture">
+        <div class="frame">
+          <div class="mat">
+            <div class="hole">
+              <img data-viewer-img alt="" />
+            </div>
+            <div class="bar">
+              <button type="button" class="vbtn" data-viewer-prev aria-label="Previous picture">
+                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M12,4 q-4,3 -6,6 q3,3 6,6" /></svg>
+              </button>
+              <span class="count" data-viewer-count aria-live="polite" />
+              <button type="button" class="vbtn" data-viewer-next aria-label="Next picture">
+                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M8,4 q4,3 6,6 q-3,3 -6,6" /></svg>
+              </button>
+              <button type="button" class="vbtn vclose" data-viewer-close aria-label="Close picture">
+                <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3,3 q5,4 10,10 M13,3 q-6,5 -10,10" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </dialog>
     )
   }
 </section>
@@ -58,4 +89,110 @@ import { pictures, placeholders } from '../../content/gallery';
   li:nth-child(4n + 3) :is(img, .empty) { border-radius: 4px 7px 3px 6px; rotate: 0.4deg; }
   li:nth-child(4n + 4) :is(img, .empty) { border-radius: 7px 4px 6px 3px; rotate: -0.5deg; }
   figcaption { margin-top: 6px; font-size: 0.9375rem; line-height: 1.5; }
+
+  .hint { margin: -6px 0 14px; font-size: 0.9375rem; }
+  .pic { display: block; cursor: zoom-in; }
+  .pic:is(:hover, :focus-visible) img { border-color: var(--link); outline: 1.5px solid var(--link); }
+  :global(html[data-motion]) .pic img { transition: translate 0.12s ease-out; }
+  :global(html[data-motion]) .pic:is(:hover, :focus-visible) img { translate: 0 -3px; }
+  .pic:focus-visible { outline: 2px dashed var(--link); outline-offset: 5px; border-radius: 6px; }
+
+  /* No scrim: the picture simply comes off the wall, in the frame from the
+     shelf. The frame is one size for every picture, so the buttons stay put;
+     a picture of another shape sits on the mat. */
+  .viewer {
+    --pad: 16px;
+    --mat: 12px;
+    --box-w: min(100vw - 108px, (100dvh - 190px) * 4 / 3, 1040px);
+    --box-h: calc(var(--box-w) * 3 / 4);
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    overflow: visible;
+  }
+  .viewer::backdrop { background: transparent; }
+  .frame,
+  .mat { position: relative; }
+  /* the drawn parts go through the room's wobble; the photo and buttons do not */
+  .frame::before,
+  .mat::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2.2px solid var(--line);
+    filter: url(#wobble);
+  }
+  .frame { padding: var(--pad); }
+  .frame::before { border-radius: 5px 8px 6px 9px; background: var(--sand); }
+  .mat { padding: var(--mat); }
+  .mat::before { border-radius: 3px 5px 4px 6px; background: var(--paper); }
+  .hole,
+  .bar { position: relative; }
+  .hole { width: var(--box-w); height: var(--box-h); }
+  .viewer img {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: auto;
+    border-radius: 2px 3px 2px 4px;
+    rotate: none;
+    object-fit: contain;
+  }
+  .bar { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .count { font-family: var(--font-hand); font-weight: 600; min-width: 4em; text-align: center; font-variant-numeric: tabular-nums; }
+  .vbtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 4px 10px;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 20px 22px 19px 24px;
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .vbtn:hover { color: var(--link); border-color: var(--link); }
+  .vbtn:focus-visible { outline: 2px dashed var(--link); outline-offset: 4px; }
+  .vbtn svg { width: 16px; height: 16px; }
+  .vbtn path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .vclose { margin-left: auto; }
+  .vclose svg { width: 14px; height: 14px; }
+
+  /* upright screens: an upright frame */
+  @media (max-aspect-ratio: 1/1) {
+    .viewer {
+      --box-w: min(100vw - 108px, (100dvh - 210px) * 4 / 5, 720px);
+      --box-h: calc(var(--box-w) * 5 / 4);
+    }
+  }
+  @media (max-width: 480px) {
+    .viewer {
+      --pad: 9px;
+      --mat: 7px;
+      --box-w: min(100vw - 72px, (100dvh - 200px) * 4 / 5);
+    }
+  }
+  /* short screens (a phone on its side): thin frame, and the bar moves beside the picture */
+  @media (max-height: 500px) {
+    .viewer {
+      --pad: 8px;
+      --mat: 6px;
+      --box-w: min(100vw - 150px, (100dvh - 60px) * 4 / 3);
+      --box-h: calc(var(--box-w) * 3 / 4);
+    }
+    .mat { display: flex; gap: 8px; }
+    .bar { flex-direction: column; justify-content: center; margin-top: 0; gap: 6px; }
+    .count { min-width: 0; font-size: 0.9375rem; }
+    .vclose { margin-left: 0; margin-top: auto; }
+  }
 </style>

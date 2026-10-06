@@ -10,6 +10,7 @@ import { initBoil } from './boil';
 import { initEntrance } from './entrance';
 import { initParallax } from './parallax';
 import { initTraining } from './training';
+import { initViewer } from './viewer';
 import { initWater } from './water';
 
 const head = room.querySelector<HTMLElement>('[data-head]');
@@ -96,6 +97,7 @@ initPanels();
 initToys();
 initWater();
 initTraining();
+initViewer();
 initAmbient();
 initBoil();
 initParallax();
