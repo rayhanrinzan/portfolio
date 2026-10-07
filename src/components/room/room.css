@@ -40,7 +40,7 @@ html:not([data-view='room']) .room { display: none; }
 /* short phones: the wall has no room for a second line, and labels run smaller */
 @media (max-aspect-ratio: 1/1) and (max-height: 700px) {
   .room-head p { display: none; }
-  .room .lab { font-size: 0.8125rem; }
+  html .room .lab { font-size: 0.8125rem; }
   html .room { --lab-gap: 6px; }
 }
 
@@ -255,15 +255,18 @@ html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
   .room { --sw: 800; --sh: 1600; --floor-y: 1195; }
   .room .obj-window { --x: 40; --y: 160; --s: 0.9; }
   .room { --lab-gap: 9px; }
+  /* the wall is crowded here: labels run a little smaller and tighter */
+  .room .lab { font-size: clamp(0.875rem, calc(22 * var(--u)), 1.375rem); line-height: 1.45; padding: 0 8px; }
   .room .obj-window .lab { top: calc(100% + var(--gap)); bottom: auto; transform-origin: 50% 0; }
   .room .obj-lamp { --x: 590; --y: 290; --s: 1.2; }
   .room .obj-corkboard { --x: 40; --y: 590; }
-  .room .obj-shelves { --x: 440; --y: 565; --s: 0.82; }
+  .room .obj-shelves { --x: 440; --y: 545; --s: 0.82; }
   .room .obj-shelves .lab { left: 50%; }
   /* where the shelves put it: 264 across and 18 down their own drawing */
-  .room .obj-frame { --x: 656.5; --y: 579.8; --s: 0.82; }
+  .room .obj-frame { --x: 656.5; --y: 559.8; --s: 0.82; }
   /* 38 across and 226 down */
-  .room .obj-trophy { --x: 471.2; --y: 750.3; --s: 0.82; }
+  .room .obj-trophy { --x: 471.2; --y: 730.3; --s: 0.82; }
+  .room .obj-trophy .lab { bottom: calc(100% + 3px); }
   .room .obj-table-land,
   :root[data-sky='night'] .room .obj-glow-land { display: none; }
   .room .obj-table-port,
@@ -274,7 +277,7 @@ html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
   .room .obj-mail { --x: 505; --y: 1270; --s: 0.95; }
   .room .obj-chair { --x: 240; --y: 1540; }
   /* left of the laptop, at the back of the table */
-  .room .obj-can { --x: 20; --y: 1040; --s: 0.75; }
+  .room .obj-can { --x: 46; --y: 1040; --s: 0.75; }
   .room .hint { transform: translateX(-82%) rotate(-2deg); }
 }
 
