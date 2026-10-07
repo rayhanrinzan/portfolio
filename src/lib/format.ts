@@ -1,3 +1,4 @@
+// Short month names, in calendar order.
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 /** "2026-08" -> "Aug 2026" */
