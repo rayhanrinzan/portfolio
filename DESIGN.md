@@ -20,7 +20,8 @@ Room composition: sketch C, the kitchen-table view
 runs across the foreground with the laptop, mug, envelope and phone spread
 out on it; the window, corkboard and two wall shelves sit on the wall behind;
 a pendant lamp hangs between the window and the shelves; a chair back sits in
-the foreground. The wall shelves stand in for the bookshelf (education).
+the foreground. The wall shelves stand in for the bookshelf (education); a picture frame
+(gallery) stands on the top one and a trophy (awards) on the bottom one.
 
 ## Color
 

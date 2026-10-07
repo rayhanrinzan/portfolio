@@ -9,6 +9,7 @@ import Corkboard from '../art/room/Corkboard.astro';
 import Window from '../art/room/Window.astro';
 import Shelves from '../art/room/Shelves.astro';
 import Frame from '../art/room/Frame.astro';
+import Trophy from '../art/room/Trophy.astro';
 import Lamp from '../art/room/Lamp.astro';
 import Glow from '../art/room/Glow.astro';
 import Table from '../art/room/Table.astro';
@@ -49,6 +50,9 @@ const { name, education, contact } = profile;
     </RoomObject>
     <RoomObject id="frame" name="Open gallery (picture frame)" label="gallery" target="gallery" layer="wall" drop={4}>
       <Frame />
+    </RoomObject>
+    <RoomObject id="trophy" name="Open awards (trophy)" label="awards" target="awards" layer="wall" drop={4}>
+      <Trophy />
     </RoomObject>
     <RoomObject id="mug" name="Open about me (mug)" label="about" target="about" layer="objects" drop={7}>
       <Mug />

@@ -1,0 +1,31 @@
+---
+import { profile } from '../../content/profile';
+import { formatMonth } from '../../lib/format';
+
+const { awards } = profile;
+---
+
+<section id="awards" aria-labelledby="awards-h">
+  <h2 id="awards-h">What I've won</h2>
+  <ul role="list">
+    {
+      awards.map(({ event, place, division, date }) => (
+        <li class="award">
+          <div class="row">
+            <h3>
+              {place}, {event}
+            </h3>
+            <time class="when soft" datetime={date}>{formatMonth(date)}</time>
+          </div>
+          <p>{division}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .award + .award { margin-top: 20px; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 16px; flex-wrap: wrap; }
+  .when { font-size: 0.9375rem; white-space: nowrap; }
+</style>

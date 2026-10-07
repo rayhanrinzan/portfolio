@@ -43,7 +43,7 @@ single-column list. Both are first-class.
 
 - Object-to-content map: laptop → projects; corkboard / sticky notes →
   experience; bookshelf → education + coursework; mug → about me; picture
-  frame → gallery of pictures; phone /
+  frame → gallery of pictures; trophy → awards; phone /
   envelope → contact + résumé; window → the sky (easter egg).
 - Content opens as paper notebook pages that slide over the room. The room
   stays visible behind them.

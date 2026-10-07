@@ -98,6 +98,17 @@ function rockFrame(): void {
     .to(frame, { rotation: 0, duration: 0.7, ease: 'elastic.out(1.2, 0.3)' });
 }
 
+/** The trophy hops on the shelf and lands. */
+function hopTrophy(): void {
+  const trophy = one<SVGGElement>('.obj-trophy .trophy-art');
+  if (!trophy) return;
+  gsap.killTweensOf(trophy);
+  gsap
+    .timeline({ defaults: { svgOrigin: '1205 446' } })
+    .to(trophy, { y: -12, rotation: 5, duration: 0.14, ease: 'power2.out' })
+    .to(trophy, { y: 0, rotation: 0, duration: 0.45, ease: 'bounce.out' });
+}
+
 function tipBook(): void {
   if (!tilt) return;
   gsap.killTweensOf(tilt, 'rotation');
@@ -387,6 +398,7 @@ export function react(id: string): void {
   else if (id === 'education') tipBook();
   else if (id === 'about') puffSteam();
   else if (id === 'gallery') rockFrame();
+  else if (id === 'awards') hopTrophy();
   else if (id === 'contact') {
     hopEnvelope();
     buzzPhone();

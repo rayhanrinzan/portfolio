@@ -210,7 +210,9 @@ html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
 .room { --floor-y: 700; }
 .obj-corkboard { --x: 90; --y: 150; --w: 290; --h: 230; }
 .obj-window { --x: 426; --y: 90; --w: 498; --h: 366; }
-.obj-shelves { --x: 1120; --y: 140; --w: 380; --h: 330; }
+.obj-shelves { --x: 1120; --y: 140; --w: 380; --h: 356; }
+/* its label sits left of centre, clear of the watering can and its label */
+.obj-shelves .lab { left: 36%; }
 .obj-lamp { --x: 940; --y: 290; --w: 120; --h: 100; }
 /* stands on the top shelf, inside the shelves' own box: kept above them even
    while they are hovered, so it can always be reached */
@@ -221,7 +223,16 @@ html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
 @media (hover: none) {
   button.obj-frame::before { width: max(100%, 56px); height: max(100%, 56px); }
 }
-.cat { stroke-width: 1.6; }
+.cat,
+.shine { stroke-width: 1.6; }
+/* on the bottom shelf, in the shelves' box like the frame; its label goes in
+   the bare wall between the two shelves */
+.obj-trophy { --x: 1158; --y: 366; --w: 94; --h: 86; }
+.room .stage button.obj-trophy { z-index: 6; }
+.obj-trophy .lab { top: auto; bottom: calc(100% + var(--gap) * 0.6); pointer-events: auto; cursor: pointer; }
+@media (hover: none) {
+  button.obj-trophy::before { width: max(100%, 56px); height: max(100%, 56px); }
+}
 .obj-glow-land { --x: 690; --y: 380; --w: 640; --h: 440; }
 .obj-glow-port { --x: 0; --y: 398; --w: 800; --h: 1082; }
 .obj-table-land { --x: 0; --y: 640; --w: 1600; --h: 360; }
@@ -234,7 +245,7 @@ html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
 .obj-can { --x: 1300; --y: 560; --w: 160; --h: 140; }
 .obj-can .lab { top: auto; bottom: calc(100% + var(--gap)); }
 /* a label above its object stays put at its bottom edge when it is rescaled */
-:is(.obj-can, .obj-window, .obj-frame) .lab { transform-origin: 50% 100%; }
+:is(.obj-can, .obj-window, .obj-frame, .obj-trophy) .lab { transform-origin: 50% 100%; }
 .obj-window .lab { top: auto; bottom: calc(100% + var(--gap)); }
 
 /* portrait re-composition: window and lamp on top, corkboard and shelves
@@ -248,8 +259,11 @@ html[data-lamp='off'] .room .sky-night .star { fill: #E6CF78; }
   .room .obj-lamp { --x: 590; --y: 290; --s: 1.2; }
   .room .obj-corkboard { --x: 40; --y: 590; }
   .room .obj-shelves { --x: 440; --y: 565; --s: 0.82; }
+  .room .obj-shelves .lab { left: 50%; }
   /* where the shelves put it: 264 across and 18 down their own drawing */
   .room .obj-frame { --x: 656.5; --y: 579.8; --s: 0.82; }
+  /* 38 across and 226 down */
+  .room .obj-trophy { --x: 471.2; --y: 750.3; --s: 0.82; }
   .room .obj-table-land,
   :root[data-sky='night'] .room .obj-glow-land { display: none; }
   .room .obj-table-port,
@@ -460,6 +474,7 @@ html[data-hint] .hint { opacity: 1; }
 .page-doodles svg { display: none; width: 52px; height: 52px; }
 .page[data-id='experience'] [data-doodle='experience'],
 .page[data-id='education'] [data-doodle='education'],
+.page[data-id='awards'] [data-doodle='awards'],
 .page[data-id='about'] [data-doodle='about'],
 .page[data-id='gallery'] [data-doodle='gallery'],
 .page[data-id='contact'] [data-doodle='contact'] { display: block; }
