@@ -31,6 +31,23 @@ export const profile = {
       'Adobe Campus Ambassador',
     ],
   },
+  // newest first
+  awards: [
+    {
+      event: 'MIT BeaverWorks 2025',
+      place: '1st place',
+      division: 'UAS-SAR Signal Processing (International Division)',
+      issuer: 'Massachusetts Institute of Technology',
+      date: '2025-07',
+    },
+    {
+      event: 'Lockheed Martin CodeQuest',
+      place: '2nd place',
+      division: 'Advanced Division',
+      issuer: 'Lockheed Martin',
+      date: '2025-03',
+    },
+  ],
   contact: {
     email: 'rmr326@cornell.edu',
     linkedin: 'https://www.linkedin.com/in/rinzan',

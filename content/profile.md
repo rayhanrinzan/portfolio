@@ -28,6 +28,17 @@ on LinkedIn and must be filled in by Rayhan, never invented.
 - Fayetteville-Manlius Senior High School, Sep 2021 – Jun 2025
   (leave off the site unless Rayhan asks)
 
+## Honors & awards
+
+Provided by Rayhan on 2026-10-06 (LinkedIn screenshot).
+
+- 1st place @ MIT BeaverWorks 2025 — UAS-SAR Signal Processing (International Division).
+  Issued by Massachusetts Institute of Technology, Jul 2025. Associated with
+  Syracuse University College of Engineering and Computer Science.
+- 2nd Place @ Lockheed Martin CodeQuest (Advanced Division). Issued by
+  Lockheed Martin, Mar 2025. Associated with Fayetteville-Manlius Senior
+  High School (the school stays off the site, see Education).
+
 ## Experience (newest first)
 
 LinkedIn has titles and dates only, no descriptions. Every role needs a
