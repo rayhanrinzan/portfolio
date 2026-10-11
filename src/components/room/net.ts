@@ -53,6 +53,7 @@ export function step(net: Net, lr: number): number {
     const p = forward(net, x, hidden);
     const q = Math.min(1 - EPS, Math.max(EPS, p));
     loss -= y * Math.log(q) + (1 - y) * Math.log(1 - q);
+    // For sigmoid + cross-entropy, the output gradient is p - y.
     const dz = p - y;
     gb2 += dz;
     for (let j = 0; j < H; j++) {
