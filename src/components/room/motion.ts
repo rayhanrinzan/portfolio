@@ -47,6 +47,7 @@ export function unit(): number {
 /** Pointer position in an svg's own coordinates. */
 export function svgPoint(svg: SVGSVGElement, e: { clientX: number; clientY: number }): DOMPoint | null {
   const matrix = svg.getScreenCTM();
+  // Invert the screen transform to convert viewport pointer pixels into SVG coordinates.
   return matrix ? new DOMPoint(e.clientX, e.clientY).matrixTransform(matrix.inverse()) : null;
 }
 
