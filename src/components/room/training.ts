@@ -139,6 +139,7 @@ export function initTraining(): void {
   const slider = room.querySelector<HTMLInputElement>('[data-lr]');
   const out = room.querySelector<HTMLElement>('[data-lr-out]');
   slider?.addEventListener('input', () => {
+    // Interpret the slider logarithmically: each +1 multiplies the learning rate by 10.
     lr = 10 ** Number(slider.value);
     if (out) out.textContent = lr >= 10 ? lr.toFixed(0) : lr >= 1 ? lr.toFixed(1) : lr.toFixed(2);
     // a new learning rate on a finished run starts a new one
