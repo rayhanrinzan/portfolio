@@ -68,13 +68,14 @@ export const pictures: Picture[] = [
     alt: 'Someone in a beige T-shirt smiling down at a fluffy orange-and-white kitten held in both hands.',
     width: 900,
     height: 1200,
-    focus: 'center 22%',
+    focus: 'center 4%',
   },
   {
     src: '/gallery/hackharvard.webp',
     alt: 'Four friends working on laptops on orange chairs and green ottomans in a lounge outside a lab, one of them mid-sentence.',
     width: 1200,
     height: 675,
+    focus: 'left center',
   },
   {
     src: '/gallery/rooftop.webp',
