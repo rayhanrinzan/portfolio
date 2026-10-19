@@ -1,5 +1,5 @@
 ---
-title: Keepsake, a wearable memory aid for people with Alzheimer's and dementia
+title: Keepsake, a wearable memory aid for people with Alzheimer’s and dementia
 tools: [Python, FastAPI, YOLO, CLIP, MediaPipe, Expo, React, TypeScript, Photon Spectrum, Grok API, SQLite, Vercel]
 links:
   - label: GitHub
