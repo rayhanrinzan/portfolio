@@ -63,6 +63,32 @@ export const pictures: Picture[] = [
     height: 1200,
     focus: 'center 30%',
   },
+  {
+    src: '/gallery/kitten.webp',
+    alt: 'Someone in a beige T-shirt smiling down at a fluffy orange-and-white kitten held in both hands.',
+    width: 900,
+    height: 1200,
+    focus: 'center 4%',
+  },
+  {
+    src: '/gallery/hackharvard.webp',
+    alt: 'Four friends working on laptops on orange chairs and green ottomans in a lounge outside a lab, one of them mid-sentence.',
+    width: 1200,
+    height: 675,
+    focus: 'left center',
+  },
+  {
+    src: '/gallery/rooftop.webp',
+    alt: 'Three friends smiling at sunset on a raised walkway, with a city skyline across the water behind them.',
+    width: 900,
+    height: 1200,
+  },
+  {
+    src: '/gallery/lobby.webp',
+    alt: 'Four friends standing in a wood-paneled lobby, two giving a thumbs-up, with tall windows and autumn trees behind them.',
+    width: 900,
+    height: 1200,
+  },
 ];
 
 /** How many empty frames to show until there are pictures. */
