@@ -63,6 +63,12 @@ export const pictures: Picture[] = [
     height: 1200,
     focus: 'center 30%',
   },
+  {
+    src: '/gallery/lobby.webp',
+    alt: 'Four friends standing in a wood-paneled lobby, two giving a thumbs-up, with tall windows and autumn trees behind them.',
+    width: 900,
+    height: 1200,
+  },
 ];
 
 /** How many empty frames to show until there are pictures. */
