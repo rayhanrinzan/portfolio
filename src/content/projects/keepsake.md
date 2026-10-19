@@ -5,7 +5,7 @@ links:
   - label: GitHub
     href: https://github.com/rayhanrinzan/keepsake
   - label: Demo
-    href: https://keepsake-demo.vercel.app/
+    href: https://devpost.com/software/keepsake-df0gmw
 order: 1
 ---
 
