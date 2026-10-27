@@ -7,5 +7,5 @@ roles:
   - title: Electrical Systems
     start: "2026-02"
     what: Contributed to Robotics Power Distribution + Binary Relay Board
-order: 2
+order: 3
 ---
