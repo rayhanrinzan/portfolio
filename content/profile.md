@@ -44,19 +44,21 @@ Provided by Rayhan on 2026-10-06 (LinkedIn screenshot).
 LinkedIn has titles and dates only, no descriptions. Every role needs a
 one-line "what I did + result" from Rayhan.
 
-1. Software Engineer Intern — IMGNi, Aug 2026 – present
+1. Software Engineer — World Resources Institute (via Develop for Good), Oct 2026 – Feb 2027 (added 2026-10-27)
+   - Energy Access Explorer, an open-source geospatial platform governments and organizations use to plan electrification and clean energy access; building features for exploring and evaluating energy data, intended for the public codebase.
+2. Software Engineer Intern — IMGNi, Aug 2026 – present
    - Building Sienna AI, an AI employee for small businesses.
-2. Cornell University AutoBoat Project Team, Ithaca NY, on-site
+3. Cornell University AutoBoat Project Team, Ithaca NY, on-site
    - Software Engineer, Aug 2026 – present
    - Electrical Systems, Feb 2026 – present
    - Software Engineer: perception software: quaternion-derived yaw in the exponential moving averages for vessel tracking; buoy color and sign validation so tracked object information is more consistent for the autonomy stack.
    - Electrical Systems: "Contributed to Robotics Power Distribution + Binary Relay Board"
-3. ML Research Intern (site title; LinkedIn says Machine Learning Research Intern) — Weill Cornell Medicine, New York NY, on-site, May 2026 – Aug 2026
+4. ML Research Intern (site title; LinkedIn says Machine Learning Research Intern) — Weill Cornell Medicine, New York NY, on-site, May 2026 – Aug 2026
    - Deep learning pipelines for automated abdominal-organ segmentation in MRI for radiotherapy planning. Dataset infrastructure, preprocessing, GPU training (Python, PyTorch, Linux); hundreds of experiments; about 0.94 Dice.
-4. Robotics Systems Engineer (internship on LinkedIn; site title drops it) — Syracuse University College of
+5. Robotics Systems Engineer (internship on LinkedIn; site title drops it) — Syracuse University College of
    Engineering and Computer Science, Syracuse NY, on-site, Jun 2025 – Aug 2025
    - Radar-equipped hexacopter (Pixhawk, ArduPilot, Raspberry Pi): sensor integration and synthetic aperture radar processing; image reconstruction with motion compensation and backprojection.
-5. Computational Research Intern — SUNY Oswego, Jun 2024 – Oct 2024
+6. Computational Research Intern — SUNY Oswego, Jun 2024 – Oct 2024
    - Python tools to analyze experimental data on ladder-type electromagnetically induced transparency in cesium.
 
 ## Projects
