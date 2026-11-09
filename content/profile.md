@@ -70,6 +70,7 @@ Provided by Rayhan on 2026-10-05; full entries are in `src/content/projects/`.
 - FIFA World Cup Predictor: https://github.com/rayhanrinzan/fifa-world-cup-predictor, demo https://fifawcpredictor.streamlit.app/
 - ThirdMan, AI football tactics sandbox: https://github.com/rayhanrinzan/thirdman, demo https://thirdman-one.vercel.app/
 - ClockedIn, calendar-aware productivity app (iOS): https://github.com/rayhanrinzan/clockedin
+- skillissue.lol, internship recruiting simulator written in LOLCODE (added 2026-11-09): https://github.com/rayhanrinzan/skillissue.lol, demo https://rayhanrinzan.github.io/skillissue.lol/
 
 ## Site-copy suggestions (Claude Code: propose, don't publish without approval)
 
