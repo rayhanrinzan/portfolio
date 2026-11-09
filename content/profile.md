@@ -66,6 +66,7 @@ one-line "what I did + result" from Rayhan.
 Provided by Rayhan on 2026-10-05; full entries are in `src/content/projects/`.
 
 - QuoteDesk, live manufacturing quoting assistant (Google DeepMind New Agentic Economy 2026, three-person team; added 2026-10-12): https://github.com/dcgursoy/quote-desk, demo https://quote-desk-hack.vercel.app/
+- FirstTouch, arcade 4v4 football in first person (Three.js browser game; added 2026-11-09): https://github.com/rayhanrinzan/firsttouch, demo https://firsttouch-henna.vercel.app
 - FIFA World Cup Predictor: https://github.com/rayhanrinzan/fifa-world-cup-predictor, demo https://fifawcpredictor.streamlit.app/
 - ThirdMan, AI football tactics sandbox: https://github.com/rayhanrinzan/thirdman, demo https://thirdman-one.vercel.app/
 - ClockedIn, calendar-aware productivity app (iOS): https://github.com/rayhanrinzan/clockedin
